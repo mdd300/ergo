@@ -34,8 +34,6 @@ public class Model extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
-        alertDialog = new AlertDialog.Builder(ctx).create();
-        alertDialog.setTitle("Login Information....");
         dialog = new ProgressDialog(ctx);
         dialog.setTitle("Realizando o carregamento dos dados");
         dialog.setMessage("Aguarde o fim da requisição...");
@@ -106,8 +104,6 @@ public class Model extends AsyncTask<String,Void,String> {
         }
         else
         {
-            alertDialog.setMessage(result);
-            alertDialog.show();
             dialog.dismiss();//Fecha o dialog após o fim da requisição
         }
 
