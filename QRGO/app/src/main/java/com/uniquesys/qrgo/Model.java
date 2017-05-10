@@ -1,6 +1,8 @@
 package com.uniquesys.qrgo;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -28,11 +30,16 @@ public class Model extends AsyncTask<String,Void,String> {
     {
         this.ctx =ctx;
     }
+    ProgressDialog dialog;
 
     @Override
     protected void onPreExecute() {
         alertDialog = new AlertDialog.Builder(ctx).create();
         alertDialog.setTitle("Login Information....");
+        dialog = new ProgressDialog(ctx);
+        dialog.setTitle("Realizando o carregamento dos dados");
+        dialog.setMessage("Aguarde o fim da requisição...");
+        dialog.show();
     }
 
     @Override
@@ -101,7 +108,9 @@ public class Model extends AsyncTask<String,Void,String> {
         {
             alertDialog.setMessage(result);
             alertDialog.show();
+            dialog.dismiss();//Fecha o dialog após o fim da requisição
         }
 
     }
+
 }
