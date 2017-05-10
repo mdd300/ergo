@@ -1,6 +1,9 @@
 package com.uniquesys.qrgo;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +22,9 @@ import java.util.concurrent.ExecutionException;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.CAMERA;
+
 public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     EditText user,senha;
     String login_name,login_pass;
@@ -27,6 +33,18 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (ContextCompat.checkSelfPermission(this, CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // Verifica se já mostramos o alerta e o usuário negou na 1ª vez.
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, CAMERA)) {
+                // Caso o usuário tenha negado a permissão anteriormente, e não tenha marcado o check "nunca mais mostre este alerta"
+                // Podemos mostrar um alerta explicando para o usuário porque a permissão é importante.
+            } else {
+                // Solicita a permissão
+                ActivityCompat.requestPermissions(this, new String[]{CAMERA}, 0);
+            }
+        } else {
+            
+        }
         setContentView(R.layout.activity_main);
 
     }
@@ -42,10 +60,13 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         JSONObject obj = new JSONObject (result.toString());
         String JAStuff = obj.getString("sucesso");
         if(JAStuff == "true"){
+// Tudo OK, podemos prosseguir.
             mScannerView = new ZXingScannerView(this);
             setContentView(mScannerView);
             mScannerView.setResultHandler(this);
             mScannerView.startCamera();
+
+
         }
     }
 
