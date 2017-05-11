@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                 ActivityCompat.requestPermissions(this, new String[]{CAMERA}, 0);
             }
         } else {
-            
+
         }
         setContentView(R.layout.activity_main);
 
