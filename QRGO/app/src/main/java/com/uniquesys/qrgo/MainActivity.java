@@ -54,8 +54,9 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         login_name = user.getText().toString();
         login_pass = senha.getText().toString();
         String method = "https://www.uniquesys.com.br/qrgo/login/efetuar_login";
+        String function = "login";
         Model loginTask = new Model(this);
-        loginTask.execute(method, login_name, login_pass);
+        loginTask.execute(function,method, login_name, login_pass);
         String result = loginTask.get();
         JSONObject obj = new JSONObject (result.toString());
         String JAStuff = obj.getString("sucesso");
@@ -72,10 +73,27 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
     @Override
     public void handleResult(Result result) {
-        Log.e("Resultado",result.getText());
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan");
-        builder.setMessage(result.getText());
+        String[] separated = result.getText().split("readqrcodepedido/");
+        String codigo = separated[1];
+        Log.e("Resultado",codigo);
+        String method = "https://www.uniquesys.com.br/qrgo/pedidos/readqrcodepedido_app";
+        String function = "produto";
+        Model prodTask = new Model(this);
+        prodTask.execute(function,method, codigo);
+        String resultado = null;
+        try {
+            resultado = prodTask.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        Log.e("Resultado",resultado.toString());
+        builder.setMessage(resultado.toString());
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
