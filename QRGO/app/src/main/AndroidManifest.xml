@@ -24,8 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QRScanner" />
-        <activity android:name=".ProdutoActivity"></activity>
+        <activity
+            android:name=".ProdutoActivity"
+            android:label="@string/title_activity_produto"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
