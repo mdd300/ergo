@@ -1,7 +1,12 @@
 package com.uniquesys.qrgo;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -16,7 +21,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 public class ProdutoActivity extends AppCompatActivity {
 
@@ -39,26 +51,32 @@ public class ProdutoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produto);
+        Intent intent = getIntent();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Scan");
+        Bundle bundle = intent.getExtras();
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        String resultado = bundle.getString("resultado");
+        try {
+            JSONArray JASresult = new JSONArray(resultado.toString());
+            JSONObject obj = JASresult.getJSONObject(0);
+            String nome = obj.getString("prod_text");
+            String img = obj.getString("img_nome");
+            builder.setMessage(nome.toString() + img.toString());
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            TextView txtProd = (TextView)findViewById(R.id.txtProd);
+            txtProd.setText(nome);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+
 
     }
 
@@ -110,14 +128,11 @@ public class ProdutoActivity extends AppCompatActivity {
             return fragment;
         }
 
-        @Override
+   /*     @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_produto, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
+
+        }*/
     }
 
     /**

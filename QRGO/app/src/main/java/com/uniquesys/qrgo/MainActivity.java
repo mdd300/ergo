@@ -74,8 +74,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     @Override
     public void handleResult(Result result) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Scan");
+
         String[] separated = result.getText().split("readqrcodepedido/");
         String codigo = separated[1];
         Log.e("Resultado",codigo);
@@ -93,8 +92,14 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         }
 
         Log.e("Resultado",resultado.toString());
-        builder.setMessage(resultado.toString());
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+
+        Intent intent = new Intent(MainActivity.this, ProdutoActivity.class);
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString("resultado", resultado.toString());
+        intent.putExtras(bundle);
+
+        startActivity(intent);
     }
 }
