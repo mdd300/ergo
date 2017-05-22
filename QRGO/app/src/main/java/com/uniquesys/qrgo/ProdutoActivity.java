@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,11 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
@@ -52,6 +58,7 @@ public class ProdutoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produto);
         Intent intent = getIntent();
+        final ImageView iv = (ImageView) findViewById(R.id.ImgProd);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan");
@@ -68,6 +75,25 @@ public class ProdutoActivity extends AppCompatActivity {
             alertDialog.show();
             TextView txtProd = (TextView)findViewById(R.id.txtProd);
             txtProd.setText(nome);
+
+            String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + img;
+            Log.e("Imagem", urlOfImage);
+            String method = urlOfImage;
+            ImageView im = (ImageView) findViewById(R.id.ImgProd);
+            String function = "imagem";
+            Imagem imgTask = new Imagem(this);
+            imgTask.execute(function,method);
+
+            Bitmap result = null;
+            try {
+                result  = imgTask.get();
+                im.setImageBitmap(result);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
 
 
         } catch (JSONException e) {

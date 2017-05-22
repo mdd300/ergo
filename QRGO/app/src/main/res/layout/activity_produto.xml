@@ -25,16 +25,16 @@
             app:srcCompat="@drawable/btbg" />
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/ImgProd"
             android:layout_width="400dp"
             android:layout_height="280dp"
-            android:background="@color/Cinza"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/imgroupa"
             android:layout_above="@+id/btnPedido"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="13dp" />
+            android:layout_marginBottom="13dp"
+            android:background="@color/Cinza"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/imgroupa" />
 
         <Button
             android:id="@+id/button4"
