@@ -1,5 +1,6 @@
 package com.uniquesys.qrgo;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -55,13 +56,18 @@ public class ProdutoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final ProgressDialog dialog =
+                new ProgressDialog(ProdutoActivity.this);
+        dialog.setMessage("Enviando dados... aguarde");
+        dialog.setIndeterminate(false);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+        dialog.show();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produto);
         Intent intent = getIntent();
         final ImageView iv = (ImageView) findViewById(R.id.ImgProd);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Scan");
         Bundle bundle = intent.getExtras();
 
         String resultado = bundle.getString("resultado");
@@ -69,15 +75,17 @@ public class ProdutoActivity extends AppCompatActivity {
             JSONArray JASresult = new JSONArray(resultado.toString());
             JSONObject obj = JASresult.getJSONObject(0);
             String nome = obj.getString("prod_text");
+            String preco = obj.getString("prod_preco");
+            String ref = obj.getString("prod_ref");
             String img = obj.getString("img_nome");
-            builder.setMessage(nome.toString() + img.toString());
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
             TextView txtProd = (TextView)findViewById(R.id.txtProd);
             txtProd.setText(nome);
+            TextView txtPreco = (TextView)findViewById(R.id.txtPreco);
+            txtPreco.setText(preco);
+            TextView txtRef = (TextView)findViewById(R.id.txtReferencia);
+            txtRef.setText(ref);
 
             String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + img;
-            Log.e("Imagem", urlOfImage);
             String method = urlOfImage;
             ImageView im = (ImageView) findViewById(R.id.ImgProd);
             String function = "imagem";
@@ -93,17 +101,11 @@ public class ProdutoActivity extends AppCompatActivity {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-
-
-
+            
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-
-
-
+        dialog.dismiss();
     }
 
 

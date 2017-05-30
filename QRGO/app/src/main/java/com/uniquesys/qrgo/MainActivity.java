@@ -1,5 +1,7 @@
 package com.uniquesys.qrgo;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     EditText user,senha;
     String login_name,login_pass;
     ZXingScannerView mScannerView;
+    ProgressDialog pd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,13 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
     }
     public void login(View v) throws ExecutionException, InterruptedException, JSONException {
+        final ProgressDialog dialog =
+                new ProgressDialog(MainActivity.this);
+        dialog.setMessage("Enviando dados... aguarde");
+        dialog.setIndeterminate(false);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+        dialog.show();
         user = (EditText)findViewById(R.id.txtUser);
         senha = (EditText) findViewById(R.id.txtSenha);
         login_name = user.getText().toString();
@@ -66,18 +77,22 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             setContentView(mScannerView);
             mScannerView.setResultHandler(this);
             mScannerView.startCamera();
-
+            dialog.dismiss();
 
         }
     }
 
     @Override
     public void handleResult(Result result) {
-
-
+        final ProgressDialog dialog =
+                new ProgressDialog(MainActivity.this);
+        dialog.setMessage("Enviando dados... aguarde");
+        dialog.setIndeterminate(false);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+        dialog.show();
         String[] separated = result.getText().split("readqrcodepedido/");
         String codigo = separated[1];
-        Log.e("Resultado",codigo);
         String method = "https://www.uniquesys.com.br/qrgo/pedidos/readqrcodepedido_app";
         String function = "produto";
         Model prodTask = new Model(this);
@@ -91,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             e.printStackTrace();
         }
 
-        Log.e("Resultado",resultado.toString());
+
 
         Intent intent = new Intent(MainActivity.this, ProdutoActivity.class);
 
@@ -99,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
         bundle.putString("resultado", resultado.toString());
         intent.putExtras(bundle);
-
+        dialog.dismiss();
         startActivity(intent);
     }
 }
