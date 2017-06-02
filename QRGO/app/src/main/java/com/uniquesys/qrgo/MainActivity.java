@@ -81,6 +81,13 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
         }
     }
+    public void grid(View v) throws ExecutionException, InterruptedException, JSONException {
+        Intent intent = new Intent(MainActivity.this, GridActivity.class);
+
+        startActivity(intent);
+
+        }
+
 
     @Override
     public void handleResult(Result result) {

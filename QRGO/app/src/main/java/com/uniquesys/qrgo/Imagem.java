@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -19,22 +20,10 @@ import java.net.URL;
  */
 
 public class Imagem extends AsyncTask<Object, Object, Bitmap> {
-    AlertDialog alertDialog;
-    Context ctx;
-    Imagem(Context ctx)
-    {
-        this.ctx =ctx;
-    }
-    ProgressDialog dialog;
 
     @Override
     protected void onPreExecute() {
-        alertDialog = new AlertDialog.Builder(ctx).create();
-        alertDialog.setTitle("Login Information....");
-        dialog = new ProgressDialog(ctx);
-        dialog.setTitle("Realizando o carregamento dos dados");
-        dialog.setMessage("Aguarde o fim da requisição...");
-        dialog.show();
+
     }
 
     @Override
@@ -42,8 +31,6 @@ public class Imagem extends AsyncTask<Object, Object, Bitmap> {
         Object function = params[0];
         Object method = params[1];
         Object login_url = method;
-        // String reg_url = "http://192.168.56.1/webapp/register.php";
-        // String login_url = "http://192.168.56.1/webapp/login.php";
 
 
         if(function == "imagem") {
@@ -55,8 +42,12 @@ public class Imagem extends AsyncTask<Object, Object, Bitmap> {
                 httpURLConnection.setDoInput(true);
 
                 InputStream inputStream = httpURLConnection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(inputStream);
+                /* Buffered is always good for a performance plus. */
+                BufferedInputStream bis = new BufferedInputStream(inputStream);
 
+                Bitmap myBitmap = BitmapFactory.decodeStream(bis);
+
+                bis.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 return myBitmap;
@@ -72,10 +63,9 @@ public class Imagem extends AsyncTask<Object, Object, Bitmap> {
         return null;
     }
 
-
-
     @Override
     protected void onProgressUpdate(Object... values) {
+
         super.onProgressUpdate(values);
     }
 
@@ -87,7 +77,7 @@ public class Imagem extends AsyncTask<Object, Object, Bitmap> {
         }
         else
         {
-            dialog.dismiss();
+
         }
 
     }

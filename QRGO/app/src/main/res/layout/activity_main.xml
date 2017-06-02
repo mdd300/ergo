@@ -127,6 +127,7 @@
         android:layout_marginRight="11dp"
         android:layout_marginTop="14dp"
         android:background="@color/Cinza"
+        android:onClick="grid"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/qrcodeicon"
         tools:background="@color/Cinza"

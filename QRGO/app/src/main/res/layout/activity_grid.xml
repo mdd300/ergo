@@ -7,9 +7,16 @@
     tools:context="com.uniquesys.qrgo.GridActivity">
 
     <GridView
+        android:id="@+id/gridProdutos"
         android:layout_width="377dp"
         android:layout_height="463dp"
-        tools:layout_editor_absoluteY="101dp"
         android:layout_marginRight="-1dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:columnWidth="90dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="101dp" />
 </android.support.constraint.ConstraintLayout>
