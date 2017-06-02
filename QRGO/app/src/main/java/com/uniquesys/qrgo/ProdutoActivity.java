@@ -89,7 +89,7 @@ public class ProdutoActivity extends AppCompatActivity {
             String method = urlOfImage;
             ImageView im = (ImageView) findViewById(R.id.ImgProd);
             String function = "imagem";
-            Imagem imgTask = new Imagem(this);
+            Imagem imgTask = new Imagem();
             imgTask.execute(function,method);
 
             Bitmap result = null;

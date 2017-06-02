@@ -1,23 +1,25 @@
 package com.uniquesys.qrgo;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class GridActivity extends AppCompatActivity {
 
+     private Bitmap bitmap;
+    private ImageView image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,13 +33,18 @@ public class GridActivity extends AppCompatActivity {
         GridView gridView = (GridView) findViewById(R.id.gridProdutos);
         Bitmap result = null;
         String img_test = null;
+        List<Bitmap> splittedBitmaps = new ArrayList<>();;
+
+
+
         try {
 
             resultado = prodTask.get();
             JSONArray JASresult = new JSONArray(resultado.toString());
-            for(int i = 0; i < JASresult.length(); i++){
+            for(int i = 0; i < 10; i++){
             JSONObject obj = JASresult.getJSONObject(i);
             String img = obj.getString("img_nome");
+
 
             try {
 
@@ -47,9 +54,13 @@ public class GridActivity extends AppCompatActivity {
                         String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + img;
                         method = urlOfImage;
                         function = "imagem";
-                        Imagem imgTask = new Imagem(this);
+                        Imagem imgTask = new Imagem();
                         imgTask.execute(function, method);
                         result = imgTask.get();
+
+                        splittedBitmaps.add(result);
+
+
                     }
                 }
 
@@ -67,7 +78,8 @@ public class GridActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        gridView.setAdapter(new SplittedImageAdapter(this,splittedBitmaps));
+        Log.e("Imagem", "Teste");
         setContentView(R.layout.activity_grid);
 
 

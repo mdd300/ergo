@@ -37,6 +37,8 @@ public class Model extends AsyncTask<String,Void,String> {
     }
 
 
+
+
     @Override
     protected void onPreExecute() {
         alertDialog = new AlertDialog.Builder(ctx).create();
