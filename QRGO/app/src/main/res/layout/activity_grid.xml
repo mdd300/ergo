@@ -8,15 +8,11 @@
 
     <GridView
         android:id="@+id/gridProdutos"
-        android:layout_width="377dp"
-        android:layout_height="463dp"
-        android:layout_marginRight="-1dp"
-        android:columnWidth="90dp"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:numColumns="auto_fit"
+        android:gravity="center"
+        android:columnWidth="100dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="101dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </android.support.constraint.ConstraintLayout>

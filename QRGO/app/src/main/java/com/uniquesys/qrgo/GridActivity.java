@@ -3,6 +3,7 @@ package com.uniquesys.qrgo;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -36,7 +37,6 @@ public class GridActivity extends AppCompatActivity {
         List<Bitmap> splittedBitmaps = new ArrayList<>();;
 
 
-
         try {
 
             resultado = prodTask.get();
@@ -60,7 +60,6 @@ public class GridActivity extends AppCompatActivity {
 
                         splittedBitmaps.add(result);
 
-
                     }
                 }
 
@@ -78,11 +77,10 @@ public class GridActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        gridView.setAdapter(new SplittedImageAdapter(this,splittedBitmaps));
-        Log.e("Imagem", "Teste");
+        SplittedImageAdapter adapter = new SplittedImageAdapter(GridActivity.this, splittedBitmaps);
+        gridView.setAdapter(adapter);
         setContentView(R.layout.activity_grid);
 
-
-
     }
+
 }
