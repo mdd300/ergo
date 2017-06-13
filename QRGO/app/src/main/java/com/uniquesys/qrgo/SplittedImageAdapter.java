@@ -14,17 +14,35 @@ import android.widget.ImageView;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SplittedImageAdapter extends ArrayAdapter< Bitmap > {
+import static android.R.layout.simple_list_item_1;
+
+public class SplittedImageAdapter extends BaseAdapter {
 
     Context mContext;
     List<Bitmap> data;
 
 
-    public SplittedImageAdapter(Context c, int simple_list_item_1, List<Bitmap> splittedBitmaps) {
-        super(c, splittedBitmaps.size());
+    public SplittedImageAdapter(Context c, List<Bitmap> splittedBitmaps) {
+        super();
         mContext = c;
         data=splittedBitmaps;
 
+    }
+
+
+    @Override
+    public int getCount() {
+        return data.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override

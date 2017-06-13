@@ -36,7 +36,9 @@ public class Model extends AsyncTask<String,Void,String> {
         this.ctx =ctx;
     }
 
+    public Model() {
 
+    }
 
 
     @Override
