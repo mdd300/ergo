@@ -17,10 +17,12 @@ public class SplittedImageAdapter extends BaseAdapter {
 
 
     public SplittedImageAdapter(Context c, List<Bitmap> splittedBitmaps) {
+
         mContext = c;
         data=splittedBitmaps;
 
     }
+
 
     @Override
     public int getCount() {
