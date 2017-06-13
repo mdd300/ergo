@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import java.util.List;
 
 public class SplittedImageAdapter extends BaseAdapter {
@@ -50,7 +52,7 @@ public class SplittedImageAdapter extends BaseAdapter {
         if (convertView == null) {
 
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(30, 30));
+            imageView.setLayoutParams(new GridView.LayoutParams(480, 480));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(1, 1, 1, 1);
 

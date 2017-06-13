@@ -6,5 +6,6 @@
     <color name="CorBotaoEnviar">#000000</color>
     <color name="Cinza">#fafafa</color>
     <color name="btnVerde">#70ba63</color>
+    <color name="VermelhorProd">#f70058</color>
 
 </resources>

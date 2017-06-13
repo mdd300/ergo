@@ -1,6 +1,8 @@
 package com.uniquesys.qrgo;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,45 +26,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class GridActivity extends Fragment {
+public class GridActivity extends AppCompatActivity implements  GridFragment.OnFragmentInteractionListener{
 
      private Bitmap bitmap;
     private ImageView image;
+    Model prodTask = new Model(this);
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        View rootView = inflater.inflate(R.layout.activity_grid, container,
-                false);
-
+        setContentView(R.layout.activity_grid);
 
         String method = "https://www.uniquesys.com.br/qrgo/pedidos/grid_listagem";
         String function = "listagem";
-        Model prodTask = new Model();
         prodTask.execute(function, method);
         String resultado = null;
         Bitmap result = null;
         String img_test = null;
         List<Bitmap> splittedBitmaps = new ArrayList<>();
-        ;
 
 
         try {
 
             resultado = prodTask.get();
             JSONArray JASresult = new JSONArray(resultado.toString());
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 12; i++) {
                 JSONObject obj = JASresult.getJSONObject(i);
                 String img = obj.getString("img_nome");
 
 
                 try {
 
-                    if (!img.equals(img_test)) {
+
                         Log.e("Imagem", img);
-                        if (!img.equals("null") && !img.equals("58c5ef25001c4.jpeg")) {
+                        if (!img.equals("null")) {
                             String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + img;
                             method = urlOfImage;
                             function = "imagem";
@@ -72,7 +72,7 @@ public class GridActivity extends Fragment {
                             splittedBitmaps.add(result);
 
                         }
-                    }
+
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -89,14 +89,18 @@ public class GridActivity extends Fragment {
             e.printStackTrace();
         }
 
-        View myView = inflater.inflate(R.layout.activity_grid, null);
-        GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
-        SplittedImageAdapter adapter = new SplittedImageAdapter(getActivity(), splittedBitmaps);
+        Fragment fragment = new GridFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
 
-        gridView.setAdapter(adapter);
 
-        return myView;
     }
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
+    }
 }

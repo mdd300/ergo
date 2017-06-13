@@ -1,18 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     tools:context="com.uniquesys.qrgo.GridActivity">
 
-    <GridView
-        android:id="@+id/gridProdutos"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:numColumns="auto_fit"
-        android:gravity="center"
-        android:columnWidth="100dp"
-        android:stretchMode="columnWidth"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-</android.support.constraint.ConstraintLayout>
+    <FrameLayout
+        android:id="@+id/fragment_frame"
+        android:layout_width="368dp"
+        android:layout_height="551dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="129dp"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_centerHorizontal="true">
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="406dp"
+        android:layout_height="53dp"
+        android:background="@color/Cinza"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/Cinza"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/iconnotification"
+            android:layout_marginRight="11dp"
+            android:layout_marginEnd="11dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imageButton4"
+            android:layout_toStartOf="@+id/imageButton4" />
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/Cinza"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/iconmessage"
+            tools:layout_editor_absoluteX="335dp"
+            tools:layout_editor_absoluteY="4dp"
+            android:layout_alignTop="@+id/imageButton5"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="11dp"
+            android:layout_marginEnd="11dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@color/Cinza"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/logo"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="399dp"
+        android:layout_height="43dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginTop="35dp"
+        android:background="@color/Cinza"
+        tools:layout_editor_absoluteX="-7dp"
+        tools:layout_editor_absoluteY="86dp"
+        android:id="@+id/relativeLayout2">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:scaleType="matrix"
+            app:srcCompat="@drawable/rectanglered" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="51dp"
+            android:layout_marginStart="51dp"
+            app:srcCompat="@drawable/vectorprod" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@color/Cinza"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/vectorgrade"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imageButton6"
+            android:layout_toStartOf="@+id/imageButton6"
+            android:layout_marginRight="14dp"
+            android:layout_marginEnd="14dp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13dp"
+            android:layout_marginStart="13dp"
+            android:layout_toEndOf="@+id/imageView5"
+            android:layout_toRightOf="@+id/imageView5"
+            android:text="Produtos"
+            android:textColor="@color/VermelhorProd"
+            android:textIsSelectable="false"
+            android:textSize="@dimen/activity_vertical_margin" />
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@color/Cinza"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/vectorlista"
+            android:layout_marginRight="13dp"
+            android:layout_marginEnd="13dp"
+            android:layout_alignTop="@+id/imageButton2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <ImageButton
+            android:id="@+id/imageButton7"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@color/Cinza"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/vectorpesquisa"
+            android:layout_alignTop="@+id/imageButton2"
+            android:layout_toLeftOf="@+id/imageButton2"
+            android:layout_toStartOf="@+id/imageButton2"
+            android:layout_marginRight="14dp"
+            android:layout_marginEnd="14dp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:text="Pedidos"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignLeft="@+id/fragment_frame"
+        android:layout_alignStart="@+id/fragment_frame" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView8"
+        android:layout_marginLeft="41dp"
+        android:layout_marginStart="41dp"
+        android:layout_toEndOf="@+id/textView8"
+        android:layout_toRightOf="@+id/textView8"
+        android:text="Clientes" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView14"
+        android:layout_marginLeft="46dp"
+        android:layout_marginStart="46dp"
+        android:layout_toEndOf="@+id/textView14"
+        android:layout_toRightOf="@+id/textView14"
+        android:text="Novos" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/fragment_frame"
+        android:layout_alignRight="@+id/fragment_frame"
+        android:layout_alignTop="@+id/textView15"
+        android:layout_marginEnd="19dp"
+        android:layout_marginRight="19dp"
+        android:text="Produtos" />
+
+</RelativeLayout>

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -20,6 +21,8 @@ import java.net.URL;
  */
 
 public class Imagem extends AsyncTask<Object, Object, Bitmap> {
+
+
 
     @Override
     protected void onPreExecute() {

@@ -37,7 +37,7 @@ public class Model extends AsyncTask<String,Void,String> {
     }
 
     public Model() {
-
+        Log.e("Imagem", "teste1");
     }
 
 
