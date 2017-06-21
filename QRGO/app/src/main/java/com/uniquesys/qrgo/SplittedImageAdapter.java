@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,37 +17,38 @@ public class SplittedImageAdapter extends BaseAdapter {
 
     Context mContext;
     List<Bitmap> data;
+    List<String> id;
+    int getId;
 
 
-    public SplittedImageAdapter(Context c, List<Bitmap> splittedBitmaps) {
+    public SplittedImageAdapter(Context c, List<Bitmap> splittedBitmaps, List<String> splittedid) {
 
         mContext = c;
         data=splittedBitmaps;
+        id = splittedid;
 
     }
 
 
     @Override
     public int getCount() {
-        Log.e("Imagem",String.valueOf(data.size()));
         return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        Log.e("Imagem", "Teste");
         return null;
     }
 
     @Override
     public long getItemId(int position) {
-        Log.e("Imagem", "Teste");
-        return 0;
+        getId = Integer.parseInt(id.get(position));
+        return getId;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup arg2) {
-        Log.e("Imagem", "Teste");
+
         ImageView imageView;
 
         if (convertView == null) {
@@ -60,6 +62,13 @@ public class SplittedImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
         imageView.setImageBitmap(data.get(position));
+        imageView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new GridActivity().itemClicked(mContext,id.get(position));
+            }
+        });
 
 
         return imageView;

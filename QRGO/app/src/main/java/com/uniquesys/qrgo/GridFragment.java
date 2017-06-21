@@ -1,6 +1,7 @@
 package com.uniquesys.qrgo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class GridFragment extends Fragment {
     private Bitmap bitmap;
     private ImageView image;
     ArrayList<Bitmap> splittedBitmaps;
+    ArrayList<String> splittedid;
 
     private String mParam1;
     private String mParam2;
@@ -65,6 +67,7 @@ public class GridFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
             splittedBitmaps = getArguments().getParcelableArrayList("lista");
+            splittedid = getArguments().getStringArrayList("id");
         }
     }
 
@@ -75,10 +78,10 @@ public class GridFragment extends Fragment {
             View rootView = inflater.inflate(R.layout.fragment_grid, container,
                     false);
 
-        Log.e("Imagem","teste1");
+
 
             GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
-            SplittedImageAdapter adapter = new SplittedImageAdapter(getActivity(), splittedBitmaps);
+            SplittedImageAdapter adapter = new SplittedImageAdapter(getActivity(), splittedBitmaps, splittedid);
 
 
             gridView.setAdapter(adapter);
@@ -123,4 +126,6 @@ public class GridFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
+
 }
