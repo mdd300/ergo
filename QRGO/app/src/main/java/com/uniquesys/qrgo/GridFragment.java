@@ -81,7 +81,7 @@ public class GridFragment extends Fragment {
 
 
             GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
-            SplittedImageAdapter adapter = new SplittedImageAdapter(getActivity(), splittedBitmaps, splittedid);
+            SplittedImageAdapter adapter = new SplittedImageAdapter(getActivity(),getActivity(), splittedBitmaps, splittedid);
 
 
             gridView.setAdapter(adapter);
@@ -116,6 +116,8 @@ public class GridFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
+        void OnRefresh();
     }
     public void onStart(){
         super.onStart();

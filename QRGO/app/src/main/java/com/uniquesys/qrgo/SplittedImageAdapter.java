@@ -1,6 +1,8 @@
 package com.uniquesys.qrgo;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class SplittedImageAdapter extends BaseAdapter {
 
@@ -19,13 +22,15 @@ public class SplittedImageAdapter extends BaseAdapter {
     List<Bitmap> data;
     List<String> id;
     int getId;
+    Activity act;
 
 
-    public SplittedImageAdapter(Context c, List<Bitmap> splittedBitmaps, List<String> splittedid) {
+    public SplittedImageAdapter(Context c, Activity activity, List<Bitmap> splittedBitmaps, List<String> splittedid) {
 
         mContext = c;
         data=splittedBitmaps;
         id = splittedid;
+        act = activity;
 
     }
 
@@ -54,7 +59,7 @@ public class SplittedImageAdapter extends BaseAdapter {
         if (convertView == null) {
 
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(480, 480));
+            imageView.setLayoutParams(new GridView.LayoutParams(180, 180));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(1, 1, 1, 1);
 
@@ -66,7 +71,24 @@ public class SplittedImageAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
-                new GridActivity().itemClicked(mContext,id.get(position));
+                String codigo = id.get(position);
+                String method = "https://www.uniquesys.com.br/qrgo/pedidos/readqrcodepedido_app";
+                String function = "produto";
+                Model prodTask = new Model(act);
+                prodTask.execute(function,method, codigo);
+                String resultado = null;
+                try {
+                    resultado = prodTask.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                Activity parentActivity = act;
+                Intent in = new Intent(parentActivity, ProdutoActivity.class);
+                in.putExtra("resultado", resultado);
+                ((myInterface)parentActivity).startMyIntent(in);
             }
         });
 

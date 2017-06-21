@@ -112,13 +112,13 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
+        Log.e("Image",codigo);
 
 
         Intent intent = new Intent(MainActivity.this, ProdutoActivity.class);
 
         Bundle bundle = new Bundle();
-
+        Log.e("Imagem", resultado);
         bundle.putString("resultado", resultado.toString());
         intent.putExtras(bundle);
         dialog.dismiss();

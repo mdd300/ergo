@@ -15,18 +15,18 @@
 
         <ImageView
             android:id="@+id/imageView8"
-            android:layout_width="1000dp"
+            android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView13"
             android:layout_marginTop="130dp"
             android:scaleType="fitStart"
-            app:srcCompat="@drawable/btbg"
-            android:layout_below="@+id/imageView13"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            app:srcCompat="@drawable/btbg" />
 
         <ImageView
             android:id="@+id/ImgProd"
-            android:layout_width="400dp"
+            android:layout_width="match_parent"
             android:layout_height="280dp"
             android:layout_above="@+id/btnPedido"
             android:layout_alignParentLeft="true"
@@ -73,23 +73,23 @@
             android:id="@+id/imageView10"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginBottom="31dp"
-            app:srcCompat="@drawable/qrcodeicon"
             android:layout_alignBottom="@+id/txtProd"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="31dp"
+            app:srcCompat="@drawable/qrcodeicon" />
 
         <Button
             android:id="@+id/btnPedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="14dp"
+            android:layout_toEndOf="@+id/imageView12"
+            android:layout_toRightOf="@+id/imageView12"
             android:backgroundTint="@color/btnVerde"
             android:elevation="21dp"
             android:text="Finalizar Pedido"
-            android:textColor="@android:color/background_light"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/imageView12"
-            android:layout_toEndOf="@+id/imageView12" />
+            android:textColor="@android:color/background_light" />
 
         <Button
             android:id="@+id/button2"
@@ -104,13 +104,13 @@
 
         <ImageView
             android:id="@+id/imageView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/imageView10"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:scaleType="fitStart"
-            app:srcCompat="@drawable/btbg"
-            android:layout_above="@+id/imageView10" />
+            app:srcCompat="@drawable/btbg" />
 
         <ImageView
             android:id="@+id/imageView12"
@@ -167,13 +167,13 @@
             android:id="@+id/txtPreco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="@color/viewfinder_mask"
             android:layout_below="@+id/txtProd"
-            android:layout_toRightOf="@+id/textView3"
-            android:layout_toEndOf="@+id/textView3"
             android:layout_marginLeft="12dp"
-            android:layout_marginStart="12dp" />
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/textView3"
+            android:layout_toRightOf="@+id/textView3"
+            android:text="TextView"
+            android:textColor="@color/viewfinder_mask" />
 
         <TextView
             android:id="@+id/textView5"

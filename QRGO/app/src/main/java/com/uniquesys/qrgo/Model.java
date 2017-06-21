@@ -129,6 +129,7 @@ if(function == "produto") {
     }
 }
     if(function == "listagem") {
+        String pagina = params[2];
 
         try {
             URL url = new URL(login_url);
@@ -137,6 +138,11 @@ if(function == "produto") {
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
             OutputStream outputStream = httpURLConnection.getOutputStream();
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+            String data = URLEncoder.encode("pagina", "UTF-8") + "=" + URLEncoder.encode(pagina, "UTF-8");
+            bufferedWriter.write(data);
+            bufferedWriter.flush();
+            bufferedWriter.close();
             outputStream.close();
 
             InputStream inputStream = httpURLConnection.getInputStream();

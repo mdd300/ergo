@@ -31,7 +31,11 @@
             android:name=".ProdutoActivity"
             android:label="@string/title_activity_produto"
             android:theme="@style/AppTheme" />
-        <activity android:name=".GridActivity"></activity>
+        <activity android:name=".GridActivity"
+            android:launchMode="singleInstance">
+
+
+        </activity>
     </application>
 
 </manifest>
