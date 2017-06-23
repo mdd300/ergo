@@ -153,4 +153,6 @@ public void RefreshGrid(List<String> splittedid, List<Bitmap> splittedBitmaps){
         this.getGridImage();
         swipeLayout.setRefreshing(false);
     }
+
+
 }

@@ -16,25 +16,14 @@
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/imageView13"
             android:layout_marginTop="130dp"
             android:scaleType="fitStart"
-            app:srcCompat="@drawable/btbg" />
-
-        <ImageView
-            android:id="@+id/ImgProd"
-            android:layout_width="match_parent"
-            android:layout_height="280dp"
-            android:layout_above="@+id/btnPedido"
+            app:srcCompat="@drawable/btbg"
+            android:layout_above="@+id/ImgProd"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="13dp"
-            android:background="@color/Cinza"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/imgroupa" />
+            android:layout_alignParentStart="true" />
 
         <Button
             android:id="@+id/button4"
@@ -71,12 +60,13 @@
 
         <ImageView
             android:id="@+id/imageView10"
-            android:layout_width="50dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_alignBottom="@+id/txtProd"
-            android:layout_centerHorizontal="true"
             android:layout_marginBottom="31dp"
-            app:srcCompat="@drawable/qrcodeicon" />
+            app:srcCompat="@drawable/qrcodeicon"
+            android:layout_above="@+id/txtProd"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:id="@+id/btnPedido"
@@ -193,6 +183,26 @@
             android:layout_alignRight="@+id/imageView15"
             android:layout_alignTop="@+id/textView5"
             android:text="TextView" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <ImageView
+                android:id="@+id/ImgProd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="69dp"
+                android:background="@color/Cinza"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/imgroupa" />
+        </RelativeLayout>
 
     </RelativeLayout>
 
