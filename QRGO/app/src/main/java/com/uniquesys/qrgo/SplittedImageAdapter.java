@@ -8,10 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -21,7 +19,6 @@ public class SplittedImageAdapter extends BaseAdapter {
     Context mContext;
     List<Bitmap> data;
     List<String> id;
-    int getId;
     Activity act;
 
 
@@ -37,6 +34,8 @@ public class SplittedImageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+
+        Log.e("Image", String.valueOf(data.size()));
         return data.size();
     }
 
@@ -47,8 +46,8 @@ public class SplittedImageAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        getId = Integer.parseInt(id.get(position));
-        return getId;
+
+        return position;
     }
 
     @Override

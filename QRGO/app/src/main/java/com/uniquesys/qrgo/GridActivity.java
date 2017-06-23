@@ -1,16 +1,14 @@
 package com.uniquesys.qrgo;
 
-import android.app.Activity;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import org.json.JSONArray;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class GridActivity extends AppCompatActivity implements  GridFragment.OnFragmentInteractionListener, myInterface, SwipeRefreshLayout.OnRefreshListener {
+public class GridActivity extends AppCompatActivity implements myInterface {
 
      private Bitmap bitmap;
     private ImageView image;
@@ -31,29 +29,17 @@ public class GridActivity extends AppCompatActivity implements  GridFragment.OnF
     String resultado = null;
     Bitmap result = null;
     String img_test = null;
-    SwipeRefreshLayout swipeLayout;
     int pagina = 1;
+    ProgressDialog pd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
-        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-
-        swipeLayout.setOnRefreshListener(this);
-
+        pd = ProgressDialog.show(GridActivity.this, "Carregando", "Aguarde...", true, false);
         this.getGridImage();
 
-
-    }
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
-    public void OnRefresh() {
 
     }
 
@@ -88,7 +74,8 @@ public class GridActivity extends AppCompatActivity implements  GridFragment.OnF
 
 
 public void getGridImage(){
-    Model prodTask = new Model(this);
+
+    Model prodTask = new Model();
     String method = "https://www.uniquesys.com.br/qrgo/pedidos/grid_listagem";
     String function = "listagem";
     prodTask.execute(function, method, String.valueOf(pagina));
@@ -132,26 +119,48 @@ public void getGridImage(){
     } catch (JSONException e) {
         e.printStackTrace();
     }
-Log.e("Imagem","teste");
+
     this.RefreshGrid(splittedid,splittedBitmaps);
 }
-public void RefreshGrid(List<String> splittedid, List<Bitmap> splittedBitmaps){
-    Fragment fragment = new GridFragment();
-    Bundle bundle = new Bundle();
-    bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
-    bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
-    fragment.setArguments(bundle);
-    getSupportFragmentManager().beginTransaction()
-            .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
+public void RefreshGrid(final List<String> splittedid, final List<Bitmap> splittedBitmaps){
+
+    new Thread()
+    {
+
+        public void run()
+        {
+
+            try
+            {
+                sleep(1500);
+                Fragment fragment = new GridFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
+                bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+
+            }
+            catch (Exception e)
+            {
+                Log.e("tag",e.getMessage());
+            }
+            pd.dismiss();
+        }
+    }.start();
 
 
 }
 
-    @Override
-    public void onRefresh() {
+    public void Pagination(View v) throws ExecutionException, InterruptedException {
+        pd = ProgressDialog.show(GridActivity.this, "Carregando", "Aguarde...", true, false);
         pagina++;
+        Log.e("Imagem", String.valueOf(pagina));
         this.getGridImage();
-        swipeLayout.setRefreshing(false);
+
+
     }
 
 
