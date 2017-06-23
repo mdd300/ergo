@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,6 +65,10 @@ public class ProdutoActivity extends AppCompatActivity {
         }
     }
 
+    public void grid(View v) throws ExecutionException, InterruptedException, JSONException {
+        Intent intent = new Intent(ProdutoActivity.this, GridActivity.class);
+        startActivity(intent);
 
+    }
 
 }

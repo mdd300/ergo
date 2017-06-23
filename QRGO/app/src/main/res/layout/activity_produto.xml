@@ -12,41 +12,67 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/background_light">
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/Cinza"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="4dp">
+
+            <ImageButton
+                android:id="@+id/imageButton5"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="11dp"
+                android:layout_marginRight="11dp"
+                android:layout_toLeftOf="@+id/imageButton4"
+                android:layout_toStartOf="@+id/imageButton4"
+                android:background="@color/Cinza"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/iconnotification" />
+
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/imageButton5"
+                android:layout_marginEnd="11dp"
+                android:layout_marginRight="11dp"
+                android:background="@color/Cinza"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/iconmessage"
+                tools:layout_editor_absoluteX="335dp"
+                tools:layout_editor_absoluteY="4dp" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@color/Cinza"
+                android:onClick="grid"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/logo" />
+
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView13"
             android:layout_marginTop="130dp"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/btbg"
-            android:layout_above="@+id/ImgProd"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:layout_alignBaseline="@+id/btnPedido"
-            android:layout_alignBottom="@+id/btnPedido"
-            android:layout_toLeftOf="@+id/button3"
-            android:text="Guardar"
-            android:textSize="10sp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:layout_alignBaseline="@+id/btnPedido"
-            android:layout_alignBottom="@+id/btnPedido"
-            android:layout_toLeftOf="@+id/button2"
-            android:layout_toStartOf="@+id/button2"
-            android:text="Limpar"
-            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/txtProd"
@@ -63,84 +89,11 @@
             android:id="@+id/imageView10"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="31dp"
             app:srcCompat="@drawable/qrcodeicon"
-            android:layout_above="@+id/txtProd"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:id="@+id/btnPedido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="14dp"
-            android:layout_toEndOf="@+id/imageView12"
-            android:layout_toRightOf="@+id/imageView12"
-            android:backgroundTint="@color/btnVerde"
-            android:elevation="21dp"
-            android:text="Finalizar Pedido"
-            android:textColor="@android:color/background_light" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:layout_alignBaseline="@+id/btnPedido"
-            android:layout_alignBottom="@+id/btnPedido"
-            android:layout_toLeftOf="@+id/btnPedido"
-            android:text="Ver"
-            android:textSize="10sp" />
-
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView10"
+            android:layout_below="@+id/relativeLayout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/btbg" />
-
-        <ImageView
-            android:id="@+id/imageView12"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/logo" />
-
-        <ImageView
-            android:id="@+id/imageView13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/imageView12"
-            android:layout_toStartOf="@+id/imageView12"
-            app:srcCompat="@drawable/shape" />
-
-        <ImageView
-            android:id="@+id/imageView14"
-            android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView13"
-            android:layout_marginEnd="18dp"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/imageView15"
-            android:layout_toStartOf="@+id/imageView15"
-            app:srcCompat="@drawable/iconmessage" />
-
-        <ImageView
-            android:id="@+id/imageView15"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_above="@+id/imageView13"
-            android:layout_alignEnd="@+id/btnPedido"
-            android:layout_alignRight="@+id/btnPedido"
-            android:layout_alignTop="@+id/imageView14"
-            android:layout_marginRight="10dp"
-            app:srcCompat="@drawable/iconnotification" />
+            android:layout_marginTop="11dp" />
 
         <TextView
             android:id="@+id/textView3"
@@ -170,27 +123,31 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView10"
-            android:layout_toEndOf="@+id/imageView12"
-            android:layout_toRightOf="@+id/imageView12"
-            android:text="Referencia:" />
+            android:text="Referencia:"
+            android:layout_marginRight="33dp"
+            android:layout_marginEnd="33dp"
+            android:layout_above="@+id/relativeLayout3"
+            android:layout_toLeftOf="@+id/txtReferencia"
+            android:layout_toStartOf="@+id/txtReferencia" />
 
         <TextView
             android:id="@+id/txtReferencia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/ImgProd"
-            android:layout_alignEnd="@+id/imageView15"
-            android:layout_alignRight="@+id/imageView15"
-            android:layout_alignTop="@+id/textView5"
-            android:text="TextView" />
+            android:text="TextView"
+            android:layout_above="@+id/relativeLayout3"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="21dp"
+            android:layout_marginEnd="21dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/textView3"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:id="@+id/relativeLayout3">
 
             <ImageView
                 android:id="@+id/ImgProd"
@@ -203,6 +160,51 @@
                 android:background="@color/Cinza"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/imgroupa" />
+
+            <Button
+                android:id="@+id/btnPedido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="13dp"
+                android:backgroundTint="@color/btnVerde"
+                android:elevation="21dp"
+                android:text="Finalizar Pedido"
+                android:textColor="@android:color/background_light" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:text="Ver"
+                android:textSize="10sp"
+                android:layout_alignBaseline="@+id/btnPedido"
+                android:layout_alignBottom="@+id/btnPedido"
+                android:layout_toLeftOf="@+id/btnPedido"
+                android:layout_toStartOf="@+id/btnPedido" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:text="Limpar"
+                android:textSize="10sp"
+                android:layout_alignTop="@+id/btnPedido"
+                android:layout_toLeftOf="@+id/button2"
+                android:layout_toStartOf="@+id/button2" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:text="Guardar"
+                android:textSize="10sp"
+                android:layout_alignBaseline="@+id/button2"
+                android:layout_alignBottom="@+id/button2"
+                android:layout_toLeftOf="@+id/button3"
+                android:layout_toStartOf="@+id/button3" />
         </RelativeLayout>
 
     </RelativeLayout>

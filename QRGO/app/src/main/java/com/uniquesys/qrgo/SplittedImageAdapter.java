@@ -19,15 +19,13 @@ public class SplittedImageAdapter extends BaseAdapter {
     Context mContext;
     List<Bitmap> data;
     List<String> id;
-    Activity act;
 
 
-    public SplittedImageAdapter(Context c, Activity activity, List<Bitmap> splittedBitmaps, List<String> splittedid) {
+    public SplittedImageAdapter(Context c, List<Bitmap> splittedBitmaps, List<String> splittedid) {
 
         mContext = c;
         data=splittedBitmaps;
         id = splittedid;
-        act = activity;
 
     }
 
@@ -71,9 +69,10 @@ public class SplittedImageAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 String codigo = id.get(position);
+                Log.e("Imagem", String.valueOf(position));
                 String method = "https://www.uniquesys.com.br/qrgo/pedidos/readqrcodepedido_app";
                 String function = "produto";
-                Model prodTask = new Model(act);
+                Model prodTask = new Model(mContext);
                 prodTask.execute(function,method, codigo);
                 String resultado = null;
                 try {
@@ -84,10 +83,10 @@ public class SplittedImageAdapter extends BaseAdapter {
                     e.printStackTrace();
                 }
 
-                Activity parentActivity = act;
-                Intent in = new Intent(parentActivity, ProdutoActivity.class);
+                Intent in = new Intent(mContext, ProdutoActivity.class);
+                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 in.putExtra("resultado", resultado);
-                ((myInterface)parentActivity).startMyIntent(in);
+                mContext.startActivity(in);
             }
         });
 
