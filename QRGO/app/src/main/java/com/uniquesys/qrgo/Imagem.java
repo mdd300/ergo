@@ -74,14 +74,6 @@ public class Imagem extends AsyncTask<Object, Object, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap result) {
-        if(result.equals("Registration Success..."))
-        {
-
-        }
-        else
-        {
-
-        }
 
     }
 

@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/background_light">
+
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="wrap_content"
@@ -68,11 +69,11 @@
             android:id="@+id/imageView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_marginTop="130dp"
             android:scaleType="fitStart"
-            app:srcCompat="@drawable/btbg"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            app:srcCompat="@drawable/btbg" />
 
         <TextView
             android:id="@+id/txtProd"
@@ -89,11 +90,11 @@
             android:id="@+id/imageView10"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/qrcodeicon"
-            android:layout_below="@+id/relativeLayout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="11dp" />
+            android:layout_below="@+id/relativeLayout"
+            android:layout_marginTop="11dp"
+            app:srcCompat="@drawable/qrcodeicon" />
 
         <TextView
             android:id="@+id/textView3"
@@ -123,89 +124,97 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Referencia:"
-            android:layout_marginRight="33dp"
-            android:layout_marginEnd="33dp"
             android:layout_above="@+id/relativeLayout3"
+            android:layout_marginEnd="33dp"
+            android:layout_marginRight="33dp"
             android:layout_toLeftOf="@+id/txtReferencia"
-            android:layout_toStartOf="@+id/txtReferencia" />
+            android:layout_toStartOf="@+id/txtReferencia"
+            android:text="Referencia:" />
 
         <TextView
             android:id="@+id/txtReferencia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_above="@+id/relativeLayout3"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="21dp"
             android:layout_marginRight="21dp"
-            android:layout_marginEnd="21dp" />
+            android:text="TextView" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/textView3"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/relativeLayout3">
+        <ViewFlipper
+            android:id="@+id/relativeLayout4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/txtReferencia"
+            android:layout_marginTop="14dp">
+
 
             <ImageView
-                android:id="@+id/ImgProd"
+                android:id="@+id/imageView13"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="69dp"
-                android:background="@color/Cinza"
-                android:scaleType="fitXY"
+                app:srcCompat="@drawable/shape" />
+
+        </ViewFlipper>
+
+        <ViewFlipper
+            android:id="@+id/relativeLayout3"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView3">
+
+            <ImageView
+                android:id="@+id/ImgProd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:srcCompat="@drawable/imgroupa" />
 
-            <Button
-                android:id="@+id/btnPedido"
+        </ViewFlipper>
+
+        <Button
+            android:id="@+id/btnTeste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageView10"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:onClick="next"
+            android:text="Ir" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView10"
+            android:layout_alignEnd="@+id/txtPreco"
+            android:layout_alignRight="@+id/txtPreco"
+            android:onClick="Previous"
+            android:text="Voltar" />
+
+        <ViewFlipper
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/relativeLayout4"
+            android:layout_toLeftOf="@+id/relativeLayout4"
+            android:layout_alignBottom="@+id/relativeLayout4"
+            android:layout_alignLeft="@+id/textView5"
+            android:layout_alignStart="@+id/textView5">
+
+            <TextView
+                android:id="@+id/textColor"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="13dp"
-                android:backgroundTint="@color/btnVerde"
-                android:elevation="21dp"
-                android:text="Finalizar Pedido"
-                android:textColor="@android:color/background_light" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:text="Ver"
-                android:textSize="10sp"
-                android:layout_alignBaseline="@+id/btnPedido"
-                android:layout_alignBottom="@+id/btnPedido"
-                android:layout_toLeftOf="@+id/btnPedido"
-                android:layout_toStartOf="@+id/btnPedido" />
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:text="Limpar"
-                android:textSize="10sp"
-                android:layout_alignTop="@+id/btnPedido"
-                android:layout_toLeftOf="@+id/button2"
-                android:layout_toStartOf="@+id/button2" />
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:text="Guardar"
-                android:textSize="10sp"
-                android:layout_alignBaseline="@+id/button2"
-                android:layout_alignBottom="@+id/button2"
-                android:layout_toLeftOf="@+id/button3"
-                android:layout_toStartOf="@+id/button3" />
-        </RelativeLayout>
+                android:layout_height="wrap_content" />
+        </ViewFlipper>
 
     </RelativeLayout>
 

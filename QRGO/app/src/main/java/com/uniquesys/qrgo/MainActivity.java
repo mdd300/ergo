@@ -86,13 +86,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
     @Override
     public void handleResult(Result result) {
-        final ProgressDialog dialog =
-                new ProgressDialog(MainActivity.this);
-        dialog.setMessage("Enviando dados... aguarde");
-        dialog.setIndeterminate(false);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.setCancelable(true);
-        dialog.show();
         String[] separated = result.getText().split("readqrcodepedido/");
         String codigo = separated[1];
         String method = "https://www.uniquesys.com.br/qrgo/pedidos/readqrcodepedido_app";
@@ -107,16 +100,13 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        Log.e("Image",codigo);
 
 
         Intent intent = new Intent(MainActivity.this, ProdutoActivity.class);
 
         Bundle bundle = new Bundle();
-        Log.e("Imagem", resultado);
         bundle.putString("resultado", resultado.toString());
         intent.putExtras(bundle);
-        dialog.dismiss();
         startActivity(intent);
     }
 }

@@ -85,6 +85,7 @@ public class SplittedImageAdapter extends BaseAdapter {
 
                 Intent in = new Intent(mContext, ProdutoActivity.class);
                 in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                in.putExtra("id", codigo);
                 in.putExtra("resultado", resultado);
                 mContext.startActivity(in);
             }
