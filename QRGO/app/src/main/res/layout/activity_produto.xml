@@ -86,61 +86,90 @@
             android:textColor="@color/CorBotaoEnviar"
             android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/relativeLayout"
-            android:layout_marginTop="11dp"
-            app:srcCompat="@drawable/qrcodeicon" />
-
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/txtProd"
             android:text="Preço:"
             android:textColor="@color/viewfinder_mask"
             android:textColorHighlight="@color/Cinza"
-            android:textColorHint="@android:color/darker_gray" />
+            android:textColorHint="@android:color/darker_gray"
+            android:layout_below="@+id/textView5"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/txtPreco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtProd"
-            android:layout_marginLeft="12dp"
-            android:layout_marginStart="12dp"
+            android:layout_below="@+id/textView5"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_toEndOf="@+id/textView3"
             android:layout_toRightOf="@+id/textView3"
             android:text="TextView"
-            android:textColor="@color/viewfinder_mask" />
+            android:textColor="@color/CorBotaoEnviar" />
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/relativeLayout3"
-            android:layout_marginEnd="33dp"
-            android:layout_marginRight="33dp"
-            android:layout_toLeftOf="@+id/txtReferencia"
-            android:layout_toStartOf="@+id/txtReferencia"
-            android:text="Referencia:" />
+            android:text="Referencia:"
+            android:layout_below="@+id/txtProd"
+            android:layout_alignRight="@+id/txtProd"
+            android:layout_alignEnd="@+id/txtProd" />
 
         <TextView
             android:id="@+id/txtReferencia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/relativeLayout3"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="21dp"
-            android:layout_marginRight="21dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:layout_above="@+id/txtPreco"
+            android:layout_toRightOf="@+id/textView5"
+            android:layout_toEndOf="@+id/textView5" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:id="@+id/TextViewTeste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Pedidos" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Clientes" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Novos" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Produtos" />
+        </LinearLayout>
 
         <ViewFlipper
             android:id="@+id/relativeLayout4"
@@ -165,50 +194,27 @@
 
         <ViewFlipper
             android:id="@+id/relativeLayout3"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_alignLeft="@+id/relativeLayout6"
+            android:layout_alignStart="@+id/relativeLayout6"
             android:layout_below="@+id/textView3">
 
             <ImageView
                 android:id="@+id/ImgProd"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="365dp"
                 app:srcCompat="@drawable/imgroupa" />
 
         </ViewFlipper>
 
-        <Button
-            android:id="@+id/btnTeste"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/imageView10"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:onClick="next"
-            android:text="Ir" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView10"
-            android:layout_alignEnd="@+id/txtPreco"
-            android:layout_alignRight="@+id/txtPreco"
-            android:onClick="Previous"
-            android:text="Voltar" />
-
         <ViewFlipper
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignTop="@+id/relativeLayout4"
+            android:id="@+id/relativeLayout5"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/textView5"
             android:layout_toLeftOf="@+id/relativeLayout4"
-            android:layout_alignBottom="@+id/relativeLayout4"
-            android:layout_alignLeft="@+id/textView5"
-            android:layout_alignStart="@+id/textView5">
+            android:layout_toStartOf="@+id/relativeLayout4">
 
             <TextView
                 android:id="@+id/textColor"
@@ -216,6 +222,150 @@
                 android:layout_height="wrap_content" />
         </ViewFlipper>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignLeft="@+id/textView5"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/textView5"
+            android:layout_marginBottom="47dp"
+            android:orientation="vertical"></LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:layout_above="@+id/txtProd"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/Cinza"
+            tools:layout_editor_absoluteX="-7dp"
+            tools:layout_editor_absoluteY="86dp">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="30dp"
+                android:layout_height="80dp"
+                android:layout_alignParentTop="true"
+                android:scaleType="matrix"
+                app:srcCompat="@drawable/rectanglered" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="51dp"
+                android:layout_marginStart="51dp"
+                app:srcCompat="@drawable/vectorprod" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_toLeftOf="@+id/imageButton6"
+                android:layout_toStartOf="@+id/imageButton6"
+                android:background="@color/Cinza"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/vectorgrade" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
+                android:layout_toEndOf="@+id/imageView5"
+                android:layout_toRightOf="@+id/imageView5"
+                android:text="Produtos"
+                android:textColor="@color/VermelhorProd"
+                android:textIsSelectable="false"
+                android:textSize="@dimen/activity_vertical_margin" />
+
+            <ImageButton
+                android:id="@+id/imageButton6"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/imageButton2"
+                android:layout_marginEnd="13dp"
+                android:layout_marginRight="13dp"
+                android:background="@color/Cinza"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/vectorlista" />
+
+            <ImageButton
+                android:id="@+id/imageButton7"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignTop="@+id/imageButton2"
+                android:layout_marginEnd="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_toLeftOf="@+id/imageButton2"
+                android:layout_toStartOf="@+id/imageButton2"
+                android:background="@color/Cinza"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/vectorpesquisa" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/imageView10"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
+                app:srcCompat="@drawable/lixovetor" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/imageView10"
+                android:layout_marginEnd="22dp"
+                android:layout_marginRight="22dp"
+                app:srcCompat="@drawable/compravetor" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/line" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/qrcodeicon" />
+        </RelativeLayout>
+
     </RelativeLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
