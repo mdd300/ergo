@@ -8,10 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -27,7 +30,20 @@ public class ProdutoActivity extends AppCompatActivity {
     String id;
     Bitmap image;
     Context ctx;
-
+    String method;
+    String function;
+    JSONObject JASresultEst;
+    String resul = null;
+    String PPID;
+    String PID;
+    String MID;
+    String GID;
+    String GGID;
+    EditText PPE = (EditText)findViewById(R.id.edit0);
+    EditText PE = (EditText)findViewById(R.id.edit1);
+    EditText ME = (EditText)findViewById(R.id.edit2);
+    EditText GE = (EditText)findViewById(R.id.edit3);
+    EditText GGE = (EditText)findViewById(R.id.edit4);
 
     final GestureDetector gestureDetector = new GestureDetector(ctx, new GestureListener());
 
@@ -132,8 +148,8 @@ public class ProdutoActivity extends AppCompatActivity {
         }
 
         String codigo = id;
-        String method = "https://www.uniquesys.com.br/qrgo/produtos/prod_app";
-        String function = "produto";
+        method = "https://www.uniquesys.com.br/qrgo/produtos/prod_app";
+        function = "produto";
         Model prodTask = new Model(this);
         prodTask.execute(function,method, codigo);
         String resul = null;
@@ -142,7 +158,6 @@ public class ProdutoActivity extends AppCompatActivity {
 
             resul = prodTask.get();
             JSONArray JASresultProd = new JSONArray(resul.toString());
-            Log.e("Imagem", String.valueOf(JASresultProd));
             ViewFlipper simpleViewFlipper=(ViewFlipper)findViewById(R.id. relativeLayout3);
             simpleViewFlipper.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -214,8 +229,187 @@ public class ProdutoActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        this.estoque(id);
 
+        PPE.addTextChangedListener(new TextWatcher() {
 
+            @Override
+            public void afterTextChanged(Editable s) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                String PP = PPE.getText().toString();
+
+                method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+                function = "carrinho";
+                Model estTask = new Model();
+                estTask.execute(function,method, PPID,PP,"item");
+
+                try {
+                    String res = estTask.get();
+                    JASresultEst = new JSONObject(res.toString());
+                    Log.e("Prod", String.valueOf(JASresultEst));
+
+            }catch (JSONException e) {
+                    Log.e("tag",e.getMessage());
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        PE.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                String P = PE.getText().toString();
+
+                method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+                function = "carrinho";
+                Model estTask = new Model();
+                estTask.execute(function,method, PID,P,"item");
+
+                try {
+                    String res = estTask.get();
+                    JASresultEst = new JSONObject(res.toString());
+                    Log.e("Prod", String.valueOf(JASresultEst));
+
+                }catch (JSONException e) {
+                    Log.e("tag",e.getMessage());
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        ME.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                String M = ME.getText().toString();
+
+                method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+                function = "carrinho";
+                Model estTask = new Model();
+                estTask.execute(function,method, MID,M,"item");
+
+                try {
+                    String res = estTask.get();
+                    JASresultEst = new JSONObject(res.toString());
+                    Log.e("Prod", String.valueOf(JASresultEst));
+
+                }catch (JSONException e) {
+                    Log.e("tag",e.getMessage());
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        GE.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                String G = GE.getText().toString();
+                method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+                function = "carrinho";
+                Model estTask = new Model();
+                estTask.execute(function,method, GID,G,"item");
+
+                try {
+                    String res = estTask.get();
+                    JASresultEst = new JSONObject(res.toString());
+                    Log.e("Prod", String.valueOf(JASresultEst));
+
+                }catch (JSONException e) {
+                    Log.e("tag",e.getMessage());
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        GGE.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+
+                String GG = GGE.getText().toString();
+
+                method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+                function = "carrinho";
+                Model estTask = new Model();
+                estTask.execute(function,method, GGID,GG,"item");
+
+                try {
+                    String res = estTask.get();
+                    JASresultEst = new JSONObject(res.toString());
+                    Log.e("Prod", String.valueOf(JASresultEst));
+
+                }catch (JSONException e) {
+                    Log.e("tag",e.getMessage());
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void grid(View v) throws ExecutionException, InterruptedException, JSONException {
@@ -223,6 +417,70 @@ public class ProdutoActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+    public void estoque(String idEstoque) {
+
+        method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+        function = "produto";
+        Model estTask = new Model();
+        estTask.execute(function,method, idEstoque);
+
+        try {
+            resul = estTask.get();
+            JASresultEst = new JSONObject(resul.toString());
+            JSONObject JASresultTam = JASresultEst.getJSONObject("tamanho");
+            JSONObject JASresultId = JASresultEst.getJSONObject("id");
+
+            String PPS = JASresultTam.getString("PP");
+            PPS.replace("[","");
+            PPS.replace("]","");
+            TextView PP = (TextView)findViewById(R.id.Text0);
+            PPID = JASresultId.getString("PP");
+            PP.setText(PPS);
+
+            String PS = JASresultTam.getString("P");
+            PS.replace("[","");
+            PS.replace("]","");
+            TextView P = (TextView)findViewById(R.id.Text1);
+            PID = JASresultId.getString("P");
+            P.setText(PS);
+
+            String MS = JASresultTam.getString("M");
+            MS.replace("[","");
+            MS.replace("]","");
+            TextView M = (TextView)findViewById(R.id.Text2);
+            MID = JASresultId.getString("M");
+            M.setText(MS);
+
+            String GS = JASresultTam.getString("G");
+            GS.replace("[","");
+            GS.replace("]","");
+            TextView G = (TextView)findViewById(R.id.Text3);
+            GID = JASresultId.getString("G");
+            G.setText(GS);
+
+            String GGS = JASresultTam.getString("GG");
+            GGS.replace("[","");
+            GGS.replace("]","");
+            TextView GG = (TextView)findViewById(R.id.Text4);
+            GGID = JASresultId.getString("GG");
+            GG.setText(GGS);
+
+        } catch (JSONException e) {
+            Log.e("tag",e.getMessage());
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            Log.e("tag",e.getMessage());
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            Log.e("tag",e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void carrinho(){
+
+    }
+
 
 
 }

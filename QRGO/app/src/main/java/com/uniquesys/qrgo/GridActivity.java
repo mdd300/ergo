@@ -60,7 +60,6 @@ public void getGridImage(){
 
 
                 resultado = prodTask.get();
-                Log.e("Imagem",resultado.toString());
                 JASresult = new JSONArray(resultado.toString());
             try
             {
