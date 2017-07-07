@@ -32,18 +32,20 @@ public class ProdutoActivity extends AppCompatActivity {
     Context ctx;
     String method;
     String function;
-    JSONObject JASresultEst;
+    JSONArray JASresultEst;
     String resul = null;
-    String PPID;
-    String PID;
-    String MID;
-    String GID;
-    String GGID;
-    EditText PPE = (EditText)findViewById(R.id.edit0);
-    EditText PE = (EditText)findViewById(R.id.edit1);
-    EditText ME = (EditText)findViewById(R.id.edit2);
-    EditText GE = (EditText)findViewById(R.id.edit3);
-    EditText GGE = (EditText)findViewById(R.id.edit4);
+    JSONArray PPID;
+    JSONArray PID;
+    JSONArray MID;
+    JSONArray GID;
+    JSONArray GGID;
+
+    String PPIDS;
+    String PIDS;
+    String MIDS;
+    String GIDS;
+    String GGIDS;
+
 
     final GestureDetector gestureDetector = new GestureDetector(ctx, new GestureListener());
 
@@ -231,6 +233,12 @@ public class ProdutoActivity extends AppCompatActivity {
         }
         this.estoque(id);
 
+        final EditText PPE = (EditText)findViewById(R.id.edit0);
+        final EditText PE = (EditText)findViewById(R.id.edit1);
+        final EditText ME = (EditText)findViewById(R.id.edit2);
+        final EditText GE = (EditText)findViewById(R.id.edit3);
+        final EditText GGE = (EditText)findViewById(R.id.edit4);
+
         PPE.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -244,14 +252,14 @@ public class ProdutoActivity extends AppCompatActivity {
                                       int before, int count) {
                 String PP = PPE.getText().toString();
 
-                method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+                method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho";
                 function = "carrinho";
                 Model estTask = new Model();
-                estTask.execute(function,method, PPID,PP,"item");
+                estTask.execute(function,method,PPIDS,PP,"item");
 
                 try {
                     String res = estTask.get();
-                    JASresultEst = new JSONObject(res.toString());
+                    JASresultEst = new JSONArray(res.toString());
                     Log.e("Prod", String.valueOf(JASresultEst));
 
             }catch (JSONException e) {
@@ -280,14 +288,14 @@ public class ProdutoActivity extends AppCompatActivity {
                                       int before, int count) {
                 String P = PE.getText().toString();
 
-                method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+                method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho";
                 function = "carrinho";
                 Model estTask = new Model();
-                estTask.execute(function,method, PID,P,"item");
+                estTask.execute(function,method, PIDS,P,"item");
 
                 try {
                     String res = estTask.get();
-                    JASresultEst = new JSONObject(res.toString());
+                    JASresultEst = new JSONArray(res.toString());
                     Log.e("Prod", String.valueOf(JASresultEst));
 
                 }catch (JSONException e) {
@@ -316,20 +324,16 @@ public class ProdutoActivity extends AppCompatActivity {
                                       int before, int count) {
                 String M = ME.getText().toString();
 
-                method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+                method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho";
                 function = "carrinho";
                 Model estTask = new Model();
-                estTask.execute(function,method, MID,M,"item");
-
+                estTask.execute(function,method,MIDS,M,"item");
+                Log.e("Prod", String.valueOf(MIDS));
                 try {
                     String res = estTask.get();
-                    JASresultEst = new JSONObject(res.toString());
-                    Log.e("Prod", String.valueOf(JASresultEst));
+                    Log.e("Prod", String.valueOf(res));
 
-                }catch (JSONException e) {
-                    Log.e("tag",e.getMessage());
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                }catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
@@ -352,14 +356,14 @@ public class ProdutoActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 String G = GE.getText().toString();
-                method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+                method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho";
                 function = "carrinho";
                 Model estTask = new Model();
-                estTask.execute(function,method, GID,G,"item");
+                estTask.execute(function,method, GIDS,G,"item");
 
                 try {
                     String res = estTask.get();
-                    JASresultEst = new JSONObject(res.toString());
+                    JASresultEst = new JSONArray(res.toString());
                     Log.e("Prod", String.valueOf(JASresultEst));
 
                 }catch (JSONException e) {
@@ -390,14 +394,14 @@ public class ProdutoActivity extends AppCompatActivity {
 
                 String GG = GGE.getText().toString();
 
-                method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
+                method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho";
                 function = "carrinho";
                 Model estTask = new Model();
-                estTask.execute(function,method, GGID,GG,"item");
+                estTask.execute(function,method, GGIDS,GG,"item");
 
                 try {
                     String res = estTask.get();
-                    JASresultEst = new JSONObject(res.toString());
+                    JASresultEst = new JSONArray(res.toString());
                     Log.e("Prod", String.valueOf(JASresultEst));
 
                 }catch (JSONException e) {
@@ -426,44 +430,39 @@ public class ProdutoActivity extends AppCompatActivity {
 
         try {
             resul = estTask.get();
-            JASresultEst = new JSONObject(resul.toString());
-            JSONObject JASresultTam = JASresultEst.getJSONObject("tamanho");
-            JSONObject JASresultId = JASresultEst.getJSONObject("id");
+            JSONObject JASresultEs = new JSONObject(resul.toString());
+            JSONObject JASresultTam = JASresultEs.getJSONObject("tamanho");
+            JSONObject JASresultId = JASresultEs.getJSONObject("id");
 
-            String PPS = JASresultTam.getString("PP");
-            PPS.replace("[","");
-            PPS.replace("]","");
+            JSONArray PPS = JASresultTam.getJSONArray("PP");
             TextView PP = (TextView)findViewById(R.id.Text0);
-            PPID = JASresultId.getString("PP");
-            PP.setText(PPS);
+            PPID = JASresultId.getJSONArray("PP");
+            PPIDS = PPID.getString(0);
+            PP.setText(String.valueOf(PPS));
 
-            String PS = JASresultTam.getString("P");
-            PS.replace("[","");
-            PS.replace("]","");
+            JSONArray PS = JASresultTam.getJSONArray("P");
             TextView P = (TextView)findViewById(R.id.Text1);
-            PID = JASresultId.getString("P");
-            P.setText(PS);
+            PID = JASresultId.getJSONArray("P");
+            PIDS = PID.getString(0);
+            P.setText(String.valueOf(PS));
 
-            String MS = JASresultTam.getString("M");
-            MS.replace("[","");
-            MS.replace("]","");
+            JSONArray MS = JASresultTam.getJSONArray("M");
             TextView M = (TextView)findViewById(R.id.Text2);
-            MID = JASresultId.getString("M");
-            M.setText(MS);
+            MID = JASresultId.getJSONArray("M");
+            MIDS = MID.getString(0);
+            M.setText(String.valueOf(MS));
 
-            String GS = JASresultTam.getString("G");
-            GS.replace("[","");
-            GS.replace("]","");
+            JSONArray GS = JASresultTam.getJSONArray("G");
             TextView G = (TextView)findViewById(R.id.Text3);
-            GID = JASresultId.getString("G");
-            G.setText(GS);
+            GID = JASresultId.getJSONArray("G");
+            GIDS = GID.getString(0);
+            G.setText(String.valueOf(GS));
 
-            String GGS = JASresultTam.getString("GG");
-            GGS.replace("[","");
-            GGS.replace("]","");
+            JSONArray GGS = JASresultTam.getJSONArray("GG");
             TextView GG = (TextView)findViewById(R.id.Text4);
-            GGID = JASresultId.getString("GG");
-            GG.setText(GGS);
+            GGID = JASresultId.getJSONArray("GG");
+            GGIDS = GGID.getString(0);
+            GG.setText(String.valueOf(GGS));
 
         } catch (JSONException e) {
             Log.e("tag",e.getMessage());
@@ -476,11 +475,5 @@ public class ProdutoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    public void carrinho(){
-
-    }
-
-
 
 }
