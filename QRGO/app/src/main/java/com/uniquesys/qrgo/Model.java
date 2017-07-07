@@ -168,6 +168,8 @@ if(function == "produto") {
             String codigo = params[2];
             String qtde = params[3];
             String tipo = params[4];
+            String user_id = params[5];
+            String hash = params[6];
 
             try {
                 URL url = new URL(login_url);
@@ -179,7 +181,9 @@ if(function == "produto") {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String data = URLEncoder.encode("prod_id", "UTF-8") + "=" + URLEncoder.encode(codigo, "UTF-8") + "&"
                         + URLEncoder.encode("qtde", "UTF-8") + "=" + URLEncoder.encode(qtde, "UTF-8") + "&"
-                        + URLEncoder.encode("tipo", "UTF-8") + "=" + URLEncoder.encode(tipo, "UTF-8");
+                        + URLEncoder.encode("tipo", "UTF-8") + "=" + URLEncoder.encode(tipo, "UTF-8") + "&"
+                        + URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(user_id, "UTF-8") + "&"
+                        + URLEncoder.encode("hash", "UTF-8") + "=" + URLEncoder.encode(hash, "UTF-8");
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -229,5 +233,3 @@ if(function == "produto") {
 
 
 }
-
-

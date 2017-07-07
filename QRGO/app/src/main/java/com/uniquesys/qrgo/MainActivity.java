@@ -3,6 +3,7 @@ package com.uniquesys.qrgo;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +18,7 @@ import android.widget.ViewFlipper;
 
 import com.google.zxing.Result;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +35,9 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     ProgressDialog pd;
     Context ctx;
     final GestureDetector gestureDetector = new GestureDetector(ctx, new GestureListener());
-
+    private static final String PREF_NAME = "USER_LOG";
+    String user_id = null;
+    String hash = null;
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
@@ -80,22 +84,34 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         } else {
 
         }
+
+        SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
+        user_id = sharedPreferences.getString("user_id", "");
+        hash = sharedPreferences.getString("hash", "");
+
+
         setContentView(R.layout.activity_main);
 
+        if(user_id != null && hash != null){
+            mScannerView = new ZXingScannerView(this);
+            setContentView(mScannerView);
+            mScannerView.setResultHandler(this);
+            mScannerView.startCamera();
+            mScannerView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return gestureDetector.onTouchEvent(event);
+                }
+            });
+        }
     }
     public void login(View v) throws ExecutionException, InterruptedException, JSONException {
-        final ProgressDialog dialog =
-                new ProgressDialog(MainActivity.this);
-        dialog.setMessage("Enviando dados... aguarde");
-        dialog.setIndeterminate(false);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.setCancelable(true);
-        dialog.show();
+
         user = (EditText)findViewById(R.id.txtUser);
         senha = (EditText) findViewById(R.id.txtSenha);
         login_name = user.getText().toString();
         login_pass = senha.getText().toString();
-        String method = "https://www.uniquesys.com.br/qrgo/login/efetuar_login";
+        String method = "https://www.uniquesys.com.br/qrgo/login/efetuar_login_app";
         String function = "login";
         Model loginTask = new Model(this);
         loginTask.execute(function,method, login_name, login_pass);
@@ -103,6 +119,15 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         JSONObject obj = new JSONObject (result.toString());
         String JAStuff = obj.getString("sucesso");
         if(JAStuff == "true"){
+
+            String user_id = obj.getString("user_id");
+            String hash = obj.getString("user_hash");
+
+            SharedPreferences.Editor userPref = getSharedPreferences(PREF_NAME,MODE_PRIVATE).edit();
+            userPref.putString("user_id",user_id);
+            userPref.putString("hash",hash);
+            userPref.apply();
+
 // Tudo OK, podemos prosseguir.
             mScannerView = new ZXingScannerView(this);
             setContentView(mScannerView);
@@ -114,16 +139,11 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                     return gestureDetector.onTouchEvent(event);
                 }
             });
-            dialog.dismiss();
 
         }
     }
 
 
-    public void grid(View v) throws ExecutionException, InterruptedException, JSONException {
-
-
-        }
 
 
     @Override
