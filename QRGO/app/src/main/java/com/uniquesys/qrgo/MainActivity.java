@@ -92,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
         setContentView(R.layout.activity_main);
 
-        if(user_id != null && hash != null){
+        if(user_id != "" && hash != ""){
+            Log.e("hash",user_id+hash);
             mScannerView = new ZXingScannerView(this);
             setContentView(mScannerView);
             mScannerView.setResultHandler(this);
