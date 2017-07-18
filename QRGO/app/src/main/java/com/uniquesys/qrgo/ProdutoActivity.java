@@ -245,7 +245,7 @@ public class ProdutoActivity extends AppCompatActivity {
         final EditText GE = (EditText)findViewById(R.id.edit3);
         final EditText GGE = (EditText)findViewById(R.id.edit4);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
         user_id = sharedPreferences.getString("user_id", "");
         hash = sharedPreferences.getString("hash", "");
 
@@ -280,7 +280,9 @@ public class ProdutoActivity extends AppCompatActivity {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    sharedPreferences.edit().clear().commit();
+                    Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -313,8 +315,9 @@ public class ProdutoActivity extends AppCompatActivity {
                     PD.setText(disponivel);
 
                 }catch (JSONException e) {
-                    Log.e("tag",e.getMessage());
-                    e.printStackTrace();
+                    sharedPreferences.edit().clear().commit();
+                    Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
+                    startActivity(intent);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -354,7 +357,9 @@ public class ProdutoActivity extends AppCompatActivity {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    sharedPreferences.edit().clear().commit();
+                    Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
 
             }
@@ -389,12 +394,14 @@ public class ProdutoActivity extends AppCompatActivity {
                     GD.setText(disponivel);
 
                 }catch (JSONException e) {
-                    Log.e("tag",e.getMessage());
+                    sharedPreferences.edit().clear().commit();
+                    Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
+                    startActivity(intent);
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
-                    e.printStackTrace();
+
                 }
 
             }
@@ -429,8 +436,9 @@ public class ProdutoActivity extends AppCompatActivity {
                     GGD.setText(disponivel);
 
                 }catch (JSONException e) {
-                    Log.e("tag",e.getMessage());
-                    e.printStackTrace();
+                    sharedPreferences.edit().clear().commit();
+                    Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
+                    startActivity(intent);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -507,5 +515,15 @@ public class ProdutoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void carrinho(View v) throws ExecutionException, InterruptedException {
+        Intent intent = new Intent(ProdutoActivity.this, CheckoutActivity.class);
+        startActivity(intent);
 
+    }
+
+    public void produtos(View v) throws ExecutionException, InterruptedException {
+        Intent intent = new Intent(ProdutoActivity.this, GridActivity.class);
+        startActivity(intent);
+
+    }
 }

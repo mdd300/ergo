@@ -2,6 +2,7 @@ package com.uniquesys.qrgo;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,7 @@ public class GridActivity extends AppCompatActivity {
     ProgressDialog pd;
     String method2;
     String function2;
+    private static final String PREF_NAME = "USER_LOG";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -132,6 +134,13 @@ public void getGridImage(){
 
 
     }
+
+    public void carrinho(View v) throws ExecutionException, InterruptedException {
+        Intent intent = new Intent(GridActivity.this, CheckoutActivity.class);
+        startActivity(intent);
+
+    }
+
 
 
 }
