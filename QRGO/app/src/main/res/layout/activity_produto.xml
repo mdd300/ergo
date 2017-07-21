@@ -11,7 +11,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/background_light">
+        android:background="@android:color/background_light"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -197,17 +199,11 @@
         <ViewFlipper
             android:id="@+id/relativeLayout3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/relativeLayout7"
+            android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/relativeLayout6"
             android:layout_alignStart="@+id/relativeLayout6"
-            android:layout_below="@+id/textView3">
-
-            <ImageView
-                android:id="@+id/ImgProd"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/imgroupa" />
+            android:layout_below="@+id/textView3"
+            android:layout_above="@+id/relativeLayout7">
 
         </ViewFlipper>
 
@@ -229,11 +225,10 @@
             android:id="@+id/relativeLayout7"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_alignLeft="@+id/textView5"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/textView5"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="47dp">
+            android:layout_above="@+id/relativeLayout6"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
 
             <RelativeLayout
                 android:id="@+id/relativeLayout8"
@@ -414,7 +409,16 @@
                     android:inputType="number"
                     android:textAlignment="center" />
             </RelativeLayout>
+
+            <EditText
+                android:id="@+id/TextId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name" />
         </RelativeLayout>
+
 
         <RelativeLayout
             android:id="@+id/relativeLayout2"
@@ -504,7 +508,7 @@
         <RelativeLayout
             android:id="@+id/relativeLayout6"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true">

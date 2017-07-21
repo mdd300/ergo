@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class ProdutoActivity extends AppCompatActivity {
@@ -35,7 +36,6 @@ public class ProdutoActivity extends AppCompatActivity {
     Context ctx;
     String method;
     String function;
-    JSONArray JASresultEst;
     String resul = null;
     JSONArray PPID;
     JSONArray PID;
@@ -52,6 +52,9 @@ public class ProdutoActivity extends AppCompatActivity {
     String user_id;
     String hash;
 
+    ArrayList idProd = new ArrayList();
+    int i;
+    int arrayleght;
 
     final GestureDetector gestureDetector = new GestureDetector(ctx, new GestureListener());
 
@@ -71,16 +74,28 @@ public class ProdutoActivity extends AppCompatActivity {
             float distanceY = e2.getY() - e1.getY();
             if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                 if (distanceX > 0)
-                    onSwipeRight();
+                    try {
+                        onSwipeRight();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 else
-                    onSwipeLeft();
+                    try {
+                        onSwipeLeft();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 return true;
             }
             return false;
         }
     }
 
-    public void onSwipeRight() {
+    public void onSwipeRight() throws ExecutionException, InterruptedException {
         ViewFlipper simpleViewFlipper=(ViewFlipper)findViewById(R.id. relativeLayout3);
         simpleViewFlipper.showNext();
 
@@ -89,9 +104,25 @@ public class ProdutoActivity extends AppCompatActivity {
 
         ViewFlipper simpleViewFlipperNome=(ViewFlipper)findViewById(R.id.relativeLayout5);
         simpleViewFlipperNome.showNext();
+
+        arrayleght = idProd.size();
+        i++;
+        if(i == arrayleght ){
+            String idPesquisa = idProd.get(0).toString();
+            i = 0;
+            String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque_app";
+            this.estoque(idPesquisa,methodS);
+
+        }else{
+            String idPesquisa = idProd.get(i).toString();
+            String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque_app";
+            this.estoque(idPesquisa,methodS);
+
+        }
+
     }
 
-    public void onSwipeLeft() {
+    public void onSwipeLeft() throws ExecutionException, InterruptedException {
         ViewFlipper simpleViewFlipper=(ViewFlipper)findViewById(R.id. relativeLayout3);
         simpleViewFlipper.showPrevious();
 
@@ -100,6 +131,22 @@ public class ProdutoActivity extends AppCompatActivity {
 
         ViewFlipper simpleViewFlipperNome=(ViewFlipper)findViewById(R.id.relativeLayout5);
         simpleViewFlipperNome.showPrevious();
+
+
+
+        arrayleght = idProd.size();
+        i--;
+        if(i < 0){
+            i = arrayleght - 1;
+            String idPesquisa = idProd.get(i).toString();
+            String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque_app";
+            this.estoque(idPesquisa,methodS);
+        }else{
+            String idPesquisa = idProd.get(i).toString();
+            String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque_app";
+            this.estoque(idPesquisa,methodS);
+        }
+
     }
 
 
@@ -110,10 +157,14 @@ public class ProdutoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_produto);
         Intent intent = getIntent();
 
+        EditText CampoID = (EditText) findViewById(R.id.TextId);
+        CampoID.setVisibility(View.INVISIBLE);
+
         Bundle bundle = intent.getExtras();
 
         String resultado = bundle.getString("resultado");
-        ImageView im = (ImageView) findViewById(R.id.ImgProd);
+
+
 
         try {
 
@@ -132,25 +183,6 @@ public class ProdutoActivity extends AppCompatActivity {
             TextView txtRef = (TextView)findViewById(R.id.txtReferencia);
             txtRef.setText(ref);
 
-            String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + img;
-            String method = urlOfImage;
-            String function = "imagem";
-            Imagem imgTask = new Imagem();
-            imgTask.execute(function,method);
-
-            Bitmap result = null;
-            try {
-
-                result  = imgTask.get();
-                im.setImageBitmap(result);
-                image = result;
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -161,6 +193,7 @@ public class ProdutoActivity extends AppCompatActivity {
         Model prodTask = new Model(this);
         prodTask.execute(function,method, codigo);
         String resul = null;
+
 
         try {
 
@@ -179,6 +212,7 @@ public class ProdutoActivity extends AppCompatActivity {
 
                 JSONObject obj =  JASresultProd.getJSONObject(i);
                 String img = obj.getString("img_nome");
+                String idTeste = obj.getString("prod_id");
 
                 if(img != "null"){
                 String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + img;
@@ -186,7 +220,7 @@ public class ProdutoActivity extends AppCompatActivity {
                 function = "imagem";
                 Imagem imgTask = new Imagem();
                 imgTask.execute(function,method);
-                 Bitmap result = null;
+                    Bitmap result = null;
                 try {
 
                     result  = imgTask.get();
@@ -203,6 +237,8 @@ public class ProdutoActivity extends AppCompatActivity {
                     TextView TextViewNome = new TextView(this);
                     simpleViewFlipperNome.addView(TextViewNome);
 
+                    this.idProd.add(idTeste.toString());
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -210,6 +246,38 @@ public class ProdutoActivity extends AppCompatActivity {
                 }
             }
             else{
+
+                    String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_app_cor";
+                    function = "produto";
+                    Model estTask = new Model();
+                    estTask.execute(function,methodS, codigo);
+                    resul = estTask.get();
+                    try {
+                        JSONArray JASresultProdCor = new JSONArray(resul.toString());
+                        JSONObject objJ =  JASresultProdCor.getJSONObject(i);
+                        String imgJ = objJ.getString("img_nome");
+
+                    String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + imgJ;
+                    method = urlOfImage;
+                    function = "imagem";
+                    Imagem imgTask = new Imagem();
+                    imgTask.execute(function,method);
+                    Bitmap result = null;
+                    try {
+
+                        result = imgTask.get();
+
+                        ImageView imageView = new ImageView(this);
+                        imageView.setImageBitmap(result);
+                        simpleViewFlipper.addView(imageView);
+
+                    }catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
+
                     simpleViewFlipper=(ViewFlipper)findViewById(R.id. relativeLayout3);
                     ImageView imageView = new ImageView(this);
                     imageView.setImageBitmap(image);
@@ -227,17 +295,23 @@ public class ProdutoActivity extends AppCompatActivity {
                     TextViewNome.setText(cor_nome);
                     simpleViewFlipperNome.addView(TextViewNome);
 
-                }
-            }
+                    this.idProd.add(idTeste.toString());
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+                } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                Log.e("teste1", String.valueOf(idProd.size()));
+        String idPesquisa = idProd.get(0).toString();
+        String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque_app";
+        try {
+            this.estoque(idPesquisa,methodS);
         } catch (ExecutionException e) {
             e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        this.estoque(id);
 
         final EditText PPE = (EditText)findViewById(R.id.edit0);
         final EditText PE = (EditText)findViewById(R.id.edit1);
@@ -275,6 +349,7 @@ public class ProdutoActivity extends AppCompatActivity {
                     PPD.setText(disponivel);
 
 
+
             } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -305,7 +380,7 @@ public class ProdutoActivity extends AppCompatActivity {
                 method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
                 function = "carrinho";
                 Model estTask = new Model();
-                estTask.execute(function,method, PIDS,P,"item",user_id,hash);
+                    estTask.execute(function,method, PIDS,P,"item",user_id,hash);
 
                 try {
                     String res = estTask.get();
@@ -313,6 +388,7 @@ public class ProdutoActivity extends AppCompatActivity {
                     String disponivel = obj.getString("disponivel");
                     TextView PD = (TextView)findViewById(R.id.Text1);
                     PD.setText(disponivel);
+
 
                 }catch (JSONException e) {
                     sharedPreferences.edit().clear().commit();
@@ -351,6 +427,7 @@ public class ProdutoActivity extends AppCompatActivity {
                     String disponivel = obj.getString("disponivel");
                     TextView MD = (TextView)findViewById(R.id.Text2);
                     MD.setText(disponivel);
+
 
                 }catch (InterruptedException e) {
                     e.printStackTrace();
@@ -392,6 +469,7 @@ public class ProdutoActivity extends AppCompatActivity {
                     String disponivel = obj.getString("disponivel");
                     TextView GD = (TextView)findViewById(R.id.Text3);
                     GD.setText(disponivel);
+
 
                 }catch (JSONException e) {
                     sharedPreferences.edit().clear().commit();
@@ -435,6 +513,7 @@ public class ProdutoActivity extends AppCompatActivity {
                     TextView GGD = (TextView)findViewById(R.id.Text4);
                     GGD.setText(disponivel);
 
+
                 }catch (JSONException e) {
                     sharedPreferences.edit().clear().commit();
                     Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
@@ -447,8 +526,13 @@ public class ProdutoActivity extends AppCompatActivity {
             }
         });
 
-
-
+        }} catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void grid(View v) throws ExecutionException, InterruptedException, JSONException {
@@ -456,15 +540,14 @@ public class ProdutoActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-    public void estoque(String idEstoque) {
+    public void estoque(String idEstoque, String methodS) throws ExecutionException, InterruptedException {
 
-        method = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque";
         function = "produto";
         Model estTask = new Model();
-        estTask.execute(function,method, idEstoque);
-
+        estTask.execute(function,methodS, idEstoque);
+        resul = estTask.get();
         try {
-            resul = estTask.get();
+
             JSONObject JASresultEs = new JSONObject(resul.toString());
             JSONObject JASresultTam = JASresultEs.getJSONObject("tamanho");
             JSONObject JASresultId = JASresultEs.getJSONObject("id");
@@ -507,23 +590,24 @@ public class ProdutoActivity extends AppCompatActivity {
         } catch (JSONException e) {
             Log.e("tag",e.getMessage());
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            Log.e("tag",e.getMessage());
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            Log.e("tag",e.getMessage());
-            e.printStackTrace();
         }
     }
     public void carrinho(View v) throws ExecutionException, InterruptedException {
         Intent intent = new Intent(ProdutoActivity.this, CheckoutActivity.class);
         startActivity(intent);
-
+        finish();
     }
 
     public void produtos(View v) throws ExecutionException, InterruptedException {
         Intent intent = new Intent(ProdutoActivity.this, GridActivity.class);
         startActivity(intent);
+        finish();
+    }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ProdutoActivity.this, GridActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

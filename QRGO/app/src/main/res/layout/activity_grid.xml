@@ -24,7 +24,7 @@
         <FrameLayout
             android:id="@+id/fragment_frame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_weight="0.82">
@@ -171,7 +171,7 @@
             android:scaleType="fitXY"
             app:srcCompat="@drawable/vectorlista" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton7"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -181,8 +181,31 @@
             android:layout_toLeftOf="@+id/imageButton2"
             android:layout_toStartOf="@+id/imageButton2"
             android:background="@color/Cinza"
+            android:onClick="pesquisaInicias"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/vectorpesquisa" />
+
+        <EditText
+            android:id="@+id/editTextPesquisa"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/buttonPesquisa"
+            android:layout_toStartOf="@+id/buttonPesquisa"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <ImageView
+            android:id="@+id/buttonPesquisa"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@color/Cinza"
+            android:onClick="pesquisa"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/vectorpesquisa"
+            android:layout_alignTop="@+id/imageButton7"
+            android:layout_toLeftOf="@+id/imageButton7"
+            android:layout_toStartOf="@+id/imageButton7" />
 
     </RelativeLayout>
 

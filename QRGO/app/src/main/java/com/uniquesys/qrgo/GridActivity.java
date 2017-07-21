@@ -1,5 +1,7 @@
 package com.uniquesys.qrgo;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import org.json.JSONArray;
@@ -34,6 +38,7 @@ public class GridActivity extends AppCompatActivity {
     String function2;
     private static final String PREF_NAME = "USER_LOG";
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -41,7 +46,10 @@ public class GridActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grid);
         pd = ProgressDialog.show(GridActivity.this, "Carregando", "Aguarde...", true, false);
         this.getGridImage();
-
+        EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
+        ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
+        CampoPesquisa.setVisibility(View.INVISIBLE);
+        btnPesquisa.setVisibility(View.INVISIBLE);
 
     }
 
@@ -116,28 +124,113 @@ public void getGridImage(){
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
-
         }
-
 
     }.start();
 
-
-
 }
-
 
     public void Pagination(View v) throws ExecutionException, InterruptedException {
         pd = ProgressDialog.show(GridActivity.this, "Carregando", "Aguarde...", true, false);
         pagina++;
         this.getGridImage();
 
-
     }
 
     public void carrinho(View v) throws ExecutionException, InterruptedException {
         Intent intent = new Intent(GridActivity.this, CheckoutActivity.class);
         startActivity(intent);
+
+    }
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    public void pesquisaInicias(View v) throws ExecutionException, InterruptedException {
+        EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
+        ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
+        ImageView btnAbrirPesquisa = (ImageView) findViewById(R.id.imageButton7);
+
+        CampoPesquisa.setVisibility(View.VISIBLE);
+        btnPesquisa.setVisibility(View.VISIBLE);
+        btnAbrirPesquisa.setVisibility(View.INVISIBLE);
+
+    }
+
+    public void pesquisa(View v) throws ExecutionException, InterruptedException {
+
+        pd = ProgressDialog.show(GridActivity.this, "Carregando", "Aguarde...", true, false);
+
+        new Thread()
+        {
+
+            public void run() {
+
+                EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
+                String StringPesquisar = CampoPesquisa.getText().toString();
+
+                Model prodTask = new Model();
+                String method = "https://www.uniquesys.com.br/qrgo/pedidos/grid_listagem_pesquisa";
+                String function = "pesquisa";
+                prodTask.execute(function, method, String.valueOf(pagina), StringPesquisar);
+
+                try {
+
+
+                    resultado = prodTask.get();
+                    JASresult = new JSONArray(resultado.toString());
+                    try {
+                        for (int i = 0; i < JASresult.length(); i++) {
+                            JSONObject obj = JASresult.getJSONObject(i);
+                            String img = obj.getString("img_nome");
+                            String id = obj.getString("prod_uniq");
+
+                            try {
+
+                                if (!img.equals("null")) {
+                                    String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + img;
+                                    method2 = urlOfImage;
+                                    function2 = "imagem";
+                                    Imagem imgTask = new Imagem();
+                                    imgTask.execute(function2, method2);
+                                    result = imgTask.get();
+                                    splittedid.add(id);
+
+                                    splittedBitmaps.add(result);
+                                }
+
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            }
+                            img_test = obj.getString("img_nome");
+                        }
+                    } catch (Exception e) {
+                        Log.e("tag", e.getMessage());
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Fragment fr = new PesquisaFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
+                bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                fr.setArguments(bundle);
+                android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_frame, fr);
+                fragmentTransaction.commit();
+                pd.dismiss();
+            }
+        }.start();
+
 
     }
 

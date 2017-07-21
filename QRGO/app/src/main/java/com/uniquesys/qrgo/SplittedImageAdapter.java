@@ -33,7 +33,6 @@ public class SplittedImageAdapter extends BaseAdapter {
     @Override
     public int getCount() {
 
-        Log.e("Image", String.valueOf(data.size()));
         return data.size();
     }
 
@@ -52,11 +51,11 @@ public class SplittedImageAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup arg2) {
 
         ImageView imageView;
-
+        notifyDataSetChanged();
         if (convertView == null) {
 
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(180, 180));
+            imageView.setLayoutParams(new GridView.LayoutParams(200, 200));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(1, 1, 1, 1);
 
@@ -69,7 +68,6 @@ public class SplittedImageAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 String codigo = id.get(position);
-                Log.e("Imagem", String.valueOf(position));
                 String method = "https://www.uniquesys.com.br/qrgo/pedidos/readqrcodepedido_app";
                 String function = "produto";
                 Model prodTask = new Model(mContext);
@@ -84,15 +82,18 @@ public class SplittedImageAdapter extends BaseAdapter {
                 }
 
                 Intent in = new Intent(mContext, ProdutoActivity.class);
-                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 in.putExtra("id", codigo);
                 in.putExtra("resultado", resultado);
                 mContext.startActivity(in);
+                ((GridActivity) mContext).finish();
+
             }
         });
-
+notifyDataSetChanged();
 
         return imageView;
     }
+
 
 }

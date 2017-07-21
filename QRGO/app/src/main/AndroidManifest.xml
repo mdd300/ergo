@@ -29,10 +29,12 @@
         <activity
             android:name=".ProdutoActivity"
             android:label="@string/title_activity_produto"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:excludeFromRecents="true"/>
         <activity
             android:name=".GridActivity"
-            android:launchMode="singleInstance"></activity>
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"></activity>
         <activity android:name=".CheckoutActivity"></activity>
     </application>
 

@@ -55,10 +55,12 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             float distanceY = e2.getY() - e1.getX();
             if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                 if (distanceY < 0 && distanceX < 0) {
-                    Log.e("Grid","teste");
                     Intent intent = new Intent(MainActivity.this, GridActivity.class);
-
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("EXIT", true);
                     startActivity(intent);
+                        finish();
+
                     return true;
                 }
             }
@@ -93,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         setContentView(R.layout.activity_main);
 
         if(user_id != "" && hash != ""){
-            Log.e("hash",user_id+hash);
             mScannerView = new ZXingScannerView(this);
             setContentView(mScannerView);
             mScannerView.setResultHandler(this);
@@ -170,6 +171,8 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         Bundle bundle = new Bundle();
         bundle.putString("resultado", resultado.toString());
         intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
 }
