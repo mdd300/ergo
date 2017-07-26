@@ -14,14 +14,14 @@ import android.widget.ImageView;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class SplittedImageAdapter extends BaseAdapter {
+public class SplittedImageAdapterRes extends BaseAdapter {
 
     Context mContext;
     List<Bitmap> data;
     List<String> id;
 
 
-    public SplittedImageAdapter(Context c, List<Bitmap> splittedBitmaps, List<String> splittedid) {
+    public SplittedImageAdapterRes(Context c, List<Bitmap> splittedBitmaps, List<String> splittedid) {
 
         mContext = c;
         data=splittedBitmaps;
@@ -54,9 +54,10 @@ public class SplittedImageAdapter extends BaseAdapter {
         if (convertView == null) {
 
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(180, 180));
+            imageView.setLayoutParams(new GridView.LayoutParams(350, 350));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(1,2,1,2);
+
 
 
         }else {

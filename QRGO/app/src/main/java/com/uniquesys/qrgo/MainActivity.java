@@ -14,6 +14,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.google.zxing.Result;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("EXIT", true);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
                         finish();
 
                     return true;
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         senha = (EditText) findViewById(R.id.txtSenha);
         login_name = user.getText().toString();
         login_pass = senha.getText().toString();
-        String method = "https://www.uniquesys.com.br/qrgo/login/efetuar_login_app";
+        String method = "http://uniquesys.jelasticlw.com.br/qrgo/login/efetuar_login_app";
         String function = "login";
         Model loginTask = new Model(this);
         loginTask.execute(function,method, login_name, login_pass);
@@ -143,6 +145,10 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             });
 
         }
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(), "Seu usuário ou senha está incorreta",Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
 
@@ -152,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     public void handleResult(Result result) {
         String[] separated = result.getText().split("readqrcodepedido/");
         String codigo = separated[1];
-        String method = "https://www.uniquesys.com.br/qrgo/pedidos/readqrcodepedido_app";
+        String method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/readqrcodepedido_app";
         String function = "produto";
         Model prodTask = new Model(this);
         prodTask.execute(function,method, codigo);
@@ -173,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        finish();
     }
 
 }

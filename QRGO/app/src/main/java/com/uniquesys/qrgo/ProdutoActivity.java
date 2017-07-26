@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import org.json.JSONArray;
@@ -51,6 +52,7 @@ public class ProdutoActivity extends AppCompatActivity {
 
     String user_id;
     String hash;
+    String imgJ;
 
     ArrayList idProd = new ArrayList();
     int i;
@@ -76,6 +78,7 @@ public class ProdutoActivity extends AppCompatActivity {
                 if (distanceX > 0)
                     try {
                         onSwipeRight();
+
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -110,12 +113,12 @@ public class ProdutoActivity extends AppCompatActivity {
         if(i == arrayleght ){
             String idPesquisa = idProd.get(0).toString();
             i = 0;
-            String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque_app";
+            String methodS = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_estoque_app";
             this.estoque(idPesquisa,methodS);
 
         }else{
             String idPesquisa = idProd.get(i).toString();
-            String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque_app";
+            String methodS = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_estoque_app";
             this.estoque(idPesquisa,methodS);
 
         }
@@ -132,18 +135,16 @@ public class ProdutoActivity extends AppCompatActivity {
         ViewFlipper simpleViewFlipperNome=(ViewFlipper)findViewById(R.id.relativeLayout5);
         simpleViewFlipperNome.showPrevious();
 
-
-
         arrayleght = idProd.size();
         i--;
         if(i < 0){
             i = arrayleght - 1;
             String idPesquisa = idProd.get(i).toString();
-            String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque_app";
+            String methodS = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_estoque_app";
             this.estoque(idPesquisa,methodS);
         }else{
             String idPesquisa = idProd.get(i).toString();
-            String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque_app";
+            String methodS = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_estoque_app";
             this.estoque(idPesquisa,methodS);
         }
 
@@ -164,8 +165,6 @@ public class ProdutoActivity extends AppCompatActivity {
 
         String resultado = bundle.getString("resultado");
 
-
-
         try {
 
             JSONArray JASresult = new JSONArray(resultado.toString());
@@ -173,7 +172,7 @@ public class ProdutoActivity extends AppCompatActivity {
             String nome = obj.getString("prod_text");
             String preco = obj.getString("prod_preco");
             String ref = obj.getString("prod_ref");
-            String img = obj.getString("img_nome");
+            imgJ = obj.getString("img_nome");
             id = obj.getString("prod_id");
 
             TextView txtProd = (TextView)findViewById(R.id.txtProd);
@@ -188,12 +187,11 @@ public class ProdutoActivity extends AppCompatActivity {
         }
 
         String codigo = id;
-        method = "https://www.uniquesys.com.br/qrgo/produtos/prod_app";
+        method = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_app";
         function = "produto";
         Model prodTask = new Model(this);
         prodTask.execute(function,method, codigo);
         String resul = null;
-
 
         try {
 
@@ -207,15 +205,14 @@ public class ProdutoActivity extends AppCompatActivity {
                 }
             });
 
+            for(int j=0; j < JASresultProd.length();j++){
 
-            for(int i=0; i < JASresultProd.length();i++){
-
-                JSONObject obj =  JASresultProd.getJSONObject(i);
+                JSONObject obj =  JASresultProd.getJSONObject(j);
                 String img = obj.getString("img_nome");
                 String idTeste = obj.getString("prod_id");
 
                 if(img != "null"){
-                String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + img;
+                String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + img;
                 method = urlOfImage;
                 function = "imagem";
                 Imagem imgTask = new Imagem();
@@ -247,17 +244,8 @@ public class ProdutoActivity extends AppCompatActivity {
             }
             else{
 
-                    String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_app_cor";
-                    function = "produto";
-                    Model estTask = new Model();
-                    estTask.execute(function,methodS, codigo);
-                    resul = estTask.get();
-                    try {
-                        JSONArray JASresultProdCor = new JSONArray(resul.toString());
-                        JSONObject objJ =  JASresultProdCor.getJSONObject(i);
-                        String imgJ = objJ.getString("img_nome");
-
-                    String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + imgJ;
+                    try{
+                    String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + imgJ;
                     method = urlOfImage;
                     function = "imagem";
                     Imagem imgTask = new Imagem();
@@ -276,12 +264,6 @@ public class ProdutoActivity extends AppCompatActivity {
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-
-
-                    simpleViewFlipper=(ViewFlipper)findViewById(R.id. relativeLayout3);
-                    ImageView imageView = new ImageView(this);
-                    imageView.setImageBitmap(image);
-                    simpleViewFlipper.addView(imageView);
 
                     ViewFlipper simpleViewFlipperCollor=(ViewFlipper)findViewById(R.id.relativeLayout4);
                     ImageView imageViewCollor = new ImageView(this);
@@ -302,9 +284,8 @@ public class ProdutoActivity extends AppCompatActivity {
                     }
                 }
 
-                Log.e("teste1", String.valueOf(idProd.size()));
         String idPesquisa = idProd.get(0).toString();
-        String methodS = "https://www.uniquesys.com.br/qrgo/produtos/prod_estoque_app";
+        String methodS = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_estoque_app";
         try {
             this.estoque(idPesquisa,methodS);
         } catch (ExecutionException e) {
@@ -336,7 +317,7 @@ public class ProdutoActivity extends AppCompatActivity {
                                       int before, int count) {
                 String PP = PPE.getText().toString();
 
-                method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
+                method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
                 function = "carrinho";
                 Model estTask = new Model();
                 estTask.execute(function,method,PPIDS,PP,"item",user_id,hash);
@@ -348,7 +329,8 @@ public class ProdutoActivity extends AppCompatActivity {
                     TextView PPD = (TextView)findViewById(R.id.Text0);
                     PPD.setText(disponivel);
 
-
+                    Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso",Toast.LENGTH_SHORT);
+                    toast.show();
 
             } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -358,6 +340,7 @@ public class ProdutoActivity extends AppCompatActivity {
                     sharedPreferences.edit().clear().commit();
                     Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -377,7 +360,7 @@ public class ProdutoActivity extends AppCompatActivity {
                                       int before, int count) {
                 String P = PE.getText().toString();
 
-                method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
+                method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
                 function = "carrinho";
                 Model estTask = new Model();
                     estTask.execute(function,method, PIDS,P,"item",user_id,hash);
@@ -388,12 +371,14 @@ public class ProdutoActivity extends AppCompatActivity {
                     String disponivel = obj.getString("disponivel");
                     TextView PD = (TextView)findViewById(R.id.Text1);
                     PD.setText(disponivel);
-
+                    Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso",Toast.LENGTH_SHORT);
+                    toast.show();
 
                 }catch (JSONException e) {
                     sharedPreferences.edit().clear().commit();
                     Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -417,7 +402,7 @@ public class ProdutoActivity extends AppCompatActivity {
                                       int before, int count) {
                 String M = ME.getText().toString();
 
-                method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
+                method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
                 function = "carrinho";
                 Model estTask = new Model();
                 estTask.execute(function,method,MIDS,M,"item",user_id,hash);
@@ -427,7 +412,8 @@ public class ProdutoActivity extends AppCompatActivity {
                     String disponivel = obj.getString("disponivel");
                     TextView MD = (TextView)findViewById(R.id.Text2);
                     MD.setText(disponivel);
-
+                    Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso",Toast.LENGTH_SHORT);
+                    toast.show();
 
                 }catch (InterruptedException e) {
                     e.printStackTrace();
@@ -437,6 +423,7 @@ public class ProdutoActivity extends AppCompatActivity {
                     sharedPreferences.edit().clear().commit();
                     Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
 
             }
@@ -458,7 +445,7 @@ public class ProdutoActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 String G = GE.getText().toString();
-                method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
+                method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
                 function = "carrinho";
                 Model estTask = new Model();
                 estTask.execute(function,method, GIDS,G,"item",user_id,hash);
@@ -469,13 +456,15 @@ public class ProdutoActivity extends AppCompatActivity {
                     String disponivel = obj.getString("disponivel");
                     TextView GD = (TextView)findViewById(R.id.Text3);
                     GD.setText(disponivel);
-
+                    Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso",Toast.LENGTH_SHORT);
+                    toast.show();
 
                 }catch (JSONException e) {
                     sharedPreferences.edit().clear().commit();
                     Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
                     startActivity(intent);
-                    e.printStackTrace();
+                    finish();
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -501,7 +490,7 @@ public class ProdutoActivity extends AppCompatActivity {
 
                 String GG = GGE.getText().toString();
 
-                method = "https://www.uniquesys.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
+                method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
                 function = "carrinho";
                 Model estTask = new Model();
                 estTask.execute(function,method, GGIDS,GG,"item",user_id,hash);
@@ -512,12 +501,15 @@ public class ProdutoActivity extends AppCompatActivity {
                     String disponivel = obj.getString("disponivel");
                     TextView GGD = (TextView)findViewById(R.id.Text4);
                     GGD.setText(disponivel);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso",Toast.LENGTH_SHORT);
+                    toast.show();
 
 
                 }catch (JSONException e) {
                     sharedPreferences.edit().clear().commit();
                     Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -595,12 +587,14 @@ public class ProdutoActivity extends AppCompatActivity {
     public void carrinho(View v) throws ExecutionException, InterruptedException {
         Intent intent = new Intent(ProdutoActivity.this, CheckoutActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
         finish();
     }
 
     public void produtos(View v) throws ExecutionException, InterruptedException {
         Intent intent = new Intent(ProdutoActivity.this, GridActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_right_leave,R.anim.anim_slide_left_leave);
         finish();
     }
 
@@ -608,6 +602,7 @@ public class ProdutoActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(ProdutoActivity.this, GridActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_right_leave,R.anim.anim_slide_left_leave);
         finish();
     }
 }

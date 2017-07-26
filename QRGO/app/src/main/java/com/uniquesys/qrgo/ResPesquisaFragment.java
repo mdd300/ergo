@@ -13,7 +13,7 @@ import android.widget.GridView;
 import java.util.ArrayList;
 
 
-public class PesquisaFragment extends Fragment {
+public class ResPesquisaFragment extends Fragment {
 
     ArrayList<Bitmap> splittedBitmaps;
     ArrayList<String> splittedid;
@@ -34,10 +34,10 @@ public class PesquisaFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_grid, container,
                 false);
 
-rootView.clearFocus();
+        rootView.clearFocus();
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
-        PesquisaImageAdapter adapter = new PesquisaImageAdapter(getActivity(), splittedBitmaps, splittedid);
+        ResPesquisaImageAdapter adapter = new ResPesquisaImageAdapter(getActivity(), splittedBitmaps, splittedid);
 
         gridView.setAdapter(adapter);
 

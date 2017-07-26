@@ -1,20 +1,22 @@
 package com.uniquesys.qrgo;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +30,8 @@ public class GridActivity extends AppCompatActivity {
 
     List<Bitmap> splittedBitmaps = new ArrayList<>();
     List<String> splittedid = new ArrayList<>();
+    List<Bitmap> splittedBitmapsPes = new ArrayList<>();
+    List<String> splittedidPes = new ArrayList<>();
     JSONArray JASresult;
     String resultado = null;
     Bitmap result = null;
@@ -51,6 +55,21 @@ public class GridActivity extends AppCompatActivity {
         CampoPesquisa.setVisibility(View.INVISIBLE);
         btnPesquisa.setVisibility(View.INVISIBLE);
 
+        Button button = (Button) findViewById(R.id.TextLoad);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // handle the click here
+                try {
+                    Pagination(v);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
 public void getGridImage(){
@@ -62,7 +81,7 @@ public void getGridImage(){
         public void run()
         {
             Model prodTask = new Model();
-            final String method = "https://www.uniquesys.com.br/qrgo/pedidos/grid_listagem";
+            final String method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/grid_listagem";
             final String function = "listagem";
             prodTask.execute(function, method, String.valueOf(pagina));
 
@@ -81,7 +100,7 @@ public void getGridImage(){
                     try {
 
                         if (!img.equals("null")) {
-                            String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + img;
+                            String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + img;
                             method2 = urlOfImage;
                             function2 = "imagem";
                             Imagem imgTask = new Imagem();
@@ -116,13 +135,34 @@ public void getGridImage(){
         }
 
         private void RefreshGrid(List<String> splittedid, List<Bitmap> splittedBitmaps) {
-            Fragment fragment = new GridFragment();
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
-            bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
-            fragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+            Fragment fragment = null;
+
+            if (width >= 720) {
+                fragment = new ResFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
+                bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+            }
+
+            else
+            {
+                fragment =  new GridFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
+                bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+            }
 
         }
 
@@ -138,12 +178,17 @@ public void getGridImage(){
     }
 
     public void carrinho(View v) throws ExecutionException, InterruptedException {
-        Intent intent = new Intent(GridActivity.this, CheckoutActivity.class);
-        startActivity(intent);
+        Intent intent_next=new Intent(GridActivity.this,CheckoutActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
+        finish();
 
     }
     @Override
     public void onBackPressed() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
 
     }
 
@@ -151,14 +196,44 @@ public void getGridImage(){
         EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
         ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
         ImageView btnAbrirPesquisa = (ImageView) findViewById(R.id.imageButton7);
+        TextView prod = (TextView) findViewById(R.id.textView4);
 
         CampoPesquisa.setVisibility(View.VISIBLE);
         btnPesquisa.setVisibility(View.VISIBLE);
         btnAbrirPesquisa.setVisibility(View.INVISIBLE);
+        prod.setVisibility(View.INVISIBLE);
+
+        InputMethodManager imm=(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(CampoPesquisa, InputMethodManager.SHOW_IMPLICIT);
 
     }
 
     public void pesquisa(View v) throws ExecutionException, InterruptedException {
+        pagina = 1;
+        splittedBitmaps.clear();
+        splittedid.clear();
+        this.pesquisaProd();
+    }
+
+    public void pesquisaProd(){
+
+        Button button = (Button) findViewById(R.id.TextLoad);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // handle the click here
+                try {
+                    PaginationPesquisa(v);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        View frag = findViewById(R.id.fragment_frame);
+        frag.setVisibility(View.INVISIBLE);
 
         pd = ProgressDialog.show(GridActivity.this, "Carregando", "Aguarde...", true, false);
 
@@ -171,7 +246,7 @@ public void getGridImage(){
                 String StringPesquisar = CampoPesquisa.getText().toString();
 
                 Model prodTask = new Model();
-                String method = "https://www.uniquesys.com.br/qrgo/pedidos/grid_listagem_pesquisa";
+                String method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/grid_listagem_pesquisa";
                 String function = "pesquisa";
                 prodTask.execute(function, method, String.valueOf(pagina), StringPesquisar);
 
@@ -189,7 +264,7 @@ public void getGridImage(){
                             try {
 
                                 if (!img.equals("null")) {
-                                    String urlOfImage = "https://www.uniquesys.com.br/qrgo/uploads/produtos/img/" + img;
+                                    String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + img;
                                     method2 = urlOfImage;
                                     function2 = "imagem";
                                     Imagem imgTask = new Imagem();
@@ -218,15 +293,38 @@ public void getGridImage(){
                     e.printStackTrace();
                 }
 
-                Fragment fr = new PesquisaFragment();
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
-                bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
-                fr.setArguments(bundle);
-                android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_frame, fr);
-                fragmentTransaction.commit();
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int width = size.x;
+                Fragment fragment = null;
+                if (width >= 720) {
+
+                    Fragment fr = new ResPesquisaFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
+                    bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                    fr.setArguments(bundle);
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    fragmentTransaction.replace(R.id.pesquisas, fr);
+                    fragmentTransaction.commit();
+                }
+
+                else
+                {
+                    Fragment fr = new PesquisaFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
+                    bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                    fr.setArguments(bundle);
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    fragmentTransaction.replace(R.id.pesquisas, fr);
+                    fragmentTransaction.commit();
+
+                }
+
                 pd.dismiss();
             }
         }.start();
@@ -234,6 +332,24 @@ public void getGridImage(){
 
     }
 
+    public void PaginationPesquisa(View v) throws ExecutionException, InterruptedException {
+        pagina++;
+        this.pesquisaProd();
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
 
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+    }
+    @Override
+    public void onStop(){
+        super.onPause();
+
+    }
 
 }

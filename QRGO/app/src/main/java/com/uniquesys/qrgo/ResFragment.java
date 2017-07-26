@@ -1,8 +1,6 @@
 package com.uniquesys.qrgo;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,8 +11,7 @@ import android.widget.GridView;
 import java.util.ArrayList;
 
 
-public class PesquisaFragment extends Fragment {
-
+public class ResFragment extends Fragment {
     ArrayList<Bitmap> splittedBitmaps;
     ArrayList<String> splittedid;
 
@@ -34,14 +31,13 @@ public class PesquisaFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_grid, container,
                 false);
 
-rootView.clearFocus();
+
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
-        PesquisaImageAdapter adapter = new PesquisaImageAdapter(getActivity(), splittedBitmaps, splittedid);
-
+        SplittedImageAdapterRes adapter = new SplittedImageAdapterRes(getActivity(), splittedBitmaps, splittedid);
         gridView.setAdapter(adapter);
-
         return rootView;
     }
+
 
 }

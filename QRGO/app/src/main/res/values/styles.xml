@@ -12,4 +12,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Fade">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="slide">
+        <item name="android:windowEnterAnimation">@anim/anim_slide_right</item>
+        <item name="android:windowExitAnimation">@anim/anim_slide_right</item>
+    </style>
 </resources>

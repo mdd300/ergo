@@ -11,9 +11,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/background_light"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:background="@android:color/background_light">
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -185,25 +185,16 @@
             android:layout_marginTop="14dp">
 
 
-            <ImageView
-                android:id="@+id/imageView13"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                app:srcCompat="@drawable/shape" />
-
         </ViewFlipper>
 
         <ViewFlipper
             android:id="@+id/relativeLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/relativeLayout7"
             android:layout_alignLeft="@+id/relativeLayout6"
             android:layout_alignStart="@+id/relativeLayout6"
-            android:layout_below="@+id/textView3"
-            android:layout_above="@+id/relativeLayout7">
+            android:layout_below="@+id/textView3">
 
         </ViewFlipper>
 
@@ -215,10 +206,6 @@
             android:layout_toLeftOf="@+id/relativeLayout4"
             android:layout_toStartOf="@+id/relativeLayout4">
 
-            <TextView
-                android:id="@+id/textColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
         </ViewFlipper>
 
         <RelativeLayout
@@ -226,8 +213,8 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_above="@+id/relativeLayout6"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
 
 
             <RelativeLayout
@@ -534,6 +521,7 @@
                 android:layout_below="@+id/imageView10"
                 android:layout_marginEnd="22dp"
                 android:layout_marginRight="22dp"
+                android:onClick="carrinho"
                 app:srcCompat="@drawable/compravetor" />
 
             <ImageView
