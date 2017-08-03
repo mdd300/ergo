@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "414015112916",
+    "firebase_url": "https://qrgo-23ac8.firebaseio.com",
+    "project_id": "qrgo-23ac8",
+    "storage_bucket": "qrgo-23ac8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414015112916:android:66403e7980f40080",
+        "android_client_info": {
+          "package_name": "com.uniquesys.qrgo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414015112916-tpi5hm7j28dd6qmoflnv2b7n70qtk2je.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChAoesdLluL8E0DHQBeWW7-2Pq7T-nWDw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

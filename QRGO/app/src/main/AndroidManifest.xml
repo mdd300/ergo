@@ -27,15 +27,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProdutoActivity"
+            android:name=".Produtos.ProdutoActivity"
+            android:excludeFromRecents="true"
             android:label="@string/title_activity_produto"
-            android:theme="@style/AppTheme"
-            android:excludeFromRecents="true"/>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name=".GridActivity"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"></activity>
-        <activity android:name=".CheckoutActivity"></activity>
+            android:name=".Produtos.GridActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance" />
+        <activity android:name=".Produtos.CheckoutActivity" />
+        <activity android:name=".Chat.ChatActivity" />
+        <activity android:name=".Chat.ConversaActivity"></activity>
     </application>
 
 </manifest>

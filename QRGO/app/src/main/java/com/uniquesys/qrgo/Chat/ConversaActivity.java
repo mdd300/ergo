@@ -1,0 +1,109 @@
+package com.uniquesys.qrgo.Chat;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.uniquesys.qrgo.R;
+import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+public class ConversaActivity extends AppCompatActivity {
+
+    private static final String PREF_NAME = "USER_LOG";
+    private DatabaseReference firebase;
+    String idUserRemetente;
+    String idUserDestinatario;
+    ArrayList<String> splittedMensagem = new ArrayList<>();;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_conversa);
+        Intent intent = getIntent();
+
+        Bundle bundle = intent.getExtras();
+
+        idUserDestinatario = bundle.getString("id");
+
+        SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
+        idUserRemetente = sharedPreferences.getString("user_id", "");
+
+        firebase = ConfiguracaoFirebase.getFirebase().child(idUserRemetente)
+                .child("Contatos")
+                .child(idUserDestinatario)
+                .child(idUserDestinatario);
+
+        firebase.addValueEventListener(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Fragment fragment = null;
+
+                splittedMensagem.clear();
+                for(DataSnapshot dados: dataSnapshot.getChildren()) {
+
+                    String MensagemRecebida = dados.getValue().toString();
+                    splittedMensagem.add(MensagemRecebida.toString());
+                    }
+                fragment = new ConversaFragment();
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("mensagem", splittedMensagem);
+                fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.ListMensagens, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public void Enviar(View v) throws ExecutionException, InterruptedException {
+
+        EditText EditMensagem = (EditText) findViewById(R.id.Mensagem);
+        String Mensagem = EditMensagem.getText().toString();
+
+        if(Mensagem.isEmpty()){
+
+        }else{
+            firebase = ConfiguracaoFirebase.getFirebase().child(idUserRemetente);
+
+            firebase.child("Contatos")
+                    .child(idUserDestinatario)
+                    .setPriority(idUserDestinatario);
+
+            firebase = ConfiguracaoFirebase.getFirebase().child(idUserRemetente);
+
+            firebase.child("Contatos")
+                    .child(idUserDestinatario)
+                    .child(idUserDestinatario)
+                    .push()
+                    .setValue(Mensagem);
+            
+            EditMensagem.setText("");
+        }
+
+    }
+
+
+}

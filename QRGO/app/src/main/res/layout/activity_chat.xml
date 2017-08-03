@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.uniquesys.qrgo.Chat.ChatActivity">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="129dp"
+        android:layout_below="@+id/linearLayout2">
+
+        <FrameLayout
+            android:id="@+id/ListChat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.95">
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/Cinza"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="4dp">
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:layout_toLeftOf="@+id/imageButton4"
+            android:layout_toStartOf="@+id/imageButton4"
+            android:background="@color/Cinza"
+            android:onClick="carrinho"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/carrinhomenu" />
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageButton5"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:background="@color/Cinza"
+            android:onClick="chat"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/iconmessage"
+            tools:layout_editor_absoluteX="335dp"
+            tools:layout_editor_absoluteY="4dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@color/Cinza"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/logo" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        android:id="@+id/linearLayout2">
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/common_google_signin_btn_text_dark_default"
+            android:text="Notificacoes"
+            android:textColor="@color/azulSelected" />
+
+        <Button
+            android:id="@+id/btnChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/azulSelected"
+            android:text="Mensagens"
+            android:textColor="@color/common_google_signin_btn_text_dark_default" />
+    </LinearLayout>
+
+
+</RelativeLayout>

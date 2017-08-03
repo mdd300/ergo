@@ -1,4 +1,4 @@
-package com.uniquesys.qrgo;
+package com.uniquesys.qrgo.Produtos;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +10,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+
+import com.uniquesys.qrgo.R;
 
 import java.util.concurrent.ExecutionException;
 

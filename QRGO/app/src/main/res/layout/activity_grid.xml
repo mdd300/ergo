@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
-    tools:context="com.uniquesys.qrgo.GridActivity">
+    tools:context="com.uniquesys.qrgo.Produtos.GridActivity">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/LinearLayout"
@@ -87,6 +87,7 @@
             android:layout_marginEnd="11dp"
             android:layout_marginRight="11dp"
             android:background="@color/Cinza"
+            android:onClick="chat"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/iconmessage"
             tools:layout_editor_absoluteX="335dp"

@@ -1,15 +1,15 @@
-package com.uniquesys.qrgo;
+package com.uniquesys.qrgo.Produtos;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+
+import com.uniquesys.qrgo.R;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

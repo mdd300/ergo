@@ -1,4 +1,4 @@
-package com.uniquesys.qrgo;
+package com.uniquesys.qrgo.Produtos;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.uniquesys.qrgo.model.Imagem;
+import com.uniquesys.qrgo.MainActivity;
+import com.uniquesys.qrgo.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

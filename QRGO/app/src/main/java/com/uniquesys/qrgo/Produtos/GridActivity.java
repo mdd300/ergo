@@ -1,4 +1,4 @@
-package com.uniquesys.qrgo;
+package com.uniquesys.qrgo.Produtos;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,6 +18,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.uniquesys.qrgo.Chat.ChatActivity;
+import com.uniquesys.qrgo.model.Imagem;
+import com.uniquesys.qrgo.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,8 +34,6 @@ public class GridActivity extends AppCompatActivity {
 
     List<Bitmap> splittedBitmaps = new ArrayList<>();
     List<String> splittedid = new ArrayList<>();
-    List<Bitmap> splittedBitmapsPes = new ArrayList<>();
-    List<String> splittedidPes = new ArrayList<>();
     JSONArray JASresult;
     String resultado = null;
     Bitmap result = null;
@@ -179,6 +181,13 @@ public void getGridImage(){
 
     public void carrinho(View v) throws ExecutionException, InterruptedException {
         Intent intent_next=new Intent(GridActivity.this,CheckoutActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
+        finish();
+
+    }
+    public void chat(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(GridActivity.this,ChatActivity.class);
         startActivity(intent_next);
         overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
         finish();

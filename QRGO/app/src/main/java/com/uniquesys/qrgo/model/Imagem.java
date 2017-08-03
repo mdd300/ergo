@@ -1,4 +1,4 @@
-package com.uniquesys.qrgo;
+package com.uniquesys.qrgo.model;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

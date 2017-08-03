@@ -1,4 +1,4 @@
-package com.uniquesys.qrgo;
+package com.uniquesys.qrgo.Produtos;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -31,7 +31,7 @@ import java.net.URLEncoder;
 public class Model extends AsyncTask<String,Void,String> {
     AlertDialog alertDialog;
     Context ctx;
-    Model(Context ctx)
+    public Model(Context ctx)
     {
         this.ctx =ctx;
     }
@@ -339,6 +339,44 @@ if(function == "produto") {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String data = URLEncoder.encode("pagina", "UTF-8") + "=" + URLEncoder.encode(pagina, "UTF-8") + "&"
                         + URLEncoder.encode("pesquisa", "UTF-8") + "=" + URLEncoder.encode(pesquisa, "UTF-8") ;
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String response = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    response += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return response;
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(function == "hash_user") {
+            String user_id = params[2];
+            String hash = params[3];
+
+            try {
+                URL url = new URL(login_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String data = URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(user_id, "UTF-8") + "&"
+                        + URLEncoder.encode("hash", "UTF-8") + "=" + URLEncoder.encode(hash, "UTF-8");
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
