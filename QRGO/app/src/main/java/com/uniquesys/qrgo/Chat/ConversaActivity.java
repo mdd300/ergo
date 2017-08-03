@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.R;
+import com.uniquesys.qrgo.config.Base64Custom;
 import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
 
 import org.json.JSONException;
@@ -29,7 +30,9 @@ public class ConversaActivity extends AppCompatActivity {
     private DatabaseReference firebase;
     String idUserRemetente;
     String idUserDestinatario;
-    ArrayList<String> splittedMensagem = new ArrayList<>();;
+    ArrayList<String> splittedMensagem = new ArrayList<>();
+    ArrayList<String> splittedMensagemDes = new ArrayList<>();
+    String codigo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +59,29 @@ public class ConversaActivity extends AppCompatActivity {
                 Fragment fragment = null;
 
                 splittedMensagem.clear();
+                splittedMensagemDes.clear();
                 for(DataSnapshot dados: dataSnapshot.getChildren()) {
 
                     String MensagemRecebida = dados.getValue().toString();
-                    splittedMensagem.add(MensagemRecebida.toString());
+                    String MensagemDescod = Base64Custom.decodificarBase64(MensagemRecebida);
+                    String[] separated = MensagemDescod.split("#Controle#QRGO2017#Bolacha#");
+                    splittedMensagem.add(separated[1].toString());
+                    Log.e("teste",separated[0] + "  " + separated[1]);
+                    if(separated[0].equals(idUserRemetente)) {
+                        Log.e("teste","teste");
+                        splittedMensagemDes.add("remetente");
+                    }else {
+                        splittedMensagemDes.add("destinatario");
                     }
-                fragment = new ConversaFragment();
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList("mensagem", splittedMensagem);
-                fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.ListMensagens, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
+                    }
 
+                        fragment = new ConversaFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putStringArrayList("mensagem", splittedMensagem);
+                        bundle.putStringArrayList("layout", splittedMensagemDes);
+                        fragment.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.ListMensagens, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
             }
 
             @Override
@@ -80,8 +94,9 @@ public class ConversaActivity extends AppCompatActivity {
 
     public void Enviar(View v) throws ExecutionException, InterruptedException {
 
-        EditText EditMensagem = (EditText) findViewById(R.id.Mensagem);
+        EditText EditMensagem = (EditText) findViewById(R.id.MensagemParaEnviar);
         String Mensagem = EditMensagem.getText().toString();
+        String Mensagemcod =  Base64Custom.codificarBase64(idUserRemetente+ "#Controle#QRGO2017#Bolacha#" +Mensagem);
 
         if(Mensagem.isEmpty()){
 
@@ -98,7 +113,21 @@ public class ConversaActivity extends AppCompatActivity {
                     .child(idUserDestinatario)
                     .child(idUserDestinatario)
                     .push()
-                    .setValue(Mensagem);
+                    .setValue(Mensagemcod);
+
+            firebase = ConfiguracaoFirebase.getFirebase().child(idUserDestinatario);
+
+            firebase.child("Contatos")
+                    .child(idUserRemetente)
+                    .setPriority(idUserRemetente);
+
+            firebase = ConfiguracaoFirebase.getFirebase().child(idUserDestinatario);
+
+            firebase.child("Contatos")
+                    .child(idUserRemetente)
+                    .child(idUserRemetente)
+                    .push()
+                    .setValue(Mensagemcod);
             
             EditMensagem.setText("");
         }

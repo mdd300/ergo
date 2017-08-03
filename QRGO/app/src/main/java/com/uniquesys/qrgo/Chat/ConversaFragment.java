@@ -17,12 +17,14 @@ import java.util.ArrayList;
 
 public class ConversaFragment extends Fragment {
     ArrayList<String> splittedMensagem;
+    ArrayList<String> layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             splittedMensagem = getArguments().getStringArrayList("mensagem");
+            layout = getArguments().getStringArrayList("layout");
         }
     }
 
@@ -34,7 +36,7 @@ public class ConversaFragment extends Fragment {
                 false);
 
         ListView listView = (ListView) rootView.findViewById(R.id.ListViewMensagem);
-        SplittedListAdapter adapter = new SplittedListAdapter(getActivity(), splittedMensagem);
+        SplittedListAdapter adapter = new SplittedListAdapter(getActivity(), splittedMensagem, layout);
         listView.setAdapter(adapter);
         return rootView;
     }

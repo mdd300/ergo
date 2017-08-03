@@ -45,16 +45,16 @@
                 app:srcCompat="@drawable/support15" />
 
             <EditText
-                android:id="@+id/Mensagem"
+                android:id="@+id/MensagemParaEnviar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/btnEnviar"
                 android:layout_toStartOf="@+id/btnEnviar"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/btnEnviar" />
+                android:inputType="textPersonName" />
         </RelativeLayout>
 
 

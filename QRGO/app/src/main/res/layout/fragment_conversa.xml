@@ -5,14 +5,14 @@
     tools:context="com.uniquesys.qrgo.Produtos.GridFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ListView
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ListViewMensagem"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:numColumns="3"
-        android:gravity="center"
-        android:columnWidth="100dp"
-        android:stretchMode="columnWidth"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:columnWidth="100dp"
+        android:divider="#00000000"
+        android:gravity="center"
+        android:numColumns="3"
+        android:stretchMode="columnWidth" />
 
 </FrameLayout>

@@ -66,11 +66,9 @@ public class ChatActivity extends AppCompatActivity {
 
                             if(dataSnapshot.getValue() != null){
 
-                                Map<String, String> teste = (Map<String, String>) dataSnapshot.getValue();
+                                for (DataSnapshot key : dataSnapshot.getChildren()) {
 
-                                for (String key : teste.keySet()) {
-
-                                    splittedid.add(key);
+                                    splittedid.add(key.getKey());
 
                                     String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/assets/admin/images/avtar/user.png";
                                     String method2 = urlOfImage;
@@ -90,7 +88,6 @@ public class ChatActivity extends AppCompatActivity {
                                         int width = size.x;
                                         Fragment fragment = null;
 
-                                        if (width >= 720) {
                                             fragment = new ListViewFragment();
                                             Bundle bundle = new Bundle();
                                             bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
@@ -98,20 +95,6 @@ public class ChatActivity extends AppCompatActivity {
                                             fragment.setArguments(bundle);
                                             getSupportFragmentManager().beginTransaction()
                                                     .replace(R.id.ListChat, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
-
-                                        }
-
-                                        else
-                                        {
-                                            fragment =  new ListViewFragment();
-                                            Bundle bundle = new Bundle();
-                                            bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
-                                            bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
-                                            fragment.setArguments(bundle);
-                                            getSupportFragmentManager().beginTransaction()
-                                                    .replace(R.id.ListChat, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
-
-                                        }
 
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
