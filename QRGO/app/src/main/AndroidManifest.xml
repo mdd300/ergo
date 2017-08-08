@@ -37,7 +37,8 @@
             android:launchMode="singleInstance" />
         <activity android:name=".Produtos.CheckoutActivity" />
         <activity android:name=".Chat.ChatActivity" />
-        <activity android:name=".Chat.ConversaActivity"></activity>
+        <activity android:name=".Chat.ConversaActivity" />
+        <activity android:name=".Chat.ContatosActivity"></activity>
     </application>
 
 </manifest>

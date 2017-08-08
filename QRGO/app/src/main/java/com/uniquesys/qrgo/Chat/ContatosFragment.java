@@ -7,17 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
-import com.uniquesys.qrgo.Chat.splittedImageAdapterList;
 import com.uniquesys.qrgo.R;
 
 import java.util.ArrayList;
 
 
-public class ListViewFragment extends Fragment {
+public class ContatosFragment extends Fragment {
     ArrayList<Bitmap> splittedBitmaps;
     ArrayList<String> splittedid;
-    ArrayList<String>  LastMessage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,7 +22,7 @@ public class ListViewFragment extends Fragment {
         if (getArguments() != null) {
             splittedBitmaps = getArguments().getParcelableArrayList("lista");
             splittedid = getArguments().getStringArrayList("id");
-            LastMessage = getArguments().getStringArrayList("LastMessage");
+
         }
     }
 
@@ -33,11 +30,11 @@ public class ListViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_list_view, container,
+        View rootView = inflater.inflate(R.layout.fragment_contatos, container,
                 false);
 
-        ListView listView = (ListView) rootView.findViewById(R.id.ListViewChat);
-        splittedImageAdapterList adapter = new splittedImageAdapterList(getActivity(), splittedBitmaps, splittedid, LastMessage);
+        ListView listView = (ListView) rootView.findViewById(R.id.ListViewContatos);
+        SplittedListContatoAdapter adapter = new SplittedListContatoAdapter(getActivity(), splittedBitmaps, splittedid);
         listView.setAdapter(adapter);
         return rootView;
     }

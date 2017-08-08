@@ -11,6 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.uniquesys.qrgo.Chat.NotificationConversa;
 import com.uniquesys.qrgo.R;
 
 import java.util.concurrent.ExecutionException;
@@ -19,6 +20,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private static final String PREF_NAME = "USER_LOG";
     String hash;
     String user_id;
+    private NotificationConversa Not;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,4 +109,5 @@ public class CheckoutActivity extends AppCompatActivity {
         finish();
 
     }
+
 }

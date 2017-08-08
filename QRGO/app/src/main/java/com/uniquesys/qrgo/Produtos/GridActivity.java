@@ -3,6 +3,7 @@ package com.uniquesys.qrgo.Produtos;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Parcelable;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uniquesys.qrgo.Chat.ChatActivity;
+import com.uniquesys.qrgo.Chat.NotificationConversa;
 import com.uniquesys.qrgo.model.Imagem;
 import com.uniquesys.qrgo.R;
 
@@ -43,6 +45,7 @@ public class GridActivity extends AppCompatActivity {
     String method2;
     String function2;
     private static final String PREF_NAME = "USER_LOG";
+    String user_id;
 
 
     @Override
@@ -50,6 +53,12 @@ public class GridActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        user_id = sharedPreferences.getString("user_id", "");
+
+        new NotificationConversa().Ativado(this,getResources(),user_id,"ativar");
+
         pd = ProgressDialog.show(GridActivity.this, "Carregando", "Aguarde...", true, false);
         this.getGridImage();
         EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
@@ -191,7 +200,6 @@ public void getGridImage(){
         startActivity(intent_next);
         overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
         finish();
-
     }
     @Override
     public void onBackPressed() {
@@ -356,8 +364,8 @@ public void getGridImage(){
 
     }
     @Override
-    public void onStop(){
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
 
     }
 

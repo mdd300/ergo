@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.uniquesys.qrgo.Chat.NotificationConversa;
 import com.uniquesys.qrgo.model.Imagem;
 import com.uniquesys.qrgo.MainActivity;
 import com.uniquesys.qrgo.R;
@@ -35,6 +36,7 @@ import java.util.concurrent.ExecutionException;
 public class ProdutoActivity extends AppCompatActivity {
 
     private static final String PREF_NAME = "USER_LOG";
+    private NotificationConversa Not;
 
     String id;
     Bitmap image;
@@ -609,4 +611,5 @@ public class ProdutoActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.anim_slide_right_leave,R.anim.anim_slide_left_leave);
         finish();
     }
+
 }

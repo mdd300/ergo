@@ -7,14 +7,14 @@
         android:id="@+id/Mensagem"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/mensagem_remetente_layout"
         android:gravity="center"
         android:text="TextView"
-        android:textColor="@color/Cinza" />
+        android:textColor="@color/Cinza"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

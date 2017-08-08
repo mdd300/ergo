@@ -1,14 +1,13 @@
 package com.uniquesys.qrgo.Chat;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.uniquesys.qrgo.R;
 
@@ -28,6 +27,7 @@ public class ConversaFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,7 +38,9 @@ public class ConversaFragment extends Fragment {
         ListView listView = (ListView) rootView.findViewById(R.id.ListViewMensagem);
         SplittedListAdapter adapter = new SplittedListAdapter(getActivity(), splittedMensagem, layout);
         listView.setAdapter(adapter);
+        listView.setSelection(listView.getAdapter().getCount()-1);
         return rootView;
     }
+
 
 }

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,28 +25,25 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class splittedImageAdapterList extends BaseAdapter {
+public class SplittedListContatoAdapter extends BaseAdapter {
 
     Context mContext;
     List<Bitmap> data;
     List<String> id;
-    List<String> ult_mensagem;
     Bitmap result;
     private int resource;
     private LayoutInflater inflater;
 
 
-    public splittedImageAdapterList(Context c, List<Bitmap> splittedBitmaps, List<String> splittedid, List<String> LastMessage) {
+    public SplittedListContatoAdapter(Context c, List<Bitmap> splittedBitmaps, List<String> splittedid) {
 
         mContext = c;
         data=splittedBitmaps;
         id = splittedid;
-        ult_mensagem = LastMessage;
-        resource = R.layout.listview_chat;
+        resource = R.layout.listview_contatos;
         inflater = LayoutInflater.from(mContext);
 
     }
-
 
     @Override
     public int getCount() {
@@ -66,20 +64,20 @@ public class splittedImageAdapterList extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup arg2) {
 
-            int size = Math.min(data.get(position).getWidth(), data.get(position).getHeight());
-            int x = (data.get(position).getWidth() - size) / 2;
-            int y = (data.get(position).getHeight() - size) / 2;
+        int size = Math.min(data.get(position).getWidth(), data.get(position).getHeight());
+        int x = (data.get(position).getWidth() - size) / 2;
+        int y = (data.get(position).getHeight() - size) / 2;
 
-            Bitmap squared = Bitmap.createBitmap(data.get(position), x, y, size, size);
+        Bitmap squared = Bitmap.createBitmap(data.get(position), x, y, size, size);
 
-            result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
 
-            Canvas canvas = new Canvas(result);
-            Paint paint = new Paint();
-            paint.setShader(new BitmapShader(squared, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
-            paint.setAntiAlias(true);
-            float r = size / 2f;
-            canvas.drawCircle(r, r, r, paint);
+        Canvas canvas = new Canvas(result);
+        Paint paint = new Paint();
+        paint.setShader(new BitmapShader(squared, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+        paint.setAntiAlias(true);
+        float r = size / 2f;
+        canvas.drawCircle(r, r, r, paint);
 
         final RelativeLayout convertViewR = (RelativeLayout) inflater.inflate(resource, null);
 
@@ -87,8 +85,6 @@ public class splittedImageAdapterList extends BaseAdapter {
 
         imageview.setImageBitmap(result);
 
-        TextView LMessage = (TextView) convertViewR.findViewById(R.id.ult_mes);
-        LMessage.setText(ult_mensagem.get(position));
         convertViewR.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -97,9 +93,8 @@ public class splittedImageAdapterList extends BaseAdapter {
                 in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 in.putExtra("id", id.get(position));
                 mContext.startActivity(in);
-                ((ChatActivity) mContext).overridePendingTransition(R.anim.anim_slide_right,R.anim.anim_slide_left);
-                ((ChatActivity) mContext).finish();
-
+                ((ContatosActivity) mContext).overridePendingTransition(R.anim.anim_slide_right,R.anim.anim_slide_left);
+                ((ContatosActivity) mContext).finish();
             }
         });
 
@@ -123,7 +118,6 @@ public class splittedImageAdapterList extends BaseAdapter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         return convertViewR;
     }

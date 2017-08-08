@@ -5,10 +5,11 @@
     <color name="colorAccent">#34b1ff</color>
     <color name="CorBotaoEnviar">#000000</color>
     <color name="Cinza">#fafafa</color>
-    <color name="CinzaEscuro">#696969</color>
+    <color name="CinzaEscuro">#989898</color>
     <color name="btnVerde">#70ba63</color>
     <color name="VermelhorProd">#f70058</color>
     <color name="VerdeCarrinho">#32c647</color>
     <color name="azulSelected">#0ea2fe</color>
+    <color name="azulMenu">#FF3658C5</color>
 
 </resources>

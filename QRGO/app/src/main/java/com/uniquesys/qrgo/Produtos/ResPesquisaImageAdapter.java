@@ -54,7 +54,7 @@ public class ResPesquisaImageAdapter extends BaseAdapter {
         if (convertView == null) {
 
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(350, 350));
+            imageView.setLayoutParams(new GridView.LayoutParams(380, 380));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(1,2,1,2);
         }else {
