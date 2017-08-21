@@ -72,6 +72,7 @@ public class splittedImageAdapterList extends BaseAdapter {
 
             Bitmap squared = Bitmap.createBitmap(data.get(position), x, y, size, size);
 
+
             result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
 
             Canvas canvas = new Canvas(result);
@@ -97,7 +98,7 @@ public class splittedImageAdapterList extends BaseAdapter {
                 in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 in.putExtra("id", id.get(position));
                 mContext.startActivity(in);
-                ((ChatActivity) mContext).overridePendingTransition(R.anim.anim_slide_right,R.anim.anim_slide_left);
+                ((ChatActivity) mContext).overridePendingTransition(R.anim.anim_slide_right_leave,R.anim.anim_slide_left_leave);
                 ((ChatActivity) mContext).finish();
 
             }

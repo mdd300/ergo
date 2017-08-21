@@ -50,6 +50,7 @@
                 android:layout_marginEnd="11dp"
                 android:layout_marginRight="11dp"
                 android:background="@color/Cinza"
+                android:onClick="chat"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/iconmessage"
                 tools:layout_editor_absoluteX="335dp"
@@ -66,72 +67,22 @@
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/logo" />
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/imageButton5"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:onClick="Logout"
+                android:text="Logout" />
+
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="130dp"
-            android:scaleType="fitStart"
-            app:srcCompat="@drawable/btbg" />
-
-        <TextView
-            android:id="@+id/txtProd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/imageView8"
-            android:text="TextView"
-            android:textColor="@color/CorBotaoEnviar"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView5"
-            android:text="Preço:"
-            android:textColor="@color/viewfinder_mask"
-            android:textColorHighlight="@color/Cinza"
-            android:textColorHint="@android:color/darker_gray" />
-
-        <TextView
-            android:id="@+id/txtPreco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView5"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_toEndOf="@+id/textView3"
-            android:layout_toRightOf="@+id/textView3"
-            android:text="TextView"
-            android:textColor="@color/CorBotaoEnviar" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/txtProd"
-            android:layout_alignRight="@+id/txtProd"
-            android:layout_below="@+id/txtProd"
-            android:text="Referencia:" />
-
-        <TextView
-            android:id="@+id/txtReferencia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/txtPreco"
-            android:layout_toEndOf="@+id/textView5"
-            android:layout_toRightOf="@+id/textView5"
-            android:text="TextView" />
-
         <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="fill_parent"
             android:layout_height="35dp"
             android:layout_alignParentLeft="true"
@@ -175,38 +126,39 @@
                 android:text="Produtos" />
         </LinearLayout>
 
-        <ViewFlipper
-            android:id="@+id/relativeLayout4"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/txtReferencia"
-            android:layout_marginTop="14dp">
-
-
-        </ViewFlipper>
-
-        <ViewFlipper
-            android:id="@+id/relativeLayout3"
+        <RelativeLayout
+            android:id="@+id/rL3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_above="@+id/relativeLayout7"
-            android:layout_alignLeft="@+id/relativeLayout6"
-            android:layout_alignStart="@+id/relativeLayout6"
-            android:layout_below="@+id/textView3">
+            android:layout_below="@+id/relativeLayout10">
 
-        </ViewFlipper>
+            <ViewFlipper
+                android:id="@+id/relativeLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true">
 
-        <ViewFlipper
-            android:id="@+id/relativeLayout5"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_below="@+id/textView5"
-            android:layout_toLeftOf="@+id/relativeLayout4"
-            android:layout_toStartOf="@+id/relativeLayout4">
+            </ViewFlipper>
 
-        </ViewFlipper>
+            <ViewFlipper
+
+                android:id="@+id/relativeLayout4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="62dp"
+                android:layout_marginStart="62dp"
+                android:layout_marginTop="13dp">
+
+
+            </ViewFlipper>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/relativeLayout7"
@@ -221,9 +173,8 @@
                 android:id="@+id/relativeLayout8"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:orientation="vertical">
 
                 <TextView
@@ -236,6 +187,7 @@
                     android:background="@color/viewfinder_mask"
                     android:text="P"
                     android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textStyle="bold" />
 
                 <TextView
@@ -248,6 +200,7 @@
                     android:background="@color/viewfinder_mask"
                     android:text="M"
                     android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textStyle="bold" />
 
                 <TextView
@@ -260,6 +213,7 @@
                     android:background="@color/viewfinder_mask"
                     android:text="GG"
                     android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textStyle="bold" />
 
                 <TextView
@@ -272,6 +226,7 @@
                     android:background="@color/viewfinder_mask"
                     android:text="G"
                     android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textStyle="bold" />
 
                 <EditText
@@ -281,10 +236,11 @@
                     android:layout_alignParentBottom="true"
                     android:layout_toEndOf="@+id/Text1"
                     android:layout_toRightOf="@+id/Text1"
-                    android:background="@color/viewfinder_mask"
+                    android:background="@color/common_google_signin_btn_text_light_pressed"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                 <TextView
                     android:id="@+id/Text2"
@@ -294,7 +250,8 @@
                     android:layout_toEndOf="@+id/textView6"
                     android:layout_toRightOf="@+id/textView6"
                     android:background="@color/CinzaEscuro"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                 <TextView
                     android:id="@+id/Text1"
@@ -305,7 +262,8 @@
                     android:layout_toEndOf="@+id/textView11"
                     android:layout_toRightOf="@+id/textView11"
                     android:background="@color/CinzaEscuro"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                 <EditText
                     android:id="@+id/edit1"
@@ -314,10 +272,11 @@
                     android:layout_alignParentBottom="true"
                     android:layout_toEndOf="@+id/edit0"
                     android:layout_toRightOf="@+id/edit0"
-                    android:background="@color/viewfinder_mask"
+                    android:background="@color/common_google_signin_btn_text_light_pressed"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                 <TextView
                     android:id="@+id/textView11"
@@ -326,6 +285,7 @@
                     android:background="@color/viewfinder_mask"
                     android:text="PP"
                     android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textStyle="bold" />
 
                 <TextView
@@ -336,7 +296,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:background="@color/CinzaEscuro"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                 <EditText
                     android:id="@+id/edit0"
@@ -345,10 +306,11 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:background="@color/viewfinder_mask"
+                    android:background="@color/common_google_signin_btn_text_light_pressed"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                 <TextView
                     android:id="@+id/Text4"
@@ -359,7 +321,8 @@
                     android:layout_toEndOf="@+id/textView7"
                     android:layout_toRightOf="@+id/textView7"
                     android:background="@color/CinzaEscuro"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                 <TextView
                     android:id="@+id/Text3"
@@ -370,7 +333,8 @@
                     android:layout_toEndOf="@+id/textView13"
                     android:layout_toRightOf="@+id/textView13"
                     android:background="@color/CinzaEscuro"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                 <EditText
                     android:id="@+id/edit4"
@@ -379,10 +343,11 @@
                     android:layout_alignParentBottom="true"
                     android:layout_toEndOf="@+id/Text3"
                     android:layout_toRightOf="@+id/Text3"
-                    android:background="@color/viewfinder_mask"
+                    android:background="@color/common_google_signin_btn_text_light_pressed"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
                 <EditText
                     android:id="@+id/edit3"
@@ -391,10 +356,23 @@
                     android:layout_alignParentBottom="true"
                     android:layout_toEndOf="@+id/edit2"
                     android:layout_toRightOf="@+id/edit2"
-                    android:background="@color/viewfinder_mask"
+                    android:background="@color/common_google_signin_btn_text_light_pressed"
                     android:ems="10"
                     android:inputType="number"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignTop="@+id/Text4"
+                    android:layout_toEndOf="@+id/textView18"
+                    android:layout_toRightOf="@+id/textView18"
+                    android:background="@drawable/botaorefresh"
+                    android:onClick="limpar"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/limpar" />
             </RelativeLayout>
 
             <EditText
@@ -411,12 +389,12 @@
             android:id="@+id/relativeLayout2"
             android:layout_width="wrap_content"
             android:layout_height="43dp"
-            android:layout_above="@+id/txtProd"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:background="@color/Cinza"
             tools:layout_editor_absoluteX="-7dp"
-            tools:layout_editor_absoluteY="86dp">
+            tools:layout_editor_absoluteY="86dp"
+            android:layout_below="@+id/linearLayout4"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -425,6 +403,17 @@
                 android:layout_alignParentTop="true"
                 android:scaleType="matrix"
                 app:srcCompat="@drawable/rectanglered" />
+
+            <ImageButton
+                android:id="@+id/imageButton7"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@color/Cinza"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/vectorpesquisa"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -436,19 +425,6 @@
                 android:layout_marginLeft="51dp"
                 android:layout_marginStart="51dp"
                 app:srcCompat="@drawable/vectorprod" />
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="14dp"
-                android:layout_marginRight="14dp"
-                android:layout_toLeftOf="@+id/imageButton6"
-                android:layout_toStartOf="@+id/imageButton6"
-                android:background="@color/Cinza"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/vectorgrade" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -465,30 +441,18 @@
                 android:textSize="@dimen/activity_vertical_margin" />
 
             <ImageButton
-                android:id="@+id/imageButton6"
+                android:id="@+id/imageButton10"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/imageButton2"
-                android:layout_marginEnd="13dp"
-                android:layout_marginRight="13dp"
+                android:layout_alignTop="@+id/imageButton7"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/imageButton7"
+                android:layout_toStartOf="@+id/imageButton7"
                 android:background="@color/Cinza"
+                android:onClick="guardar"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/vectorlista" />
-
-            <ImageButton
-                android:id="@+id/imageButton7"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignTop="@+id/imageButton2"
-                android:layout_marginEnd="14dp"
-                android:layout_marginRight="14dp"
-                android:layout_toLeftOf="@+id/imageButton2"
-                android:layout_toStartOf="@+id/imageButton2"
-                android:background="@color/Cinza"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/vectorpesquisa" />
+                app:srcCompat="@drawable/carrinhosalvar" />
 
         </RelativeLayout>
 
@@ -539,7 +503,90 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:onClick="camera"
                 app:srcCompat="@drawable/qrcodeicon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout10"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/relativeLayout2">
+
+            <ViewFlipper
+                android:id="@+id/relativeLayout5"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true">
+
+            </ViewFlipper>
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="matrix"
+                app:srcCompat="@drawable/btbg" />
+
+            <TextView
+                android:id="@+id/txtProd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="TextView"
+                android:textColor="@color/CorBotaoEnviar"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtPreco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/txtReferencia"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/textView3"
+                android:layout_toRightOf="@+id/textView3"
+                android:text="TextView"
+                android:textColor="@color/CorBotaoEnviar" />
+
+            <TextView
+                android:id="@+id/txtReferencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView5"
+                android:layout_alignBottom="@+id/textView5"
+                android:layout_toEndOf="@+id/txtProd"
+                android:layout_toRightOf="@+id/txtProd"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/relativeLayout5"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="Referencia:" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textView5"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="Preço:"
+                android:textColor="@color/viewfinder_mask"
+                android:textColorHighlight="@color/Cinza"
+                android:textColorHint="@android:color/darker_gray" />
+
         </RelativeLayout>
 
     </RelativeLayout>

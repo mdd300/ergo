@@ -7,9 +7,56 @@
     android:background="@android:color/background_light"
     tools:context="com.uniquesys.qrgo.MainActivity">
 
+    <me.dm7.barcodescanner.zxing.ZXingScannerView
+            android:id="@+id/zxscan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+
+        </me.dm7.barcodescanner.zxing.ZXingScannerView>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/btnGrid"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/botaocamera"
+        android:onClick="Grid"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/iconecomprascirc" />
+
+    <ImageView
+        android:id="@+id/btnClientes"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/btnPedidos"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/imageViewLogo"
+        android:layout_toRightOf="@+id/imageViewLogo"
+        android:background="@drawable/botaocamera"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/iconeusuario" />
+
+    <ImageView
+        android:id="@+id/btnPedidos"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/botaocamera"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/iconepedidos" />
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
         android:layout_width="233dp"
         android:layout_height="66dp"
         android:layout_alignParentTop="true"
@@ -24,12 +71,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/shape"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/imageViewLogo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp" />
 
     <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_centerHorizontal="true"
@@ -40,15 +88,15 @@
             android:id="@+id/txtSenha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/txtUser"
+            android:layout_alignLeft="@+id/btnEnviar"
+            android:layout_alignRight="@+id/txtUser"
+            android:layout_alignStart="@+id/btnEnviar"
+            android:layout_below="@+id/txtUser"
+            android:layout_marginTop="18dp"
             android:ems="10"
             android:hint="Senha"
-            android:inputType="textPassword"
-            android:layout_below="@+id/txtUser"
-            android:layout_alignLeft="@+id/btnEnviar"
-            android:layout_alignStart="@+id/btnEnviar"
-            android:layout_marginTop="18dp"
-            android:layout_alignRight="@+id/txtUser"
-            android:layout_alignEnd="@+id/txtUser" />
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/txtUser"
@@ -68,6 +116,9 @@
             android:id="@+id/btnEnviar"
             android:layout_width="322dp"
             android:layout_height="65dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="27dp"
             android:background="@color/CorBotaoEnviar"
             android:backgroundTint="@color/CorBotaoEnviar"
             android:onClick="login"
@@ -76,10 +127,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:layout_editor_absoluteY="530dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="27dp" />
+            tools:layout_editor_absoluteY="530dp" />
     </RelativeLayout>
 
 

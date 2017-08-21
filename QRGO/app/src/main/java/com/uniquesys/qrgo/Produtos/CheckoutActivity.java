@@ -1,7 +1,16 @@
 package com.uniquesys.qrgo.Produtos;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +20,16 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.uniquesys.qrgo.Chat.ChatActivity;
+import com.uniquesys.qrgo.Chat.ContatosActivity;
 import com.uniquesys.qrgo.Chat.NotificationConversa;
+import com.uniquesys.qrgo.MainActivity;
 import com.uniquesys.qrgo.R;
+import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
 
 import java.util.concurrent.ExecutionException;
 
@@ -20,7 +37,9 @@ public class CheckoutActivity extends AppCompatActivity {
     private static final String PREF_NAME = "USER_LOG";
     String hash;
     String user_id;
-    private NotificationConversa Not;
+    DatabaseReference firebaseLast;
+    ValueEventListener valueEventListenerLastMensagemNot;
+    int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +47,53 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
+        valueEventListenerLastMensagemNot = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (i > 0) {
+                NotificationManager nm = (NotificationManager) CheckoutActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
+                PendingIntent p = PendingIntent.getActivity(CheckoutActivity.this, 0, new Intent(CheckoutActivity.this, ChatActivity.class), 0);
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(CheckoutActivity.this);
+
+                builder.setTicker("Nova Mensagem");
+                builder.setContentTitle("QRGO");
+                builder.setContentText("Nova Mensagem");
+                builder.setSmallIcon(R.drawable.logo);
+                builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo));
+                builder.setContentIntent(p);
+
+                Notification n = builder.build();
+                n.vibrate = new long[]{150, 300, 150, 600};
+                nm.notify(R.drawable.logo, n);
+
+                try{
+                    Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    Ringtone toque = RingtoneManager.getRingtone(CheckoutActivity.this,som);
+                    toque.play();
+                }catch (Exception e){
+
+                }}
+                    i++;
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        };
+
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
         user_id = sharedPreferences.getString("user_id", "");
         hash = sharedPreferences.getString("hash", "");
+
+        firebaseLast = ConfiguracaoFirebase.getFirebase().child(user_id).child("Contatos");
+
+
+        firebaseLast.addValueEventListener(valueEventListenerLastMensagemNot);
 
         WebView webview = (WebView) findViewById(R.id.carrinho_wv);
         WebSettings webSettings = webview.getSettings();
@@ -48,7 +111,15 @@ public class CheckoutActivity extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
         finish();
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
+    }
 
+    public void camera(View v) throws ExecutionException, InterruptedException {
+        Intent intent = new Intent(CheckoutActivity.this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
+        finish();
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
     }
 
 
@@ -107,7 +178,11 @@ public class CheckoutActivity extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
         finish();
-
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }

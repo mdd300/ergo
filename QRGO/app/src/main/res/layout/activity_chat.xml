@@ -7,7 +7,7 @@
     tools:context="com.uniquesys.qrgo.Chat.ChatActivity">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/LinearLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -108,7 +108,7 @@
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="35dp"
@@ -118,31 +118,61 @@
         android:orientation="horizontal"
         >
 
-        <Button
-            android:id="@+id/btnConversas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/azulMenu"
-            android:text="Conversas"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"/>
+        <RelativeLayout
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:id="@+id/relativeLayout9">
+
+            <Button
+                android:id="@+id/btnConversas"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/azulMenu"
+                android:text="Conversas"
+                android:textColor="@color/common_google_signin_btn_text_dark_default"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/imageView17"
+                android:layout_width="120dp"
+                android:layout_height="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:elevation="2dp"
+                android:scaleType="matrix"
+                app:srcCompat="@color/Cinza" />
+
+
+        </RelativeLayout>
 
         <View
             android:layout_width="2dp"
             android:layout_height="fill_parent"
-            android:background="#c0c0c0"/>
+            android:background="#c0c0c0"
+            android:layout_centerInParent="true"/>
 
         <Button
             android:id="@+id/btnContatos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.09"
             android:background="@color/azulMenu"
             android:onClick="contatos"
             android:text="Contatos"
-            android:textColor="@color/CinzaEscuro" />
+            android:textColor="@color/CinzaEscuro"
+            android:textSize="12sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/relativeLayout9"
+            android:layout_toEndOf="@+id/relativeLayout9" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/ListChat"

@@ -1,10 +1,18 @@
 package com.uniquesys.qrgo.Chat;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +43,10 @@ public class ConversaActivity extends AppCompatActivity {
     ArrayList<String> splittedMensagem = new ArrayList<>();
     ArrayList<String> splittedMensagemDes = new ArrayList<>();
     ValueEventListener valueEventListenerMensagem;
+    Context con = this;
+    DatabaseReference firebaseLastM;
+    ValueEventListener valueEventListenerLastMensagemNot;
+    int j = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +56,7 @@ public class ConversaActivity extends AppCompatActivity {
         if(savedInstanceState != null){
             idUserDestinatario = savedInstanceState.getString("Destinatario");
             idUserRemetente = savedInstanceState.getString("Remetente");
+            firebaseLastM.removeEventListener(valueEventListenerLastMensagemNot);
 
         }else {
 
@@ -56,6 +69,7 @@ public class ConversaActivity extends AppCompatActivity {
 
             SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
             idUserRemetente = sharedPreferences.getString("user_id", "");
+
         }
         this.carregarMensagens();
     }
@@ -98,6 +112,7 @@ public class ConversaActivity extends AppCompatActivity {
                     .setValue(Mensagemcod);
             
             EditMensagem.setText("");
+            new NotificationConversa().Ativado(this,getResources(),idUserRemetente,"desativar");
         }
 
     }
@@ -109,7 +124,7 @@ public class ConversaActivity extends AppCompatActivity {
             startActivity(intent_next);
             overridePendingTransition(R.anim.anim_slide_right_leave, R.anim.anim_slide_left_leave);
             finish();
-        new NotificationConversa().Ativado(this,getResources(),idUserRemetente,"desativar");
+        new NotificationConversa().Ativado(this,getResources(),idUserRemetente,"ativar");
         }
 
     public void grid(View v) throws ExecutionException, InterruptedException {
@@ -124,12 +139,59 @@ public class ConversaActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString("Destinatario",idUserDestinatario);
         outState.putString("Remetente",idUserRemetente);
+
+        j=0;
+
+        valueEventListenerLastMensagemNot = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (j > 0) {
+                    NotificationManager nm = (NotificationManager) ConversaActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
+                    PendingIntent p = PendingIntent.getActivity(ConversaActivity.this, 0, new Intent(ConversaActivity.this, ChatActivity.class), 0);
+
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(ConversaActivity.this);
+
+                    builder.setTicker("Nova Mensagem");
+                    builder.setContentTitle("QRGO");
+                    builder.setContentText("Nova Mensagem");
+                    builder.setSmallIcon(R.drawable.logo);
+                    builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo));
+                    builder.setContentIntent(p);
+
+                    Notification n = builder.build();
+                    n.vibrate = new long[]{150, 300, 150, 600};
+                    nm.notify(R.drawable.logo, n);
+
+                    try {
+                        Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        Ringtone toque = RingtoneManager.getRingtone(ConversaActivity.this, som);
+                        toque.play();
+                    } catch (Exception e) {
+
+                    }
+
+                }
+                j++;
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        };
+
+        firebaseLastM = ConfiguracaoFirebase.getFirebase().child(idUserRemetente).child("Contatos");
+
+
+        firebaseLastM.addValueEventListener(valueEventListenerLastMensagemNot);
     }
 
     public void mensagens(View v) throws ExecutionException, InterruptedException {
         Intent intent_next=new Intent(ConversaActivity.this,ChatActivity.class);
         startActivity(intent_next);
-        overridePendingTransition(R.anim.anim_slide_left_leave,R.anim.anim_slide_right_leave);
+        overridePendingTransition(R.anim.anim_slide_right,R.anim.anim_slide_left);
         finish();
     }
 
@@ -170,6 +232,8 @@ public void carregarMensagens(){
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.ListMensagens, fragment, fragment.getClass().getSimpleName()).commitAllowingStateLoss();
                 }
+
+                new NotificationConversa().Ativado(con,getResources(),idUserRemetente,"desativar");
             }
         }
         @Override
@@ -180,6 +244,20 @@ public void carregarMensagens(){
 
     firebaseQ.addValueEventListener(valueEventListenerMensagem);
 }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (firebaseLastM != null)
+            firebaseLastM.removeEventListener(valueEventListenerLastMensagemNot);
+    }
 }
+
+
 
 

@@ -13,6 +13,9 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -76,6 +79,17 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ImageView cliente = (ImageView) findViewById(R.id.btnClientes);
+        ImageView grid = (ImageView) findViewById(R.id.btnGrid);
+        ImageView pedidos = (ImageView) findViewById(R.id.btnPedidos);
+        mScannerView = (ZXingScannerView) findViewById(R.id.zxscan);
+        cliente.setVisibility(View.INVISIBLE);
+        grid.setVisibility(View.INVISIBLE);
+        pedidos.setVisibility(View.INVISIBLE);
+        mScannerView.setVisibility(View.INVISIBLE);
+
         if (ContextCompat.checkSelfPermission(this, CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // Verifica se já mostramos o alerta e o usuário negou na 1ª vez.
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, CAMERA)) {
@@ -93,14 +107,20 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         user_id = sharedPreferences.getString("user_id", "");
         hash = sharedPreferences.getString("hash", "");
 
-
-        setContentView(R.layout.activity_main);
-
         if(user_id != "" && hash != ""){
-            mScannerView = new ZXingScannerView(this);
-            setContentView(mScannerView);
+            mScannerView = (ZXingScannerView) findViewById(R.id.zxscan);
+            mScannerView.setVisibility(View.VISIBLE);
             mScannerView.setResultHandler(this);
             mScannerView.startCamera();
+            cliente.setVisibility(View.VISIBLE);
+            grid.setVisibility(View.VISIBLE);
+            pedidos.setVisibility(View.VISIBLE);
+            ImageView logo = (ImageView) findViewById(R.id.imageViewLogo);
+            ImageView line = (ImageView) findViewById(R.id.imageView);
+            RelativeLayout log = (RelativeLayout) findViewById(R.id.relative);
+            logo.setVisibility(View.INVISIBLE);
+            line.setVisibility(View.INVISIBLE);
+            log.setVisibility(View.INVISIBLE);
             mScannerView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -133,10 +153,22 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             userPref.apply();
 
 // Tudo OK, podemos prosseguir.
-            mScannerView = new ZXingScannerView(this);
-            setContentView(mScannerView);
+            mScannerView = (ZXingScannerView) findViewById(R.id.zxscan);
+            mScannerView.setVisibility(View.VISIBLE);
             mScannerView.setResultHandler(this);
             mScannerView.startCamera();
+            ImageView cliente = (ImageView) findViewById(R.id.btnClientes);
+            ImageView grid = (ImageView) findViewById(R.id.btnGrid);
+            ImageView pedidos = (ImageView) findViewById(R.id.btnPedidos);
+            ImageView logo = (ImageView) findViewById(R.id.imageViewLogo);
+            ImageView line = (ImageView) findViewById(R.id.imageView);
+            RelativeLayout log = (RelativeLayout) findViewById(R.id.relative);
+            logo.setVisibility(View.INVISIBLE);
+            line.setVisibility(View.INVISIBLE);
+            log.setVisibility(View.INVISIBLE);
+            cliente.setVisibility(View.VISIBLE);
+            grid.setVisibility(View.VISIBLE);
+            pedidos.setVisibility(View.VISIBLE);
             mScannerView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -179,6 +211,15 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        finish();
+    }
+
+    public void Grid(View v) throws ExecutionException, InterruptedException {
+        Intent intent = new Intent(MainActivity.this, GridActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_up, R.anim.anim_slide_down);
         finish();
     }
 

@@ -183,6 +183,7 @@
             android:layout_marginLeft="51dp"
             android:layout_marginStart="51dp"
             android:background="@android:color/background_light"
+            android:onClick="camera"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/qrcode" />
 

@@ -113,39 +113,74 @@
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:orientation="horizontal"
         android:layout_below="@+id/linearLayout2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
 
         <Button
             android:id="@+id/btnConversas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/view"
+            android:layout_toStartOf="@+id/view"
+            android:layout_weight="1.03"
             android:background="@color/azulMenu"
             android:onClick="chat"
             android:text="Conversas"
-            android:textColor="@color/CinzaEscuro" />
+            android:textColor="@color/CinzaEscuro"
+            android:textSize="12sp" />
 
         <View
+            android:id="@+id/view"
             android:layout_width="2dp"
             android:layout_height="fill_parent"
-            android:background="#c0c0c0" />
+            android:background="#c0c0c0"
+            android:layout_centerInParent="true"/>
 
-        <Button
-            android:id="@+id/btnContatos"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/azulMenu"
-            android:text="Contatos"
-            android:textColor="@color/Cinza" />
+            android:layout_weight="1.0"
+            android:layout_toRightOf="@+id/view"
+            android:layout_toEndOf="@+id/view">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnContatos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:background="@color/azulMenu"
+                android:text="Contatos"
+                android:textColor="@color/common_google_signin_btn_text_dark_default"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/imageView17"
+                android:layout_width="120dp"
+                android:layout_height="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:elevation="2dp"
+                android:scaleType="matrix"
+                app:srcCompat="@color/Cinza" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

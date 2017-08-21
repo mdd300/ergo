@@ -41,11 +41,13 @@ if (i > 0) {
     PendingIntent p = PendingIntent.getActivity(con, 0, new Intent(con, ChatActivity.class), 0);
 
     NotificationCompat.Builder builder = new NotificationCompat.Builder(con);
+
     builder.setTicker("Nova Mensagem");
     builder.setContentTitle("QRGO");
     builder.setContentText("Nova Mensagem");
     builder.setSmallIcon(R.drawable.logo);
     builder.setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.logo));
+    builder.setContentIntent(p);
 
     Notification n = builder.build();
     n.vibrate = new long[]{150, 300, 150, 600};
@@ -78,6 +80,7 @@ if (i > 0) {
             firebaseLast.addValueEventListener(valueEventListenerLastMensagemNot);
         }else{
             firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
+
         }
 
     }

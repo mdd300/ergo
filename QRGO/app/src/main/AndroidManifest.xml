@@ -17,6 +17,7 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -38,7 +39,8 @@
         <activity android:name=".Produtos.CheckoutActivity" />
         <activity android:name=".Chat.ChatActivity" />
         <activity android:name=".Chat.ConversaActivity" />
-        <activity android:name=".Chat.ContatosActivity"></activity>
+        <activity android:name=".Chat.ContatosActivity" />
+        <activity android:name=".Produtos.ListViewActivity"></activity>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@
     <color name="VermelhorProd">#f70058</color>
     <color name="VerdeCarrinho">#32c647</color>
     <color name="azulSelected">#0ea2fe</color>
-    <color name="azulMenu">#FF3658C5</color>
+    <color name="azulMenu">#FF34498D</color>
+    <color name="transparente">#80FFFFFF</color>
 
 </resources>
