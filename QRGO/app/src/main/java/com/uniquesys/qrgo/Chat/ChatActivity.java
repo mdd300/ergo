@@ -12,11 +12,9 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.MainActivity;
-import com.uniquesys.qrgo.Produtos.GridActivity;
+import com.uniquesys.qrgo.Produtos.CheckoutActivity;
+import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.Produtos.Model;
 import com.uniquesys.qrgo.R;
 import com.uniquesys.qrgo.config.Base64Custom;
@@ -112,9 +111,7 @@ public class ChatActivity extends AppCompatActivity {
                                     }
 
                                     String MensagemRecebida = mes.getValue().toString();
-                                    MensagemRecebida = Base64Custom.decodificarBase64(MensagemRecebida);
-                                    String[] separated = MensagemRecebida.split("#Controle#QRGO2017#Bolacha#");
-                                    LMessage = separated[1].toString();
+                                    LMessage = Base64Custom.decodificarBase64(MensagemRecebida);
                                     LastMessage.add(LMessage);
 
                                     Fragment fragment = null;
@@ -274,5 +271,10 @@ public class ChatActivity extends AppCompatActivity {
         if (firebaseLastM != null)
         firebaseLastM.removeEventListener(valueEventListenerLastMensagemNot);
     }
-
+    public void carrinho(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(ChatActivity.this,CheckoutActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
+        finish();
+    }
 }

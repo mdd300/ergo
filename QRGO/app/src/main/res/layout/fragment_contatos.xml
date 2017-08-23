@@ -5,7 +5,7 @@
     tools:context="com.uniquesys.qrgo.Chat.ContatosFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ListView
+    <GridView
         android:id="@+id/ListViewContatos"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:numColumns="3"

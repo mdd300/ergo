@@ -1,4 +1,4 @@
-package com.uniquesys.qrgo.Chat;
+package com.uniquesys.qrgo.Produtos.GridProdutos;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -7,13 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ListView;
+
 import com.uniquesys.qrgo.R;
 
 import java.util.ArrayList;
 
 
-public class ContatosFragment extends Fragment {
+public class GridFragment extends Fragment {
     ArrayList<Bitmap> splittedBitmaps;
     ArrayList<String> splittedid;
 
@@ -23,7 +23,6 @@ public class ContatosFragment extends Fragment {
         if (getArguments() != null) {
             splittedBitmaps = getArguments().getParcelableArrayList("lista");
             splittedid = getArguments().getStringArrayList("id");
-
         }
     }
 
@@ -31,13 +30,15 @@ public class ContatosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_contatos, container,
-                false);
+            View rootView = inflater.inflate(R.layout.fragment_grid, container,
+                    false);
 
-        GridView listView = (GridView) rootView.findViewById(R.id.ListViewContatos);
-        SplittedListContatoAdapter adapter = new SplittedListContatoAdapter(getActivity(), splittedBitmaps, splittedid);
-        listView.setAdapter(adapter);
-        return rootView;
+
+
+            GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
+            SplittedImageAdapter adapter = new SplittedImageAdapter(getActivity(), splittedBitmaps, splittedid);
+            gridView.setAdapter(adapter);
+            return rootView;
     }
 
 

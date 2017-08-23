@@ -37,7 +37,7 @@ public class ListViewFragment extends Fragment {
                 false);
 
         ListView listView = (ListView) rootView.findViewById(R.id.ListViewChat);
-        splittedImageAdapterList adapter = new splittedImageAdapterList(getActivity(), splittedBitmaps, splittedid, LastMessage);
+        splittedImageAdapterList adapter = new splittedImageAdapterList(getResources(),getActivity(), splittedBitmaps, splittedid, LastMessage);
         listView.setAdapter(adapter);
         return rootView;
     }

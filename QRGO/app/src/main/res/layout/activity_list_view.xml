@@ -1,9 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.uniquesys.qrgo.Produtos.ListViewActivity">
+    android:background="@android:color/background_light"
+    tools:context="com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="129dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout2">
+
+        <FrameLayout
+            android:id="@+id/pesquisas_ListProd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.95">
+
+            <FrameLayout
+                android:id="@+id/fragment_ListProd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+            </FrameLayout>
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/TextLoad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="0.05"
+            android:background="@color/btnVerde"
+            android:text="Carregar mais"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light" />
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/Cinza"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="4dp">
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:layout_toLeftOf="@+id/imageButton4"
+            android:layout_toStartOf="@+id/imageButton4"
+            android:background="@color/Cinza"
+            android:onClick="carrinho"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/carrinhomenu" />
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageButton5"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:background="@color/Cinza"
+            android:onClick="chat"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/iconmessage"
+            tools:layout_editor_absoluteX="335dp"
+            tools:layout_editor_absoluteY="4dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@color/Cinza"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/logo" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="43dp"
+        android:background="@color/Cinza"
+        tools:layout_editor_absoluteX="-7dp"
+        tools:layout_editor_absoluteY="86dp"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:scaleType="matrix"
+            app:srcCompat="@drawable/rectanglered" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="51dp"
+            android:layout_marginStart="51dp"
+            app:srcCompat="@drawable/vectorprod" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_toLeftOf="@+id/imageButton6"
+            android:layout_toStartOf="@+id/imageButton6"
+            android:background="@color/Cinza"
+            android:onClick="Grid"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/icongrade" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13dp"
+            android:layout_marginStart="13dp"
+            android:layout_toEndOf="@+id/imageView5"
+            android:layout_toRightOf="@+id/imageView5"
+            android:text="Produtos"
+            android:textColor="@color/VermelhorProd"
+            android:textIsSelectable="false"
+            android:textSize="@dimen/activity_vertical_margin" />
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageButton2"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="13dp"
+            android:background="@color/Cinza"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/iconlista" />
+
+        <ImageView
+            android:id="@+id/imageButton7"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignTop="@+id/imageButton2"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_toLeftOf="@+id/imageButton2"
+            android:layout_toStartOf="@+id/imageButton2"
+            android:background="@color/Cinza"
+            android:onClick="pesquisaInicias"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/vectorpesquisa" />
+
+        <EditText
+            android:id="@+id/editTextPesquisa"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/buttonPesquisa"
+            android:layout_toStartOf="@+id/buttonPesquisa"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <ImageView
+            android:id="@+id/buttonPesquisa"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@color/Cinza"
+            android:onClick="pesquisa"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/vectorpesquisa"
+            android:layout_alignTop="@+id/imageButton7"
+            android:layout_toLeftOf="@+id/imageButton7"
+            android:layout_toStartOf="@+id/imageButton7" />
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/TextViewTeste"
+            android:layout_weight="3"/>
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Pedidos" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Clientes" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Novos" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Produtos" />
+    </LinearLayout>
+
+</RelativeLayout>

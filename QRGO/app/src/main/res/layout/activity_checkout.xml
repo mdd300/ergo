@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
-    tools:context="com.uniquesys.qrgo.Produtos.GridActivity">
+    tools:context="com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -22,16 +22,17 @@
             android:id="@+id/imageButton4"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
             android:background="@color/Cinza"
+            android:onClick="chat"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/iconmessage"
             tools:layout_editor_absoluteX="335dp"
-            tools:layout_editor_absoluteY="4dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            tools:layout_editor_absoluteY="4dp" />
 
         <ImageButton
             android:id="@+id/imageButton"

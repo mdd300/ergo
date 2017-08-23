@@ -1,4 +1,4 @@
-package com.uniquesys.qrgo.Produtos;
+package com.uniquesys.qrgo.Produtos.ListProdutos;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -6,15 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-
+import android.widget.ListView;
 import com.uniquesys.qrgo.R;
 
 import java.util.ArrayList;
 
 
-public class PesquisaFragment extends Fragment {
-
+public class ListProdFragment extends Fragment {
     ArrayList<Bitmap> splittedBitmaps;
     ArrayList<String> splittedid;
 
@@ -31,17 +29,16 @@ public class PesquisaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_grid, container,
+        View rootView = inflater.inflate(R.layout.fragment_list_prod, container,
                 false);
 
-rootView.clearFocus();
 
-        GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
-        PesquisaImageAdapter adapter = new PesquisaImageAdapter(getActivity(), splittedBitmaps, splittedid);
 
+        ListView gridView = (ListView) rootView.findViewById(R.id.ListView_Prods);
+        SplittedImageListProd adapter = new SplittedImageListProd(getActivity(), splittedBitmaps, splittedid);
         gridView.setAdapter(adapter);
-
         return rootView;
     }
+
 
 }

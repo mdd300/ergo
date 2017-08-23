@@ -40,7 +40,7 @@ public class SplittedListContatoAdapter extends BaseAdapter {
         mContext = c;
         data=splittedBitmaps;
         id = splittedid;
-        resource = R.layout.listview_contatos;
+        resource = R.layout.grid_listclientes;
         inflater = LayoutInflater.from(mContext);
 
     }
@@ -106,6 +106,7 @@ public class SplittedListContatoAdapter extends BaseAdapter {
         String resultado = null;
         try {
             resultado = prodTask.get();
+            Log.e("teste",resultado);
             JSONArray arrayJson = new JSONArray(resultado.toString());
             JSONObject obj = arrayJson.getJSONObject(0);
             String nome = obj.getString("user_nome");

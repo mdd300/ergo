@@ -27,42 +27,28 @@
         android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="53dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:background="@color/Cinza"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="4dp">
+        tools:layout_editor_absoluteY="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <ImageButton
             android:id="@+id/imageButton5"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="11dp"
-            android:layout_marginRight="11dp"
-            android:layout_toLeftOf="@+id/imageButton4"
-            android:layout_toStartOf="@+id/imageButton4"
             android:background="@color/Cinza"
             android:onClick="carrinho"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/carrinhomenu" />
-
-        <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
+            app:srcCompat="@drawable/carrinhomenu"
+            android:layout_marginRight="18dp"
+            android:layout_marginEnd="18dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/imageButton5"
-            android:layout_marginEnd="11dp"
-            android:layout_marginRight="11dp"
-            android:background="@color/Cinza"
-            android:onClick="chat"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/iconmessage"
-            tools:layout_editor_absoluteX="335dp"
-            tools:layout_editor_absoluteY="4dp" />
+            android:layout_alignParentEnd="true" />
 
         <ImageButton
             android:id="@+id/imageButton"

@@ -2,6 +2,7 @@ package com.uniquesys.qrgo.Chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -33,9 +34,10 @@ public class splittedImageAdapterList extends BaseAdapter {
     Bitmap result;
     private int resource;
     private LayoutInflater inflater;
+    Resources res;
 
 
-    public splittedImageAdapterList(Context c, List<Bitmap> splittedBitmaps, List<String> splittedid, List<String> LastMessage) {
+    public splittedImageAdapterList(Resources resources, Context c, List<Bitmap> splittedBitmaps, List<String> splittedid, List<String> LastMessage) {
 
         mContext = c;
         data=splittedBitmaps;
@@ -43,6 +45,7 @@ public class splittedImageAdapterList extends BaseAdapter {
         ult_mensagem = LastMessage;
         resource = R.layout.listview_chat;
         inflater = LayoutInflater.from(mContext);
+        res = resources;
 
     }
 
@@ -89,7 +92,18 @@ public class splittedImageAdapterList extends BaseAdapter {
         imageview.setImageBitmap(result);
 
         TextView LMessage = (TextView) convertViewR.findViewById(R.id.ult_mes);
-        LMessage.setText(ult_mensagem.get(position));
+        String[] separated = ult_mensagem.get(position).split("#Controle#QRGO2017#Bolacha#");
+        String Lmensagem = separated[1].toString();
+        LMessage.setText(Lmensagem);
+
+        if (separated[0] == id.get(position)){
+            RelativeLayout rela = (RelativeLayout) convertViewR.findViewById(R.id.RelativeBack);
+                rela.setBackgroundDrawable(res.getDrawable(R.drawable.mensagem_destinatario_layout));
+        }else{
+            RelativeLayout rela = (RelativeLayout) convertViewR.findViewById(R.id.RelativeBack);
+            rela.setBackgroundDrawable(res.getDrawable(R.drawable.mensagem_remetente_layout));
+        }
+
         convertViewR.setOnClickListener(new View.OnClickListener() {
 
             @Override

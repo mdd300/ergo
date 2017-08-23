@@ -10,21 +10,6 @@
     android:padding="5dp" >
 
     <TextView
-        android:id="@+id/nome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Game name"
-        android:textColor="@color/CorBotaoEnviar"
-        android:textSize="18dip"
-        android:textStyle="bold"
-        android:typeface="sans"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/complet_image"
-        android:layout_toEndOf="@+id/complet_image"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp" />
-
-    <TextView
         android:id="@+id/ult_mes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,20 +17,40 @@
         android:text="Notification message"
         android:textColor="@color/CinzaEscuro"
         android:textSize="15dip"
-        android:layout_below="@+id/nome"
-        android:layout_alignLeft="@+id/nome"
-        android:layout_alignStart="@+id/nome" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 
-    <ImageView
-        android:id="@+id/complet_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+    <TextView
+        android:id="@+id/nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="name"
+        android:textColor="@color/CorBotaoEnviar"
+        android:textSize="18dip"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/ult_mes"
+        android:layout_alignStart="@+id/ult_mes" />
+
+    <RelativeLayout
+        android:id="@+id/RelativeBack"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp"
-        android:src="@drawable/searchicon" />
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/complet_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/searchicon" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

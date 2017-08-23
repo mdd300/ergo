@@ -1,4 +1,4 @@
-package com.uniquesys.qrgo.Produtos;
+package com.uniquesys.qrgo.Produtos.GridProdutos;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,8 +13,7 @@ import com.uniquesys.qrgo.R;
 import java.util.ArrayList;
 
 
-public class ResPesquisaFragment extends Fragment {
-
+public class ResFragment extends Fragment {
     ArrayList<Bitmap> splittedBitmaps;
     ArrayList<String> splittedid;
 
@@ -34,14 +33,13 @@ public class ResPesquisaFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_grid, container,
                 false);
 
-        rootView.clearFocus();
+
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
-        ResPesquisaImageAdapter adapter = new ResPesquisaImageAdapter(getActivity(), splittedBitmaps, splittedid);
-
+        SplittedImageAdapterRes adapter = new SplittedImageAdapterRes(getActivity(), splittedBitmaps, splittedid);
         gridView.setAdapter(adapter);
-
         return rootView;
     }
+
 
 }

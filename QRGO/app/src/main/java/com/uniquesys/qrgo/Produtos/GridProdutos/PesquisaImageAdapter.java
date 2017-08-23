@@ -1,4 +1,4 @@
-package com.uniquesys.qrgo.Produtos;
+package com.uniquesys.qrgo.Produtos.GridProdutos;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.uniquesys.qrgo.Produtos.Model;
+import com.uniquesys.qrgo.Produtos.ProdutoActivity;
 import com.uniquesys.qrgo.R;
 
 import java.util.List;

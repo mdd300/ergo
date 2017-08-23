@@ -33,14 +33,15 @@
             android:label="@string/title_activity_produto"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Produtos.GridActivity"
+            android:name=".Produtos.GridProdutos.GridActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" />
         <activity android:name=".Produtos.CheckoutActivity" />
         <activity android:name=".Chat.ChatActivity" />
         <activity android:name=".Chat.ConversaActivity" />
         <activity android:name=".Chat.ContatosActivity" />
-        <activity android:name=".Produtos.ListViewActivity"></activity>
+        <activity android:name=".Produtos.ListProdutos.ListViewActivity" />
+        <activity android:name=".Clientes.ClientesActivity"></activity>
     </application>
 
 </manifest>

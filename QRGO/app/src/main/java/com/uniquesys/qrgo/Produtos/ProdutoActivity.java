@@ -12,8 +12,6 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -29,7 +27,6 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -42,8 +39,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.Chat.ChatActivity;
-import com.uniquesys.qrgo.Chat.ContatosActivity;
 import com.uniquesys.qrgo.Chat.NotificationConversa;
+import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
 import com.uniquesys.qrgo.model.Imagem;
 import com.uniquesys.qrgo.MainActivity;
@@ -62,7 +59,6 @@ public class ProdutoActivity extends AppCompatActivity {
     private NotificationConversa Not;
 
     String id;
-    Bitmap image;
     Context ctx;
     String method;
     String function;
@@ -108,6 +104,7 @@ public class ProdutoActivity extends AppCompatActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             float distanceX = e2.getX() - e1.getX();
             float distanceY = e2.getY() - e1.getY();
+
             if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                 if (distanceX > 0)
                     try {
@@ -287,13 +284,15 @@ public class ProdutoActivity extends AppCompatActivity {
 
 
         if(savedInstanceState != null){
-            resultado = savedInstanceState.getString("resultado");
+            resultado = savedInstanceState.getString("resultadoProduto");
 
         }else {
 
             Bundle bundle = intent.getExtras();
 
             resultado = bundle.getString("resultado");
+            String idTeste = bundle.getString("id");
+            Log.e("teste",idTeste);
         }
 
         try {
@@ -342,7 +341,7 @@ public class ProdutoActivity extends AppCompatActivity {
                 JSONObject obj =  JASresultProd.getJSONObject(k);
                 String img = obj.getString("img_nome");
                 String idTeste = obj.getString("prod_id");
-                Log.e("id",idTeste);
+
 
                 if(img != "null"){
                 String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + img;
@@ -703,7 +702,7 @@ public class ProdutoActivity extends AppCompatActivity {
     public void grid(View v) throws ExecutionException, InterruptedException, JSONException {
         Intent intent = new Intent(ProdutoActivity.this, GridActivity.class);
         startActivity(intent);
-
+        finish();
     }
     public void estoque(String idEstoque, String methodS) throws ExecutionException, InterruptedException {
 
@@ -788,7 +787,7 @@ public class ProdutoActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("resultado",resultado);
+        outState.putString("resultadoProduto",resultado);
     }
 
     @Override

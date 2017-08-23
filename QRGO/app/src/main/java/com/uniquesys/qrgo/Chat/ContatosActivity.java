@@ -23,7 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.MainActivity;
-import com.uniquesys.qrgo.Produtos.GridActivity;
+import com.uniquesys.qrgo.Produtos.CheckoutActivity;
+import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.Produtos.Model;
 import com.uniquesys.qrgo.R;
 import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
@@ -225,5 +226,18 @@ public class ContatosActivity extends AppCompatActivity {
         super.onResume();
         if (firebaseLastM != null)
             firebaseLastM.removeEventListener(valueEventListenerLastMensagemNot);
+    }
+
+    public void grid(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(ContatosActivity.this,GridActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
+        finish();
+    }
+    public void carrinho(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(ContatosActivity.this,CheckoutActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
+        finish();
     }
 }

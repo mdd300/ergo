@@ -1,6 +1,5 @@
-package com.uniquesys.qrgo.Produtos;
+package com.uniquesys.qrgo.Produtos.GridProdutos;
 
-import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -34,8 +33,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.Chat.ChatActivity;
-import com.uniquesys.qrgo.Chat.NotificationConversa;
 import com.uniquesys.qrgo.MainActivity;
+import com.uniquesys.qrgo.Produtos.CheckoutActivity;
+import com.uniquesys.qrgo.Produtos.ListProdutos.ListViewActivity;
+import com.uniquesys.qrgo.Produtos.Model;
 import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
 import com.uniquesys.qrgo.model.Imagem;
 import com.uniquesys.qrgo.R;
@@ -78,8 +79,6 @@ public class GridActivity extends AppCompatActivity {
         ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
         CampoPesquisa.setVisibility(View.INVISIBLE);
         btnPesquisa.setVisibility(View.INVISIBLE);
-
-
 
         CampoPesquisa.setOnKeyListener(new View.OnKeyListener()
         {
@@ -323,6 +322,14 @@ public class GridActivity extends AppCompatActivity {
         Intent intent_next=new Intent(GridActivity.this,ChatActivity.class);
         startActivity(intent_next);
         overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
+        finish();
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
+    }
+
+    public void List(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(GridActivity.this,ListViewActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_in);
         finish();
         firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
     }

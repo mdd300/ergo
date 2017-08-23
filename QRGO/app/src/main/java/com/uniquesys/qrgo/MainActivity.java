@@ -9,17 +9,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
-import com.uniquesys.qrgo.Produtos.GridActivity;
+import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.Produtos.Model;
 import com.uniquesys.qrgo.Produtos.ProdutoActivity;
 
@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             float distanceX = e2.getX() - e1.getY();
             float distanceY = e2.getY() - e1.getX();
+
+            Log.e("posicao", String.valueOf(distanceX));
+            Log.e("posicao",String.valueOf(distanceY));
+
             if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                 if (distanceY < 0 && distanceX < 0) {
                     Intent intent = new Intent(MainActivity.this, GridActivity.class);

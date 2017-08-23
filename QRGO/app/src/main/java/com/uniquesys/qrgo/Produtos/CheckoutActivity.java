@@ -25,9 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.Chat.ChatActivity;
-import com.uniquesys.qrgo.Chat.ContatosActivity;
-import com.uniquesys.qrgo.Chat.NotificationConversa;
 import com.uniquesys.qrgo.MainActivity;
+import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.R;
 import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
 
@@ -184,5 +183,13 @@ public class CheckoutActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    public void chat(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(CheckoutActivity.this,ChatActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
+        finish();
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
     }
 }
