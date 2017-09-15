@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.uniquesys.qrgo.Clientes.ClientesActivity;
 import com.uniquesys.qrgo.MainActivity;
 import com.uniquesys.qrgo.Produtos.CheckoutActivity;
 import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;

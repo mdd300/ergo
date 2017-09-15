@@ -21,6 +21,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.uniquesys.qrgo.Clientes.ClientesActivity;
+import com.uniquesys.qrgo.Produtos.CheckoutActivity;
 import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.R;
 import com.uniquesys.qrgo.config.Base64Custom;
@@ -73,7 +75,7 @@ public class ConversaActivity extends AppCompatActivity {
 
         EditText EditMensagem = (EditText) findViewById(R.id.MensagemParaEnviar);
         String Mensagem = EditMensagem.getText().toString();
-        String Mensagemcod =  Base64Custom.codificarBase64(idUserRemetente+ "#Controle#QRGO2017#Bolacha#" +Mensagem);
+        String Mensagemcod =  Base64Custom.codificarBase64(idUserRemetente+ "#Controle#QRGO2017#" +Mensagem);
 
         if(Mensagem.isEmpty()){
 
@@ -210,13 +212,15 @@ public void carregarMensagens(){
 
                     String MensagemRecebida = dados.getValue().toString();
                     String MensagemDescod = Base64Custom.decodificarBase64(MensagemRecebida);
-                    String[] separated = MensagemDescod.split("#Controle#QRGO2017#Bolacha#");
+                    String[] separated = MensagemDescod.split("#Controle#QRGO2017#");
+
                     splittedMensagem.add(separated[1].toString());
                     if (separated[0].equals(idUserRemetente)) {
                         splittedMensagemDes.add("remetente");
                     } else {
                         splittedMensagemDes.add("destinatario");
                     }
+
                 }
                 if (!isFinishing()) {
                     fragment = new ConversaFragment();
@@ -228,7 +232,6 @@ public void carregarMensagens(){
                             .replace(R.id.ListMensagens, fragment, fragment.getClass().getSimpleName()).commitAllowingStateLoss();
                 }
 
-                new NotificationConversa().Ativado(con,getResources(),idUserRemetente,"desativar");
             }
         }
         @Override
@@ -250,6 +253,13 @@ public void carregarMensagens(){
         super.onResume();
         if (firebaseLastM != null)
             firebaseLastM.removeEventListener(valueEventListenerLastMensagemNot);
+    }
+
+    public void carrinho(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(ConversaActivity.this,CheckoutActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
+        finish();
     }
 }
 

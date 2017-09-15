@@ -25,6 +25,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -40,6 +41,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.Chat.ChatActivity;
 import com.uniquesys.qrgo.Chat.NotificationConversa;
+import com.uniquesys.qrgo.Clientes.ClientesActivity;
 import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
 import com.uniquesys.qrgo.model.Imagem;
@@ -63,11 +65,6 @@ public class ProdutoActivity extends AppCompatActivity {
     String method;
     String function;
     String resul = null;
-    JSONArray PPID;
-    JSONArray PID;
-    JSONArray MID;
-    JSONArray GID;
-    JSONArray GGID;
 
     String PPIDS;
     String PIDS;
@@ -145,7 +142,7 @@ public class ProdutoActivity extends AppCompatActivity {
         if(i == arrayleght ){
             String idPesquisa = idProd.get(0).toString();
             i = 0;
-            String methodS = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_estoque_app";
+            String methodS = "http://192.168.0.85/erp/vendas_produtos/getVariantesTamanho";
             this.estoque(idPesquisa,methodS);
             EditText edit0 = (EditText) findViewById(R.id.edit0);
             edit0.setText("");
@@ -160,7 +157,7 @@ public class ProdutoActivity extends AppCompatActivity {
 
         }else{
             String idPesquisa = idProd.get(i).toString();
-            String methodS = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_estoque_app";
+            String methodS = "http://192.168.0.85/erp/vendas_produtos/getVariantesTamanho";
             this.estoque(idPesquisa,methodS);
             EditText edit0 = (EditText) findViewById(R.id.edit0);
             edit0.setText("");
@@ -193,7 +190,7 @@ public class ProdutoActivity extends AppCompatActivity {
         if(i < 0){
             i = arrayleght - 1;
             String idPesquisa = idProd.get(i).toString();
-            String methodS = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_estoque_app";
+            String methodS = "http://192.168.0.85/erp/vendas_produtos/getVariantesTamanho";
             this.estoque(idPesquisa,methodS);
             EditText edit0 = (EditText) findViewById(R.id.edit0);
             edit0.setText("");
@@ -207,7 +204,7 @@ public class ProdutoActivity extends AppCompatActivity {
             edit4.setText("");
         }else{
             String idPesquisa = idProd.get(i).toString();
-            String methodS = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_estoque_app";
+            String methodS = "http://192.168.0.85/erp/vendas_produtos/getVariantesTamanho";
             this.estoque(idPesquisa,methodS);
             EditText edit0 = (EditText) findViewById(R.id.edit0);
             edit0.setText("");
@@ -291,8 +288,7 @@ public class ProdutoActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
 
             resultado = bundle.getString("resultado");
-            String idTeste = bundle.getString("id");
-            Log.e("teste",idTeste);
+            Log.e("resultado", resultado);
         }
 
         try {
@@ -301,9 +297,10 @@ public class ProdutoActivity extends AppCompatActivity {
             JSONObject obj = JASresult.getJSONObject(0);
             String nome = obj.getString("prod_desc");
             String preco = obj.getString("prod_preco");
-            String ref = obj.getString("prod_ref");
+            String ref = "prod_ref";
             imgJ = obj.getString("img_nome");
             id = obj.getString("prod_id");
+            Log.e("idProd",id);
 
             TextView txtProd = (TextView)findViewById(R.id.txtProd);
             txtProd.setText(nome);
@@ -317,10 +314,10 @@ public class ProdutoActivity extends AppCompatActivity {
         }
 
         String codigo = id;
-        method = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_app";
+        method = "http://192.168.0.85/erp/vendas_produtos/getVariantes";
         function = "produto";
         Model prodTask = new Model(this);
-        prodTask.execute(function,method, codigo);
+        prodTask.execute(function,method,codigo,user_id,hash,"prod_id_fk");
         String resul = null;
 
         try {
@@ -340,11 +337,11 @@ public class ProdutoActivity extends AppCompatActivity {
 
                 JSONObject obj =  JASresultProd.getJSONObject(k);
                 String img = obj.getString("img_nome");
-                String idTeste = obj.getString("prod_id");
+                String idTeste = obj.getString("prod_id_fk");
 
 
                 if(img != "null"){
-                String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + img;
+                String urlOfImage = "http://192.168.0.85/erp/uploads/profiles/" + img;
                 method = urlOfImage;
                 function = "imagem";
                 Imagem imgTask = new Imagem();
@@ -374,7 +371,7 @@ public class ProdutoActivity extends AppCompatActivity {
             else{
 
                     try{
-                    String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + imgJ;
+                    String urlOfImage = "http://192.168.0.85/erp/uploads/profiles/" + imgJ;
                     method = urlOfImage;
                     function = "imagem";
                     Imagem imgTask = new Imagem();
@@ -396,7 +393,7 @@ public class ProdutoActivity extends AppCompatActivity {
                     ViewFlipper simpleViewFlipperCollor=(ViewFlipper) findViewById(R.id.relativeLayout4);
                         AppCompatImageView imageViewCollor = new AppCompatImageView(this);
 
-                    String color = obj.getString("prod_color");
+                    String color = obj.getString("cor_nome");
 
                         Bitmap bit = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
                         bit.eraseColor(Color.parseColor(color));
@@ -439,241 +436,267 @@ public class ProdutoActivity extends AppCompatActivity {
         final EditText GE = (EditText)findViewById(R.id.edit3);
         final EditText GGE = (EditText)findViewById(R.id.edit4);
 
+                PPE.setOnKeyListener(new View.OnKeyListener()
+                {
+                    public boolean onKey(View v, int keyCode, KeyEvent event)
+                    {
+                        if (event.getAction() == KeyEvent.ACTION_DOWN)
+                        {
+                            switch (keyCode)
+                            {
+                                case KeyEvent.KEYCODE_DPAD_CENTER:
+                                case KeyEvent.KEYCODE_ENTER:
+                                    if (PPE.getText().toString().matches("")) {
+                                    }else {
+                                        String PP = PPE.getText().toString();
 
-        PPE.addTextChangedListener(new TextWatcher() {
+                                        method = "http://192.168.0.85/erp/vendas_carrinhos/set_item_carrinho";
+                                        function = "carrinho";
+                                        Model estTask = new Model();
+                                        estTask.execute(function, method, PPIDS, PP, id, user_id, hash);
 
-            @Override
-            public void afterTextChanged(Editable s) {}
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
+                                        try {
+                                            String res = estTask.get();
+                                            Log.e("disponivel",res);
+                                            JSONObject obj = new JSONObject(res.toString());
+                                            String disponivel = obj.getString("disponivel");
+                                            if (disponivel.equals("indisponivel")){
+                                                Toast toast = Toast.makeText(getApplicationContext(), "Estoque insuficiente", Toast.LENGTH_SHORT);
+                                                toast.show();
+                                            } else {
+                                                TextView PPD = (TextView) findViewById(R.id.Text0);
+                                                Log.e("disponivel", disponivel);
+                                                PPD.setText(disponivel);
 
-                if (PPE.getText().toString().matches("")) {
-                }else{
-                    String PP = PPE.getText().toString();
+                                                if (PP != "0") {
+                                                    Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso", Toast.LENGTH_SHORT);
+                                                    toast.show();
+                                                }
+                                            }
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        } catch (JSONException e) {
+                                            sharedPreferences.edit().clear().commit();
 
-                    method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
-                    function = "carrinho";
-                    Model estTask = new Model();
-                    estTask.execute(function, method, PPIDS, PP, "item", user_id, hash);
-
-                    try {
-                        String res = estTask.get();
-                        JSONObject obj = new JSONObject(res.toString());
-                        String disponivel = obj.getString("disponivel");
-                        TextView PPD = (TextView) findViewById(R.id.Text0);
-                        PPD.setText(disponivel);
-
-                        if(PP != "0") {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso", Toast.LENGTH_SHORT);
-                            toast.show();
+                                        }
+                                    }
+                                    return true;
+                                default:
+                                    break;
+                            }
                         }
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        sharedPreferences.edit().clear().commit();
-                        Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        return false;
                     }
-                }
-            }
-        });
+                });
 
-        PE.addTextChangedListener(new TextWatcher() {
+                PE.setOnKeyListener(new View.OnKeyListener()
+                {
+                    public boolean onKey(View v, int keyCode, KeyEvent event)
+                    {
+                        if (event.getAction() == KeyEvent.ACTION_DOWN)
+                        {
+                            switch (keyCode)
+                            {
+                                case KeyEvent.KEYCODE_DPAD_CENTER:
+                                case KeyEvent.KEYCODE_ENTER:
+                                    if (PE.getText().toString().matches("")) {
+                                    }else{
+                                        String P = PE.getText().toString();
 
-            @Override
-            public void afterTextChanged(Editable s) {}
+                                        method = "http://192.168.0.85/erp/vendas_carrinhos/set_item_carrinho";
+                                        function = "carrinho";
+                                        Model estTask = new Model();
+                                        estTask.execute(function, method, PIDS, P, id, user_id, hash);
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
+                                        try {
+                                            String res = estTask.get();
+                                            JSONObject obj = new JSONObject(res.toString());
+                                            String disponivel = obj.getString("disponivel");
+                                            if (disponivel.equals("indisponivel")){
+                                                Toast toast = Toast.makeText(getApplicationContext(), "Estoque insuficiente", Toast.LENGTH_SHORT);
+                                                toast.show();
+                                            } else {
+                                                TextView PD = (TextView) findViewById(R.id.Text1);
+                                                PD.setText(disponivel);
+                                                if (P != "0") {
+                                                    Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso", Toast.LENGTH_SHORT);
+                                                    toast.show();
+                                                }
+                                            }
+                                        } catch (JSONException e) {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                if (PE.getText().toString().matches("")) {
-                }else{
-                    String P = PE.getText().toString();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
 
-                    method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
-                    function = "carrinho";
-                    Model estTask = new Model();
-                    estTask.execute(function, method, PIDS, P, "item", user_id, hash);
-
-                    try {
-                        String res = estTask.get();
-                        JSONObject obj = new JSONObject(res.toString());
-                        String disponivel = obj.getString("disponivel");
-                        TextView PD = (TextView) findViewById(R.id.Text1);
-                        PD.setText(disponivel);
-                        if(P != "0") {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso", Toast.LENGTH_SHORT);
-                            toast.show();
+                                    return true;
+                                default:
+                                    break;
+                            }
                         }
-
-                    } catch (JSONException e) {
-                        sharedPreferences.edit().clear().commit();
-                        Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
+                        return false;
                     }
-                }
-            }
-        });
+                });
 
-        ME.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void afterTextChanged(Editable s) {}
+                ME.setOnKeyListener(new View.OnKeyListener()
+                                    {
+                                        public boolean onKey(View v, int keyCode, KeyEvent event)
+                                        {
+                                            if (event.getAction() == KeyEvent.ACTION_DOWN)
+                                            {
+                                                switch (keyCode)
+                                                {
+                                                    case KeyEvent.KEYCODE_DPAD_CENTER:
+                                                    case KeyEvent.KEYCODE_ENTER:
+                                                        String M = ME.getText().toString();
+                                                        if (ME.getText().toString().matches("")) {
+                                                        }else {
+                                                            method = "http://192.168.0.85/erp/vendas_carrinhos/set_item_carrinho";
+                                                            function = "carrinho";
+                                                            Model estTask = new Model();
+                                                            estTask.execute(function, method, MIDS, M, id, user_id, hash);
+                                                            try {
+                                                                String res = estTask.get();
+                                                                JSONObject obj = new JSONObject(res.toString());
+                                                                String disponivel = obj.getString("disponivel");
+                                                                if (disponivel.equals("indisponivel")){
+                                                                    Toast toast = Toast.makeText(getApplicationContext(), "Estoque insuficiente", Toast.LENGTH_SHORT);
+                                                                    toast.show();
+                                                                } else {
+                                                                    TextView MD = (TextView) findViewById(R.id.Text2);
+                                                                    Log.e("disponivel", disponivel);
+                                                                    MD.setText(disponivel);
+                                                                    if (M != "0") {
+                                                                        Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso", Toast.LENGTH_SHORT);
+                                                                        toast.show();
+                                                                    }
+                                                                }
+                                                            } catch (InterruptedException e) {
+                                                                e.printStackTrace();
+                                                            } catch (ExecutionException e) {
+                                                                e.printStackTrace();
+                                                            } catch (JSONException e) {
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
+                                                            }
+                                                        }
+                                                            return true;
+                                                            default:
+                                                                break;
+                                                        }
+                                                }
+                                                return false;
+                                            }
+                                        });
 
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                String M = ME.getText().toString();
-                if (ME.getText().toString().matches("")) {
-                }else{
-                    method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
-                    function = "carrinho";
-                    Model estTask = new Model();
-                    estTask.execute(function, method, MIDS, M, "item", user_id, hash);
-                    try {
-                        String res = estTask.get();
-                        JSONObject obj = new JSONObject(res.toString());
-                        String disponivel = obj.getString("disponivel");
-                        TextView MD = (TextView) findViewById(R.id.Text2);
-                        MD.setText(disponivel);
-                        if(M != "0") {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso", Toast.LENGTH_SHORT);
-                            toast.show();
+                GE.setOnKeyListener(new View.OnKeyListener()
+                {
+                    public boolean onKey(View v, int keyCode, KeyEvent event)
+                    {
+                        if (event.getAction() == KeyEvent.ACTION_DOWN)
+                        {
+                            switch (keyCode)
+                            {
+                                case KeyEvent.KEYCODE_DPAD_CENTER:
+                                case KeyEvent.KEYCODE_ENTER:
+                                    if (GE.getText().toString().matches("")) {
+                                    }else{
+                                        String G = GE.getText().toString();
+                                        method = "http://192.168.0.85/erp/vendas_carrinhos/set_item_carrinho";
+                                        function = "carrinho";
+                                        Model estTask = new Model();
+                                        estTask.execute(function, method, GIDS, G, id, user_id, hash);
+
+                                        try {
+                                            String res = estTask.get();
+                                            JSONObject obj = new JSONObject(res.toString());
+                                            String disponivel = obj.getString("disponivel");
+                                            if (disponivel.equals("indisponivel")){
+                                                Toast toast = Toast.makeText(getApplicationContext(), "Estoque insuficiente", Toast.LENGTH_SHORT);
+                                                toast.show();
+                                            } else {
+                                                TextView GD = (TextView) findViewById(R.id.Text3);
+                                                GD.setText(disponivel);
+                                                if (G != "0") {
+                                                    Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso", Toast.LENGTH_SHORT);
+                                                    toast.show();
+                                                }
+                                            }
+                                        } catch (JSONException e) {
+
+
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        } catch (ExecutionException e) {
+
+                                        }
+                                    }
+                                    return true;
+                                default:
+                                    break;
+                            }
                         }
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        sharedPreferences.edit().clear().commit();
-                        Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        return false;
                     }
+                });
 
-                }
-            }
 
-        });
+                GGE.setOnKeyListener(new View.OnKeyListener()
+                {
+                    public boolean onKey(View v, int keyCode, KeyEvent event)
+                    {
+                        if (event.getAction() == KeyEvent.ACTION_DOWN)
+                        {
+                            switch (keyCode)
+                            {
+                                case KeyEvent.KEYCODE_DPAD_CENTER:
+                                case KeyEvent.KEYCODE_ENTER:
+                                    String GG = GGE.getText().toString();
+                                    if (GGE.getText().toString().matches("")) {
+                                    }else{
+                                        method = "http://192.168.0.85/erp/vendas_carrinhos/set_item_carrinho";
+                                        function = "carrinho";
+                                        Model estTask = new Model();
+                                        estTask.execute(function, method, GGIDS, GG, id, user_id, hash);
 
-        GE.addTextChangedListener(new TextWatcher() {
+                                        try {
+                                            String res = estTask.get();
+                                            JSONObject obj = new JSONObject(res.toString());
+                                            String disponivel = obj.getString("disponivel");
+                                            if (disponivel.equals("indisponivel")){
+                                                Toast toast = Toast.makeText(getApplicationContext(), "Estoque insuficiente", Toast.LENGTH_SHORT);
+                                                toast.show();
+                                            } else {
+                                                TextView GGD = (TextView) findViewById(R.id.Text4);
+                                                GGD.setText(disponivel);
+                                                if (GG != "0") {
+                                                    Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso", Toast.LENGTH_SHORT);
+                                                    toast.show();
+                                                }
+                                            }
 
-            @Override
-            public void afterTextChanged(Editable s) {}
+                                        } catch (JSONException e) {
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                if (GE.getText().toString().matches("")) {
-                }else{
-                    String G = GE.getText().toString();
-                    method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
-                    function = "carrinho";
-                    Model estTask = new Model();
-                    estTask.execute(function, method, GIDS, G, "item", user_id, hash);
-
-                    try {
-                        String res = estTask.get();
-                        JSONObject obj = new JSONObject(res.toString());
-                        String disponivel = obj.getString("disponivel");
-                        TextView GD = (TextView) findViewById(R.id.Text3);
-                        GD.setText(disponivel);
-                        if(G != "0") {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso", Toast.LENGTH_SHORT);
-                            toast.show();
+                                    return true;
+                                default:
+                                    break;
+                            }
                         }
-                    } catch (JSONException e) {
-                        sharedPreferences.edit().clear().commit();
-                        Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-
+                        return false;
                     }
-                }
-            }
-        });
-
-        GGE.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-
-                String GG = GGE.getText().toString();
-                if (GGE.getText().toString().matches("")) {
-                }else{
-                    method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/Atualizar_Carrinho_app";
-                    function = "carrinho";
-                    Model estTask = new Model();
-                    estTask.execute(function, method, GGIDS, GG, "item", user_id, hash);
-
-                    try {
-                        String res = estTask.get();
-                        JSONObject obj = new JSONObject(res.toString());
-                        String disponivel = obj.getString("disponivel");
-                        TextView GGD = (TextView) findViewById(R.id.Text4);
-                        GGD.setText(disponivel);
-                        if(GG != "0") {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Pedido realizado com sucesso", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-
-
-                    } catch (JSONException e) {
-                        sharedPreferences.edit().clear().commit();
-                        Intent intent = new Intent(ProdutoActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+                });
 
         }
             String idPesquisa;
@@ -681,7 +704,7 @@ public class ProdutoActivity extends AppCompatActivity {
                 idPesquisa = idProd.get(1).toString();
             else
                 idPesquisa = idProd.get(0).toString();
-            String methodS = "http://uniquesys.jelasticlw.com.br/qrgo/produtos/prod_estoque_app";
+            String methodS = "http://192.168.0.85/erp/vendas_produtos/getVariantesTamanho";
             try {
                 this.estoque(idPesquisa,methodS);
             } catch (ExecutionException e) {
@@ -708,47 +731,48 @@ public class ProdutoActivity extends AppCompatActivity {
 
         function = "produto";
         Model estTask = new Model();
-        estTask.execute(function,methodS, idEstoque);
+        estTask.execute(function,methodS, idEstoque,user_id,hash,"prod_id_fk");
         resul = estTask.get();
         try {
+            JSONArray JASresultEsPP = new JSONArray(resul.toString());
+            JSONObject objPP = JASresultEsPP.getJSONObject(0);
 
-            JSONObject JASresultEs = new JSONObject(resul.toString());
-            JSONObject JASresultTam = JASresultEs.getJSONObject("tamanho");
-            JSONObject JASresultId = JASresultEs.getJSONObject("id");
 
-            JSONArray PPS = JASresultTam.getJSONArray("PP");
-            String PPSS = PPS.getString(0);
+            String PPSS = objPP.getString("estq_qtde");
             TextView PP = (TextView)findViewById(R.id.Text0);
-            PPID = JASresultId.getJSONArray("PP");
-            PPIDS = PPID.getString(0);
+            PPIDS = objPP.getString("prod_id");
             PP.setText(String.valueOf(PPSS));
 
-            JSONArray PS = JASresultTam.getJSONArray("P");
-            String PSS = PS.getString(0);
+            JSONArray JASresultEsP = new JSONArray(resul.toString());
+            JSONObject objP = JASresultEsP.getJSONObject(1);
+
+            String PSS = objP.getString("estq_qtde");
             TextView P = (TextView)findViewById(R.id.Text1);
-            PID = JASresultId.getJSONArray("P");
-            PIDS = PID.getString(0);
+            PIDS = objP.getString("prod_id");
             P.setText(String.valueOf(PSS));
 
-            JSONArray MS = JASresultTam.getJSONArray("M");
-            String MSS = MS.getString(0);
+            JSONArray JASresultEsM = new JSONArray(resul.toString());
+            JSONObject objM = JASresultEsM.getJSONObject(2);
+
+            String MSS = objM.getString("estq_qtde");
             TextView M = (TextView)findViewById(R.id.Text2);
-            MID = JASresultId.getJSONArray("M");
-            MIDS = MID.getString(0);
+            MIDS = objM.getString("prod_id");
             M.setText(String.valueOf(MSS));
 
-            JSONArray GS = JASresultTam.getJSONArray("G");
-            String GSS = GS.getString(0);
+            JSONArray JASresultEsG = new JSONArray(resul.toString());
+            JSONObject objG = JASresultEsG.getJSONObject(3);
+
+            String GSS = objG.getString("estq_qtde");
             TextView G = (TextView)findViewById(R.id.Text3);
-            GID = JASresultId.getJSONArray("G");
-            GIDS = GID.getString(0);
+            GIDS = objG.getString("prod_id");
             G.setText(String.valueOf(GSS));
 
-            JSONArray GGS = JASresultTam.getJSONArray("GG");
-            String GGSS = GGS.getString(0);
+            JSONArray JASresultEsGG = new JSONArray(resul.toString());
+            JSONObject objGG = JASresultEsGG.getJSONObject(4);
+
+            String GGSS = objGG.getString("estq_qtde");
             TextView GG = (TextView)findViewById(R.id.Text4);
-            GGID = JASresultId.getJSONArray("GG");
-            GGIDS = GGID.getString(0);
+            GGIDS = objGG.getString("prod_id");
             GG.setText(String.valueOf(GGSS));
 
         } catch (JSONException e) {
@@ -856,5 +880,12 @@ public class ProdutoActivity extends AppCompatActivity {
         EditText edit4 = (EditText) findViewById(R.id.edit4);
         edit4.setText("0");
         edit4.setText("");
+    }
+    public void Clientes(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(ProdutoActivity.this,ClientesActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_right_leave, R.anim.anim_slide_left_leave);
+        finish();
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
     }
 }

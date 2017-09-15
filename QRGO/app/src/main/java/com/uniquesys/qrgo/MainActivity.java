@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
+import com.uniquesys.qrgo.Clientes.ClientesActivity;
 import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.Produtos.Model;
 import com.uniquesys.qrgo.Produtos.ProdutoActivity;
@@ -139,11 +140,12 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         senha = (EditText) findViewById(R.id.txtSenha);
         login_name = user.getText().toString();
         login_pass = senha.getText().toString();
-        String method = "http://uniquesys.jelasticlw.com.br/qrgo/login/efetuar_login_app";
+        String method = "http://192.168.0.85/erp/login/efetuarLogin";
         String function = "login";
         Model loginTask = new Model(this);
         loginTask.execute(function,method, login_name, login_pass);
         String result = loginTask.get();
+        Log.e("result",result);
         JSONObject obj = new JSONObject (result.toString());
         String JAStuff = obj.getString("sucesso");
         if(JAStuff == "true"){
@@ -226,5 +228,10 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         overridePendingTransition(R.anim.anim_slide_up, R.anim.anim_slide_down);
         finish();
     }
-
+    public void Clientes(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(MainActivity.this,ClientesActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_right_leave, R.anim.anim_slide_left_leave);
+        finish();
+    }
 }

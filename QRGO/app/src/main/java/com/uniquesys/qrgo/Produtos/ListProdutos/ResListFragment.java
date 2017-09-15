@@ -18,6 +18,9 @@ import java.util.ArrayList;
 public class ResListFragment extends Fragment {
     ArrayList<Bitmap> splittedBitmaps;
     ArrayList<String> splittedid;
+    ArrayList<String> Contatos;
+    String user;
+    String hash;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,9 @@ public class ResListFragment extends Fragment {
         if (getArguments() != null) {
             splittedBitmaps = getArguments().getParcelableArrayList("lista");
             splittedid = getArguments().getStringArrayList("id");
+            Contatos = getArguments().getStringArrayList("Contatos");
+            user = getArguments().getString("user");
+            hash = getArguments().getString("hash");
         }
     }
 
@@ -38,7 +44,7 @@ public class ResListFragment extends Fragment {
 
 
         ListView gridView = (ListView) rootView.findViewById(R.id.ListView_Prods);
-        SplittedImageListProdRes adapter = new SplittedImageListProdRes(getActivity(), splittedBitmaps, splittedid);
+        SplittedImageListProdRes adapter = new SplittedImageListProdRes(getActivity(),user,hash,Contatos, splittedBitmaps, splittedid);
         gridView.setAdapter(adapter);
         return rootView;
     }

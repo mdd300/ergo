@@ -97,41 +97,33 @@
                 android:layout_weight="3" />
 
             <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:text="Pedidos" />
-
-            <TextView
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:text="Clientes" />
+                android:onClick="guardar"
+                android:text="Guardar Carrinho"
+                android:textColor="#00bcd5" />
 
             <TextView
                 android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:text="Novos" />
+                android:onClick="limpar"
+                android:text="Limpar Produtos"
+                android:textColor="#ffb200" />
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:onClick="produtos"
-                android:text="Produtos" />
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/rL3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/relativeLayout7"
-            android:layout_below="@+id/relativeLayout10">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout4"
+            android:layout_above="@+id/relativeLayout10">
 
             <ViewFlipper
                 android:id="@+id/relativeLayout3"
@@ -140,21 +132,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true">
-
-            </ViewFlipper>
-
-            <ViewFlipper
-
-                android:id="@+id/relativeLayout4"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="62dp"
-                android:layout_marginStart="62dp"
-                android:layout_marginTop="13dp">
-
 
             </ViewFlipper>
 
@@ -174,287 +151,233 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true">
 
                 <TextView
                     android:id="@+id/textView6"
-                    android:layout_width="60dp"
+                    android:layout_width="40dp"
                     android:layout_height="30dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/textView11"
-                    android:layout_toRightOf="@+id/textView11"
-                    android:background="@color/viewfinder_mask"
+                    android:layout_alignBaseline="@+id/Text0"
+                    android:layout_alignBottom="@+id/Text0"
+                    android:layout_toEndOf="@+id/Text0"
+                    android:layout_toRightOf="@+id/Text0"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
                     android:text="P"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:textColor="#969696"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView13"
-                    android:layout_width="60dp"
+                    android:layout_width="40dp"
                     android:layout_height="30dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/textView6"
-                    android:layout_toRightOf="@+id/textView6"
-                    android:background="@color/viewfinder_mask"
+                    android:layout_alignBaseline="@+id/Text1"
+                    android:layout_alignBottom="@+id/Text1"
+                    android:layout_toEndOf="@+id/edit1"
+                    android:layout_toRightOf="@+id/edit1"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
                     android:text="M"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:textColor="#969696"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView18"
-                    android:layout_width="60dp"
+                    android:layout_width="40dp"
                     android:layout_height="30dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/textView7"
-                    android:layout_toRightOf="@+id/textView7"
-                    android:background="@color/viewfinder_mask"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
                     android:text="GG"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default"
-                    android:textStyle="bold" />
+                    android:textColor="#969696"
+                    android:textStyle="bold"
+                    android:layout_above="@+id/imageView15"
+                    android:layout_toRightOf="@+id/Text3"
+                    android:layout_toEndOf="@+id/Text3" />
 
                 <TextView
                     android:id="@+id/textView7"
-                    android:layout_width="60dp"
+                    android:layout_width="40dp"
                     android:layout_height="30dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/textView13"
-                    android:layout_toRightOf="@+id/textView13"
-                    android:background="@color/viewfinder_mask"
+                    android:layout_alignBaseline="@+id/Text2"
+                    android:layout_alignBottom="@+id/Text2"
+                    android:layout_toEndOf="@+id/Text2"
+                    android:layout_toRightOf="@+id/Text2"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
                     android:text="G"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:textColor="#969696"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/edit2"
-                    android:layout_width="60dp"
+                    android:layout_width="76dp"
                     android:layout_height="30dp"
                     android:layout_alignParentBottom="true"
                     android:layout_toEndOf="@+id/Text1"
                     android:layout_toRightOf="@+id/Text1"
-                    android:background="@color/common_google_signin_btn_text_light_pressed"
+                    android:background="@color/common_google_signin_btn_text_dark_disabled"
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                    android:textColor="@color/CorBotaoEnviar" />
 
                 <TextView
                     android:id="@+id/Text2"
-                    android:layout_width="60dp"
+                    android:layout_width="35dp"
                     android:layout_height="30dp"
-                    android:layout_above="@+id/edit2"
-                    android:layout_toEndOf="@+id/textView6"
-                    android:layout_toRightOf="@+id/textView6"
-                    android:background="@color/CinzaEscuro"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                    android:textColor="#969696"
+                    android:layout_alignBaseline="@+id/textView13"
+                    android:layout_alignBottom="@+id/textView13"
+                    android:layout_toRightOf="@+id/textView13"
+                    android:layout_toEndOf="@+id/textView13" />
 
                 <TextView
                     android:id="@+id/Text1"
-                    android:layout_width="60dp"
+                    android:layout_width="35dp"
                     android:layout_height="30dp"
-                    android:layout_alignBaseline="@+id/Text0"
-                    android:layout_alignBottom="@+id/Text0"
-                    android:layout_toEndOf="@+id/textView11"
-                    android:layout_toRightOf="@+id/textView11"
-                    android:background="@color/CinzaEscuro"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                    android:textColor="#969696"
+                    android:layout_above="@+id/imageView15"
+                    android:layout_toLeftOf="@+id/textView13"
+                    android:layout_toStartOf="@+id/textView13" />
 
                 <EditText
                     android:id="@+id/edit1"
-                    android:layout_width="60dp"
+                    android:layout_width="76dp"
                     android:layout_height="30dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_toEndOf="@+id/edit0"
-                    android:layout_toRightOf="@+id/edit0"
-                    android:background="@color/common_google_signin_btn_text_light_pressed"
+                    android:layout_toEndOf="@+id/Text0"
+                    android:layout_toRightOf="@+id/Text0"
+                    android:background="@color/Cinza"
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                    android:textColor="@color/CorBotaoEnviar" />
 
                 <TextView
                     android:id="@+id/textView11"
-                    android:layout_width="60dp"
+                    android:layout_width="40dp"
                     android:layout_height="30dp"
-                    android:background="@color/viewfinder_mask"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
                     android:text="PP"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default"
-                    android:textStyle="bold" />
+                    android:textColor="#969696"
+                    android:textStyle="bold"
+                    android:layout_above="@+id/imageView15"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
                 <TextView
                     android:id="@+id/Text0"
-                    android:layout_width="60dp"
+                    android:layout_width="35dp"
                     android:layout_height="30dp"
-                    android:layout_above="@+id/edit4"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:background="@color/CinzaEscuro"
+                    android:layout_above="@+id/imageView15"
+                    android:layout_toEndOf="@+id/textView11"
+                    android:layout_toRightOf="@+id/textView11"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                    android:textColor="#969696" />
 
                 <EditText
                     android:id="@+id/edit0"
-                    android:layout_width="60dp"
+                    android:layout_width="76dp"
                     android:layout_height="30dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:background="@color/common_google_signin_btn_text_light_pressed"
+                    android:background="@color/common_google_signin_btn_text_dark_disabled"
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                    android:textColor="@color/CorBotaoEnviar" />
 
                 <TextView
                     android:id="@+id/Text4"
-                    android:layout_width="60dp"
+                    android:layout_width="35dp"
                     android:layout_height="30dp"
-                    android:layout_alignBaseline="@+id/Text3"
-                    android:layout_alignBottom="@+id/Text3"
-                    android:layout_toEndOf="@+id/textView7"
-                    android:layout_toRightOf="@+id/textView7"
-                    android:background="@color/CinzaEscuro"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                    android:textColor="#969696"
+                    android:layout_alignBaseline="@+id/textView18"
+                    android:layout_alignBottom="@+id/textView18"
+                    android:layout_toRightOf="@+id/textView18"
+                    android:layout_toEndOf="@+id/textView18" />
 
                 <TextView
                     android:id="@+id/Text3"
-                    android:layout_width="60dp"
+                    android:layout_width="35dp"
                     android:layout_height="30dp"
-                    android:layout_alignBaseline="@+id/Text2"
-                    android:layout_alignBottom="@+id/Text2"
-                    android:layout_toEndOf="@+id/textView13"
-                    android:layout_toRightOf="@+id/textView13"
-                    android:background="@color/CinzaEscuro"
+                    android:background="@color/common_google_signin_btn_text_dark_default"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                    android:textColor="#969696"
+                    android:layout_alignBaseline="@+id/textView7"
+                    android:layout_alignBottom="@+id/textView7"
+                    android:layout_toRightOf="@+id/textView7"
+                    android:layout_toEndOf="@+id/textView7" />
 
                 <EditText
                     android:id="@+id/edit4"
-                    android:layout_width="60dp"
+                    android:layout_width="76dp"
                     android:layout_height="30dp"
                     android:layout_alignParentBottom="true"
                     android:layout_toEndOf="@+id/Text3"
                     android:layout_toRightOf="@+id/Text3"
-                    android:background="@color/common_google_signin_btn_text_light_pressed"
+                    android:background="@color/common_google_signin_btn_text_dark_disabled"
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                    android:textColor="@color/CorBotaoEnviar" />
 
                 <EditText
                     android:id="@+id/edit3"
-                    android:layout_width="60dp"
+                    android:layout_width="76dp"
                     android:layout_height="30dp"
                     android:layout_alignParentBottom="true"
                     android:layout_toEndOf="@+id/edit2"
                     android:layout_toRightOf="@+id/edit2"
-                    android:background="@color/common_google_signin_btn_text_light_pressed"
+                    android:background="@color/Cinza"
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                    android:textColor="@color/CorBotaoEnviar" />
 
-                <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_alignTop="@+id/Text4"
-                    android:layout_toEndOf="@+id/textView18"
-                    android:layout_toRightOf="@+id/textView18"
-                    android:background="@drawable/botaorefresh"
-                    android:onClick="limpar"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/limpar" />
+                <ImageView
+                    android:id="@+id/imageView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/line"
+                    android:layout_above="@+id/textView6"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <ImageView
+                    android:id="@+id/imageView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/line"
+                    android:layout_above="@+id/edit2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
             </RelativeLayout>
 
             <EditText
                 android:id="@+id/TextId"
-                android:layout_width="wrap_content"
+                android:layout_width="1dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="Name" />
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="43dp"
-            android:background="@color/Cinza"
-            tools:layout_editor_absoluteX="-7dp"
-            tools:layout_editor_absoluteY="86dp"
-            android:layout_below="@+id/linearLayout4"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="30dp"
-                android:layout_height="80dp"
-                android:layout_alignParentTop="true"
-                android:scaleType="matrix"
-                app:srcCompat="@drawable/rectanglered" />
-
-            <ImageButton
-                android:id="@+id/imageButton7"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@color/Cinza"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/vectorpesquisa"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="51dp"
-                android:layout_marginStart="51dp"
-                app:srcCompat="@drawable/vectorprod" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="13dp"
-                android:layout_marginStart="13dp"
-                android:layout_toEndOf="@+id/imageView5"
-                android:layout_toRightOf="@+id/imageView5"
-                android:text="Produtos"
-                android:textColor="@color/VermelhorProd"
-                android:textIsSelectable="false"
-                android:textSize="@dimen/activity_vertical_margin" />
-
-            <ImageButton
-                android:id="@+id/imageButton10"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignTop="@+id/imageButton7"
-                android:layout_marginEnd="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_toLeftOf="@+id/imageButton7"
-                android:layout_toStartOf="@+id/imageButton7"
-                android:background="@color/Cinza"
-                android:onClick="guardar"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/carrinhosalvar" />
 
         </RelativeLayout>
+
 
         <RelativeLayout
             android:id="@+id/relativeLayout6"
@@ -466,36 +389,49 @@
 
             <ImageView
                 android:id="@+id/imageView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/imageView10"
                 android:layout_marginLeft="25dp"
                 android:layout_marginStart="25dp"
-                app:srcCompat="@drawable/lixovetor" />
+                android:onClick="limpar"
+                app:srcCompat="@drawable/excluir" />
 
             <ImageView
                 android:id="@+id/imageView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/imageView12"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/imageView10"
                 android:layout_marginEnd="22dp"
                 android:layout_marginRight="22dp"
                 android:onClick="carrinho"
-                app:srcCompat="@drawable/compravetor" />
+                app:srcCompat="@drawable/finalizar" />
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/linered"
+                android:layout_above="@+id/imageView12"
+                android:layout_alignRight="@+id/imageView12"
+                android:layout_alignEnd="@+id/imageView12"
+                android:layout_alignLeft="@+id/imageView12"
+                android:layout_alignStart="@+id/imageView12" />
 
             <ImageView
                 android:id="@+id/imageView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                app:srcCompat="@drawable/line" />
+                app:srcCompat="@drawable/line"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="21dp" />
 
             <ImageView
                 android:id="@+id/imageView7"
@@ -505,33 +441,68 @@
                 android:layout_centerHorizontal="true"
                 android:onClick="camera"
                 app:srcCompat="@drawable/qrcodeicon" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/imageView12"
+                android:layout_alignLeft="@+id/imageView12"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/imageView12"
+                android:layout_alignStart="@+id/imageView12"
+                android:layout_below="@+id/imageView12"
+                android:text="Excluir"
+                android:textAlignment="center"
+                android:textColor="#d50000" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/imageView11"
+                android:layout_alignLeft="@+id/imageView11"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/imageView11"
+                android:layout_alignStart="@+id/imageView11"
+                android:layout_below="@+id/imageView11"
+                android:text="Finalizar"
+                android:textAlignment="center"
+                android:textColor="#32c647"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/linegreen"
+                android:layout_above="@+id/imageView11"
+                android:layout_alignRight="@+id/imageView11"
+                android:layout_alignEnd="@+id/imageView11"
+                android:layout_alignLeft="@+id/imageView11"
+                android:layout_alignStart="@+id/imageView11" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/relativeLayout10"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
+            android:layout_above="@+id/relativeLayout6"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/relativeLayout2">
+            android:layout_marginBottom="63dp">
 
             <ViewFlipper
                 android:id="@+id/relativeLayout5"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:layout_alignParentBottom="true">
+                android:layout_alignEnd="@+id/relativeLayout4"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/relativeLayout4"
+                android:layout_marginEnd="51dp"
+                android:layout_marginRight="51dp">
 
             </ViewFlipper>
-
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:scaleType="matrix"
-                app:srcCompat="@drawable/btbg" />
 
             <TextView
                 android:id="@+id/txtProd"
@@ -541,20 +512,19 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:text="TextView"
-                android:textColor="@color/CorBotaoEnviar"
+                android:textColor="#585858"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txtPreco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/txtReferencia"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/textView3"
-                android:layout_toRightOf="@+id/textView3"
                 android:text="TextView"
-                android:textColor="@color/CorBotaoEnviar" />
+                android:textColor="@color/CorBotaoEnviar"
+                android:layout_alignBaseline="@+id/textView20"
+                android:layout_alignBottom="@+id/textView20"
+                android:layout_toRightOf="@+id/textView20"
+                android:layout_toEndOf="@+id/textView20" />
 
             <TextView
                 android:id="@+id/txtReferencia"
@@ -579,13 +549,46 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/textView5"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView5"
                 android:text="Preço:"
                 android:textColor="@color/viewfinder_mask"
                 android:textColorHighlight="@color/Cinza"
                 android:textColorHint="@android:color/darker_gray" />
+
+            <ViewFlipper
+
+                android:id="@+id/relativeLayout4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/relativeLayout5"
+                android:layout_marginEnd="22dp"
+                android:layout_marginRight="22dp">
+
+
+            </ViewFlipper>
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignBottom="@+id/txtProd"
+                android:layout_toEndOf="@+id/txtProd"
+                android:layout_toRightOf="@+id/txtProd"
+                app:srcCompat="@drawable/pronto" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$"
+                android:textColor="@color/CorBotaoEnviar"
+                android:layout_toRightOf="@+id/textView3"
+                android:layout_toEndOf="@+id/textView3"
+                android:layout_alignBottom="@+id/textView3" />
 
         </RelativeLayout>
 

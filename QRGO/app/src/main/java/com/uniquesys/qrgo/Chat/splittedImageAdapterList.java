@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,7 @@ public class splittedImageAdapterList extends BaseAdapter {
             int size = Math.min(data.get(position).getWidth(), data.get(position).getHeight());
             int x = (data.get(position).getWidth() - size) / 2;
             int y = (data.get(position).getHeight() - size) / 2;
+        Log.e("teste", String.valueOf(position));
 
             Bitmap squared = Bitmap.createBitmap(data.get(position), x, y, size, size);
 
@@ -92,11 +94,18 @@ public class splittedImageAdapterList extends BaseAdapter {
         imageview.setImageBitmap(result);
 
         TextView LMessage = (TextView) convertViewR.findViewById(R.id.ult_mes);
-        String[] separated = ult_mensagem.get(position).split("#Controle#QRGO2017#Bolacha#");
+        String[] separated = ult_mensagem.get(position).split("#Controle#QRGO2017#");
         String Lmensagem = separated[1].toString();
-        LMessage.setText(Lmensagem);
 
-        if (separated[0] == id.get(position)){
+        String procurarPor = "#Produto#QRGO2017#";
+        if (!Lmensagem.contains(procurarPor))
+            LMessage.setText(Lmensagem);
+        else
+            LMessage.setText("    Imagem    ");
+
+
+
+        if (separated[0].equals(id.get(position))){
             RelativeLayout rela = (RelativeLayout) convertViewR.findViewById(R.id.RelativeBack);
                 rela.setBackgroundDrawable(res.getDrawable(R.drawable.mensagem_destinatario_layout));
         }else{

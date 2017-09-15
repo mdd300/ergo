@@ -17,6 +17,8 @@ public class ResPesquisaFragment extends Fragment {
 
     ArrayList<Bitmap> splittedBitmaps;
     ArrayList<String> splittedid;
+    String user;
+    String hash;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,8 @@ public class ResPesquisaFragment extends Fragment {
         if (getArguments() != null) {
             splittedBitmaps = getArguments().getParcelableArrayList("lista");
             splittedid = getArguments().getStringArrayList("id");
+            user = getArguments().getString("user_id");
+            hash = getArguments().getString("hash");
         }
     }
 
@@ -37,7 +41,7 @@ public class ResPesquisaFragment extends Fragment {
         rootView.clearFocus();
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
-        ResPesquisaImageAdapter adapter = new ResPesquisaImageAdapter(getActivity(), splittedBitmaps, splittedid);
+        ResPesquisaImageAdapter adapter = new ResPesquisaImageAdapter(getActivity(), splittedBitmaps, splittedid, user, hash);
 
         gridView.setAdapter(adapter);
 

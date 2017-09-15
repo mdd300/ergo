@@ -17,28 +17,31 @@
         android:text="Notification message"
         android:textColor="@color/CinzaEscuro"
         android:textSize="15dip"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/nome"
+        android:layout_alignLeft="@+id/nome"
+        android:layout_alignStart="@+id/nome" />
 
 
     <TextView
         android:id="@+id/nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="17dp"
         android:text="name"
         android:textColor="@color/CorBotaoEnviar"
         android:textSize="18dip"
         android:textStyle="bold"
         android:typeface="sans"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/ult_mes"
-        android:layout_alignStart="@+id/ult_mes" />
+        android:layout_toRightOf="@+id/RelativeBack"
+        android:layout_toEndOf="@+id/RelativeBack"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp" />
 
     <RelativeLayout
         android:id="@+id/RelativeBack"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">

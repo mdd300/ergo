@@ -25,7 +25,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.Chat.ChatActivity;
+import com.uniquesys.qrgo.Clientes.ClientesActivity;
 import com.uniquesys.qrgo.MainActivity;
 import com.uniquesys.qrgo.Produtos.CheckoutActivity;
 import com.uniquesys.qrgo.Produtos.ListProdutos.ListViewActivity;
@@ -45,6 +48,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -53,11 +57,13 @@ public class GridActivity extends AppCompatActivity {
 
     List<Bitmap> splittedBitmaps = new ArrayList<>();
     List<String> splittedid = new ArrayList<>();
+    ListAdapter empty;
     JSONArray JASresult;
     String resultado = null;
     Bitmap result = null;
     String img_test = null;
     int pagina = 1;
+    String hash;
     ProgressDialog pd;
     String method2;
     String function2;
@@ -75,6 +81,7 @@ public class GridActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         user_id = sharedPreferences.getString("user_id", "");
+        hash = sharedPreferences.getString("hash","");
         EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
         ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
         CampoPesquisa.setVisibility(View.INVISIBLE);
@@ -183,14 +190,15 @@ public class GridActivity extends AppCompatActivity {
 
         public void run() {
             Model prodTask = new Model();
-            final String method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/grid_listagem";
+            final String method = "http://192.168.0.85/erp/vendas_produtos/getGrid";
             final String function = "listagem";
-            prodTask.execute(function, method, String.valueOf(pagina));
+            prodTask.execute(function, method, String.valueOf(pagina), user_id,hash);
 
             try {
 
 
                 resultado = prodTask.get();
+                Log.e("prod",resultado);
                 JASresult = new JSONArray(resultado.toString());
                 Log.e("teste",resultado.toString());
 
@@ -198,11 +206,11 @@ public class GridActivity extends AppCompatActivity {
                     for (int i = 0; i < JASresult.length(); i++) {
                         JSONObject obj = JASresult.getJSONObject(i);
                         String img = obj.getString("image_thumb");
-                        String id = obj.getString("prod_uniq");
+                        String id = obj.getString("prod_id");
                         try {
 
                             if (!img.equals("null")) {
-                                String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + img;
+                                String urlOfImage = "http://192.168.0.85/erp/uploads/profiles/" + img;
                                 method2 = urlOfImage;
                                 function2 = "imagem";
                                 Imagem imgTask = new Imagem();
@@ -248,6 +256,8 @@ public class GridActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
                 bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                bundle.putString("user_id",user_id);
+                bundle.putString("hash",hash);
                 fragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -260,6 +270,8 @@ public class GridActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
                 bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                bundle.putString("user_id",user_id);
+                bundle.putString("hash",hash);
                 fragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -284,6 +296,8 @@ public class GridActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
             bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+            bundle.putString("user_id",user_id);
+            bundle.putString("hash",hash);
             fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -296,6 +310,8 @@ public class GridActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
             bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+            bundle.putString("user_id",user_id);
+            bundle.putString("hash",hash);
             fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_frame, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -330,6 +346,13 @@ public class GridActivity extends AppCompatActivity {
         Intent intent_next=new Intent(GridActivity.this,ListViewActivity.class);
         startActivity(intent_next);
         overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_in);
+        finish();
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
+    }
+    public void Clientes(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(GridActivity.this,ClientesActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_right_leave, R.anim.anim_slide_left_leave);
         finish();
         firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
     }
@@ -402,9 +425,9 @@ public class GridActivity extends AppCompatActivity {
                 String StringPesquisar = CampoPesquisa.getText().toString();
 
                 Model prodTask = new Model();
-                String method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/grid_listagem_pesquisa";
+                String method = "http://192.168.0.85/erp/vendas_produtos/getGrid";
                 String function = "pesquisa";
-                prodTask.execute(function, method, String.valueOf(pagina), StringPesquisar);
+                prodTask.execute(function, method, String.valueOf(pagina), StringPesquisar,user_id,hash);
 
                 try {
 
@@ -415,12 +438,12 @@ public class GridActivity extends AppCompatActivity {
                         for (int i = 0; i < JASresult.length(); i++) {
                             JSONObject obj = JASresult.getJSONObject(i);
                             String img = obj.getString("image_thumb");
-                            String id = obj.getString("prod_uniq");
+                            String id = obj.getString("prod_id");
 
                             try {
 
                                 if (!img.equals("null")) {
-                                    String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + img;
+                                    String urlOfImage = "http://192.168.0.85/erp/uploads/profiles/" + img;
                                     method2 = urlOfImage;
                                     function2 = "imagem";
                                     Imagem imgTask = new Imagem();
@@ -460,6 +483,8 @@ public class GridActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
                     bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                    bundle.putString("user_id",user_id);
+                    bundle.putString("hash",hash);
                     fr.setArguments(bundle);
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -473,6 +498,8 @@ public class GridActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
                     bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                    bundle.putString("user_id",user_id);
+                    bundle.putString("hash",hash);
                     fr.setArguments(bundle);
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();

@@ -65,9 +65,9 @@ if(function == "login") {
         httpURLConnection.setDoInput(true);
         OutputStream outputStream = httpURLConnection.getOutputStream();
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-        String data = URLEncoder.encode("email-login", "UTF-8") + "=" + URLEncoder.encode(login_name, "UTF-8") + "&" +
-                URLEncoder.encode("senha-login", "UTF-8") + "=" + URLEncoder.encode(login_pass, "UTF-8") + "&" +
-                URLEncoder.encode("format", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(true), "UTF-8");
+        String data = URLEncoder.encode("login", "UTF-8") + "=" + URLEncoder.encode(login_name, "UTF-8") + "&" +
+                URLEncoder.encode("senha", "UTF-8") + "=" + URLEncoder.encode(login_pass, "UTF-8") + "&" +
+                URLEncoder.encode("format", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(1), "UTF-8");
         bufferedWriter.write(data);
         bufferedWriter.flush();
         bufferedWriter.close();
@@ -94,7 +94,9 @@ if(function == "login") {
 }
 if(function == "produto") {
     String codigo = params[2];
-
+    String user = params[3];
+    String hash = params[4];
+    String campo = params[5];
     try {
         URL url = new URL(login_url);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -103,7 +105,10 @@ if(function == "produto") {
         httpURLConnection.setDoInput(true);
         OutputStream outputStream = httpURLConnection.getOutputStream();
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-        String data = URLEncoder.encode("codigo", "UTF-8") + "=" + URLEncoder.encode(codigo, "UTF-8");
+        String data = URLEncoder.encode("where", "UTF-8") + "=" + URLEncoder.encode(campo + " = " + codigo, "UTF-8") + "&"
+                + URLEncoder.encode("minimal", "UTF-8") + "=" + URLEncoder.encode("true", "UTF-8") + "&"
+                + URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8") + "&"
+                + URLEncoder.encode("user_hash", "UTF-8") + "=" + URLEncoder.encode(hash, "UTF-8");
         bufferedWriter.write(data);
         bufferedWriter.flush();
         bufferedWriter.close();
@@ -130,6 +135,8 @@ if(function == "produto") {
 }
     if(function == "listagem") {
         String pagina = params[2];
+        String user = params[3];
+        String hash = params[4];
 
         try {
             URL url = new URL(login_url);
@@ -139,7 +146,10 @@ if(function == "produto") {
             httpURLConnection.setDoInput(true);
             OutputStream outputStream = httpURLConnection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-            String data = URLEncoder.encode("pagina", "UTF-8") + "=" + URLEncoder.encode(pagina, "UTF-8");
+            String data = URLEncoder.encode("pagina", "UTF-8") + "=" + URLEncoder.encode(pagina, "UTF-8")+ "&"
+                    + URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8") + "&"
+                    + URLEncoder.encode("user_hash", "UTF-8") + "=" + URLEncoder.encode(hash, "UTF-8") + "&"
+                    + URLEncoder.encode("minimal", "UTF-8") + "=" + URLEncoder.encode("true", "UTF-8");
             bufferedWriter.write(data);
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -180,10 +190,10 @@ if(function == "produto") {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String data = URLEncoder.encode("prod_id", "UTF-8") + "=" + URLEncoder.encode(codigo, "UTF-8") + "&"
-                        + URLEncoder.encode("qtde", "UTF-8") + "=" + URLEncoder.encode(qtde, "UTF-8") + "&"
-                        + URLEncoder.encode("tipo", "UTF-8") + "=" + URLEncoder.encode(tipo, "UTF-8") + "&"
+                        + URLEncoder.encode("quantidade", "UTF-8") + "=" + URLEncoder.encode(qtde, "UTF-8") + "&"
+                        + URLEncoder.encode("prod_principal", "UTF-8") + "=" + URLEncoder.encode(tipo, "UTF-8") + "&"
                         + URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(user_id, "UTF-8") + "&"
-                        + URLEncoder.encode("hash", "UTF-8") + "=" + URLEncoder.encode(hash, "UTF-8");
+                        + URLEncoder.encode("user_hash", "UTF-8") + "=" + URLEncoder.encode(hash, "UTF-8");
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -247,6 +257,8 @@ if(function == "produto") {
         }
         if(function == "listagem") {
             String pagina = params[2];
+            String user_id = params[3];
+            String hash = params[4];
 
             try {
                 URL url = new URL(login_url);
@@ -256,7 +268,10 @@ if(function == "produto") {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String data = URLEncoder.encode("pagina", "UTF-8") + "=" + URLEncoder.encode(pagina, "UTF-8");
+                String data = URLEncoder.encode("pagina", "UTF-8") + "=" + URLEncoder.encode(pagina, "UTF-8")
+                        + URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(user_id, "UTF-8") + "&"
+                        + URLEncoder.encode("hash", "UTF-8") + "=" + URLEncoder.encode(hash, "UTF-8") + "&"
+                        + URLEncoder.encode("minimal", "UTF-8") + "=" + URLEncoder.encode("true", "UTF-8");;
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -297,10 +312,10 @@ if(function == "produto") {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String data = URLEncoder.encode("prod_id", "UTF-8") + "=" + URLEncoder.encode(codigo, "UTF-8") + "&"
-                        + URLEncoder.encode("qtde", "UTF-8") + "=" + URLEncoder.encode(qtde, "UTF-8") + "&"
-                        + URLEncoder.encode("tipo", "UTF-8") + "=" + URLEncoder.encode(tipo, "UTF-8") + "&"
+                        + URLEncoder.encode("quantidade", "UTF-8") + "=" + URLEncoder.encode(qtde, "UTF-8") + "&"
+                        + URLEncoder.encode("prod_principal", "UTF-8") + "=" + URLEncoder.encode(tipo, "UTF-8") + "&"
                         + URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(user_id, "UTF-8") + "&"
-                        + URLEncoder.encode("hash", "UTF-8") + "=" + URLEncoder.encode(hash, "UTF-8");
+                        + URLEncoder.encode("user_hash", "UTF-8") + "=" + URLEncoder.encode(hash, "UTF-8");
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -328,6 +343,8 @@ if(function == "produto") {
         if(function == "pesquisa") {
             String pagina = params[2];
             String pesquisa = params[3];
+            String user = params[4];
+            String hash = params[5];
 
             try {
                 URL url = new URL(login_url);
@@ -338,7 +355,9 @@ if(function == "produto") {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String data = URLEncoder.encode("pagina", "UTF-8") + "=" + URLEncoder.encode(pagina, "UTF-8") + "&"
-                        + URLEncoder.encode("pesquisa", "UTF-8") + "=" + URLEncoder.encode(pesquisa, "UTF-8") ;
+                        + URLEncoder.encode("search", "UTF-8") + "=" + URLEncoder.encode(pesquisa, "UTF-8") + "&"
+                        + URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8") + "&"
+                        + URLEncoder.encode("user_hash", "UTF-8") + "=" + URLEncoder.encode(hash, "UTF-8");
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -413,13 +432,7 @@ if(function == "produto") {
 
     @Override
     protected void onPostExecute(String result) {
-        if(result.equals("Registration Success..."))
-        {
-            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-        }
+
 
     }
 

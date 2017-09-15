@@ -21,13 +21,17 @@ public class PesquisaImageAdapter extends BaseAdapter {
     Context mContext;
     List<Bitmap> data;
     List<String> id;
+    String user_id;
+    String user_hash;
 
 
-    public PesquisaImageAdapter(Context c, List<Bitmap> splittedBitmaps, List<String> splittedid) {
+    public PesquisaImageAdapter(Context c, List<Bitmap> splittedBitmaps, List<String> splittedid, String user, String hash) {
 
         mContext = c;
         data=splittedBitmaps;
         id = splittedid;
+        user_hash = hash;
+        user_id = user;
     }
 
 
@@ -69,10 +73,10 @@ public class PesquisaImageAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 String codigo = id.get(position);
-                String method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/readqrcodepedido_app";
+                String method = "http://192.168.0.85/erp/vendas_produtos/getList";
                 String function = "produto";
                 Model prodTask = new Model(mContext);
-                prodTask.execute(function,method, codigo);
+                prodTask.execute(function,method, codigo,user_id,user_hash,"prod_id");
                 String resultado = null;
                 try {
                     resultado = prodTask.get();

@@ -19,6 +19,9 @@ public class ResPesquisaListFragment extends Fragment {
 
     ArrayList<Bitmap> splittedBitmaps;
     ArrayList<String> splittedid;
+    ArrayList<String> Contatos;
+    String user;
+    String hash;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,9 @@ public class ResPesquisaListFragment extends Fragment {
         if (getArguments() != null) {
             splittedBitmaps = getArguments().getParcelableArrayList("lista");
             splittedid = getArguments().getStringArrayList("id");
+            Contatos = getArguments().getStringArrayList("Contatos");
+            user = getArguments().getString("user");
+            hash = getArguments().getString("hash");
         }
     }
 
@@ -39,7 +45,7 @@ public class ResPesquisaListFragment extends Fragment {
         rootView.clearFocus();
 
         ListView gridView = (ListView) rootView.findViewById(R.id.ListView_Prods);
-        PesquisaImageListProdRes adapter = new PesquisaImageListProdRes(getActivity(), splittedBitmaps, splittedid);
+        PesquisaImageListProdRes adapter = new PesquisaImageListProdRes(getActivity(),user,hash,Contatos, splittedBitmaps, splittedid);
 
         gridView.setAdapter(adapter);
 

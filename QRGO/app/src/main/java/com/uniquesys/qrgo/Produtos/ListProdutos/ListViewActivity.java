@@ -33,13 +33,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.Chat.ChatActivity;
+import com.uniquesys.qrgo.Clientes.ClientesActivity;
 import com.uniquesys.qrgo.MainActivity;
 import com.uniquesys.qrgo.Produtos.CheckoutActivity;
 import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
-import com.uniquesys.qrgo.Produtos.GridProdutos.GridFragment;
-import com.uniquesys.qrgo.Produtos.GridProdutos.PesquisaFragment;
-import com.uniquesys.qrgo.Produtos.GridProdutos.ResFragment;
-import com.uniquesys.qrgo.Produtos.GridProdutos.ResPesquisaFragment;
 import com.uniquesys.qrgo.Produtos.Model;
 import com.uniquesys.qrgo.R;
 import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
@@ -57,6 +54,8 @@ public class ListViewActivity extends AppCompatActivity {
 
     List<Bitmap> splittedBitmaps = new ArrayList<>();
     List<String> splittedid = new ArrayList<>();
+    List<String> Contatos = new ArrayList<>();
+    List<JSONObject> ResProd = new ArrayList<>();
     JSONArray JASresult;
     String resultado = null;
     Bitmap result = null;
@@ -65,11 +64,15 @@ public class ListViewActivity extends AppCompatActivity {
     ProgressDialog pd;
     String method2;
     String function2;
+    String hash;
     private static final String PREF_NAME = "USER_LOG";
     String user_id;
     DatabaseReference firebaseLast;
     ValueEventListener valueEventListenerLastMensagemNot;
+    private DatabaseReference firebase;
+    ValueEventListener valueEventListenerMensagem;
     int j = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +81,58 @@ public class ListViewActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         user_id = sharedPreferences.getString("user_id", "");
+        hash = sharedPreferences.getString("hash","");
         EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
         ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
         CampoPesquisa.setVisibility(View.INVISIBLE);
         btnPesquisa.setVisibility(View.INVISIBLE);
+
+
+        valueEventListenerMensagem = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getValue() != null){
+
+                    for (DataSnapshot key : dataSnapshot.getChildren()) {
+
+                        if(key.getKey() != user_id) {
+
+                            String codigo = key.getKey();
+                            String method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/dados_user";
+                            String function = "produto";
+                            Model prodTask = new Model();
+                            prodTask.execute(function,method, codigo,user_id,hash,"prod_id");
+                            String resultado = null;
+                            try {
+                                resultado = prodTask.get();
+                                JSONArray arrayJson = new JSONArray(resultado.toString());
+                                JSONObject obj = arrayJson.getJSONObject(0);
+                                String nome = obj.getString("user_nome");
+                                Contatos.add(key.getKey() + " - " + nome);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        firebase = ConfiguracaoFirebase.getFirebase().child(user_id).child("Contatos");
+
+        firebase.addValueEventListener(valueEventListenerMensagem);
 
 
 
@@ -186,26 +237,28 @@ public class ListViewActivity extends AppCompatActivity {
 
             public void run() {
                 Model prodTask = new Model();
-                final String method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/grid_listagem";
+                final String method = "http://192.168.0.85/erp/vendas_produtos/getList";
                 final String function = "listagem";
-                prodTask.execute(function, method, String.valueOf(pagina));
+                prodTask.execute(function, method, String.valueOf(pagina), user_id, hash);
 
                 try {
 
 
                     resultado = prodTask.get();
+
                     JASresult = new JSONArray(resultado.toString());
-                    Log.e("teste",resultado.toString());
+
 
                     try {
                         for (int i = 0; i < JASresult.length(); i++) {
                             JSONObject obj = JASresult.getJSONObject(i);
+                            ResProd.add(obj);
                             String img = obj.getString("image_thumb");
-                            String id = obj.getString("prod_uniq");
+                            String id = obj.getString("prod_id");
                             try {
 
                                 if (!img.equals("null")) {
-                                    String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + img;
+                                    String urlOfImage = "http://192.168.0.85/erp/uploads/profiles/" + img;
                                     method2 = urlOfImage;
                                     function2 = "imagem";
                                     Imagem imgTask = new Imagem();
@@ -251,6 +304,10 @@ public class ListViewActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
                     bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                    bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
+                    bundle.putString("user", (user_id));
+                    bundle.putString("hash",hash);
+                    bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
                     fragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_ListProd, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -263,6 +320,9 @@ public class ListViewActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
                     bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                    bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
+                    bundle.putString("user", (user_id));
+                    bundle.putString("hash",hash);
                     fragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_ListProd, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -287,6 +347,9 @@ public class ListViewActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
             bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+            bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
+            bundle.putString("user", (user_id));
+            bundle.putString("hash",hash);
             fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_ListProd, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -299,6 +362,9 @@ public class ListViewActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
             bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+            bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
+            bundle.putString("user", (user_id));
+            bundle.putString("hash",hash);
             fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_ListProd, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -376,9 +442,9 @@ public class ListViewActivity extends AppCompatActivity {
                 String StringPesquisar = CampoPesquisa.getText().toString();
 
                 Model prodTask = new Model();
-                String method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/grid_listagem_pesquisa";
+                String method = "http://192.168.0.85/erp/vendas_produtos/getList";
                 String function = "pesquisa";
-                prodTask.execute(function, method, String.valueOf(pagina), StringPesquisar);
+                prodTask.execute(function, method, String.valueOf(pagina), StringPesquisar,user_id,hash);
 
                 try {
 
@@ -389,12 +455,12 @@ public class ListViewActivity extends AppCompatActivity {
                         for (int i = 0; i < JASresult.length(); i++) {
                             JSONObject obj = JASresult.getJSONObject(i);
                             String img = obj.getString("image_thumb");
-                            String id = obj.getString("prod_uniq");
+                            String id = obj.getString("prod_id");
 
                             try {
 
                                 if (!img.equals("null")) {
-                                    String urlOfImage = "http://uniquesys.jelasticlw.com.br/qrgo/uploads/produtos/img/" + img;
+                                    String urlOfImage = "http://192.168.0.85/erp/uploads/profiles/" + img;
                                     method2 = urlOfImage;
                                     function2 = "imagem";
                                     Imagem imgTask = new Imagem();
@@ -434,6 +500,9 @@ public class ListViewActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
                     bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                    bundle.putString("user", (user_id));
+                    bundle.putString("hash",hash);
+                    bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
                     fr.setArguments(bundle);
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -447,6 +516,9 @@ public class ListViewActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("lista", (ArrayList<? extends Parcelable>) splittedBitmaps);
                     bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                    bundle.putString("user", (user_id));
+                    bundle.putString("hash",hash);
+                    bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
                     fr.setArguments(bundle);
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -520,5 +592,11 @@ public class ListViewActivity extends AppCompatActivity {
         finish();
         firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
     }
-
+    public void Clientes(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(ListViewActivity.this,ClientesActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_right_leave, R.anim.anim_slide_left_leave);
+        finish();
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
+    }
 }

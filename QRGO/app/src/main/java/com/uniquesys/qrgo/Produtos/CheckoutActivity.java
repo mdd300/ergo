@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.Chat.ChatActivity;
+import com.uniquesys.qrgo.Clientes.ClientesActivity;
 import com.uniquesys.qrgo.MainActivity;
 import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.R;
@@ -189,6 +190,13 @@ public class CheckoutActivity extends AppCompatActivity {
         Intent intent_next=new Intent(CheckoutActivity.this,ChatActivity.class);
         startActivity(intent_next);
         overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
+        finish();
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
+    }
+    public void Clientes(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(CheckoutActivity.this,ClientesActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_right_leave, R.anim.anim_slide_left_leave);
         finish();
         firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
     }

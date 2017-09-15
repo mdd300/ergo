@@ -38,6 +38,7 @@
         android:layout_toEndOf="@+id/imageViewLogo"
         android:layout_toRightOf="@+id/imageViewLogo"
         android:background="@drawable/botaocamera"
+        android:onClick="Clientes"
         android:scaleType="centerInside"
         app:srcCompat="@drawable/iconusuario" />
 
