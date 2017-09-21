@@ -34,10 +34,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="sans"
-        android:layout_marginTop="17dp"
-        android:layout_below="@+id/ult_mes"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2" />
+        android:layout_alignTop="@+id/btnCompartilhar"
+        android:layout_toLeftOf="@+id/txtRef" />
 
     <TextView
         android:id="@+id/ult_mes"
@@ -109,5 +107,18 @@
         android:background="@drawable/botaocamera"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/iconecompartilhar" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="R$"
+        android:textColor="@color/CorBotaoEnviar"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignBaseline="@+id/txtPreco"
+        android:layout_alignBottom="@+id/txtPreco"
+        android:layout_toLeftOf="@+id/txtPreco"
+        android:layout_toStartOf="@+id/txtPreco" />
 
 </RelativeLayout>

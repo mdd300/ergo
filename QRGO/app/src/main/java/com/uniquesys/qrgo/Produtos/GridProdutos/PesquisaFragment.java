@@ -42,8 +42,8 @@ rootView.clearFocus();
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
         PesquisaImageAdapter adapter = new PesquisaImageAdapter(getActivity(), splittedBitmaps, splittedid,user,hash);
-
         gridView.setAdapter(adapter);
+        gridView.setSelection(adapter.getCount() - 1);
 
         return rootView;
     }

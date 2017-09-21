@@ -7,7 +7,7 @@
     android:background="@android:color/background_light"
     tools:context="com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/LinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,38 +20,99 @@
         tools:layout_editor_absoluteY="129dp"
         android:layout_alignParentBottom="true">
 
-        <FrameLayout
-            android:id="@+id/pesquisas"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_weight="0.95"
-            android:layout_above="@+id/TextLoad">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="365dp">
 
             <FrameLayout
-                android:id="@+id/fragment_frame"
+                android:id="@+id/pesquisas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentTop="true"
+                android:layout_weight="0.95">
 
+                <FrameLayout
+                    android:id="@+id/fragment_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
+
+                </FrameLayout>
             </FrameLayout>
-        </FrameLayout>
-        <Button
-            android:id="@+id/TextLoad"
+
+            <Button
+                android:id="@+id/TextLoad"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="31dp"
+                android:layout_marginEnd="19dp"
+                android:layout_marginRight="19dp"
+                android:layout_weight="0.05"
+                android:background="#80CFCFCF"
+                android:text="Ver mais +"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="0.05"
-            android:background="@color/btnVerde"
-            android:text="Carregar mais"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light" />
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true">
 
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/imageView10"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
+                android:onClick="limpar"
+                app:srcCompat="@drawable/iconpedidos" />
 
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/imageView10"
+                android:layout_marginEnd="22dp"
+                android:layout_marginRight="22dp"
+                android:onClick="Clientes"
+                app:srcCompat="@drawable/iconusuario" />
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/line"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="22dp" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:onClick="camera"
+                app:srcCompat="@drawable/qrcodeicon" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 
     <RelativeLayout
@@ -197,23 +258,38 @@
             android:id="@+id/editTextPesquisa"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/buttonPesquisa"
-            android:layout_toStartOf="@+id/buttonPesquisa"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/imageView5"
+            android:layout_alignRight="@+id/imageButton2"
+            android:layout_alignEnd="@+id/imageButton2" />
 
         <ImageView
             android:id="@+id/buttonPesquisa"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:layout_alignLeft="@+id/imageView5"
+            android:layout_alignStart="@+id/imageView5"
             android:background="@color/Cinza"
             android:onClick="pesquisa"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/vectorpesquisa"
-            android:layout_alignTop="@+id/imageButton7"
-            android:layout_toLeftOf="@+id/imageButton7"
-            android:layout_toStartOf="@+id/imageButton7" />
+            app:srcCompat="@drawable/searchiconrosa"
+            android:layout_toLeftOf="@+id/textView4"
+            android:layout_toStartOf="@+id/textView4"
+            android:layout_alignBottom="@+id/imageView5"
+            android:layout_alignTop="@+id/imageView5" />
+
+        <ImageView
+            android:id="@+id/x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageButton6"
+            android:layout_alignTop="@+id/imageButton6"
+            android:layout_toEndOf="@+id/imageButton2"
+            android:layout_toRightOf="@+id/imageButton2"
+            android:onClick="pesquisaTerminar"
+            app:srcCompat="@drawable/xsair" />
 
     </RelativeLayout>
 

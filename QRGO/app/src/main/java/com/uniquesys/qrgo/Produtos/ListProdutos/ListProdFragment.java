@@ -16,6 +16,7 @@ public class ListProdFragment extends Fragment {
     ArrayList<Bitmap> splittedBitmaps;
     ArrayList<String> splittedid;
     ArrayList<String> Contatos;
+    String res;
     String user;
     String hash;
 
@@ -28,6 +29,7 @@ public class ListProdFragment extends Fragment {
             Contatos = getArguments().getStringArrayList("Contatos");
             user = getArguments().getString("user");
             hash = getArguments().getString("hash");
+            res = getArguments().getString("resultado");
         }
     }
 
@@ -41,8 +43,9 @@ public class ListProdFragment extends Fragment {
 
 
         ListView gridView = (ListView) rootView.findViewById(R.id.ListView_Prods);
-        SplittedImageListProd adapter = new SplittedImageListProd(getActivity(),user,hash,Contatos, splittedBitmaps, splittedid);
+        SplittedImageListProd adapter = new SplittedImageListProd(getActivity(),user,hash,Contatos, splittedBitmaps, splittedid,res);
         gridView.setAdapter(adapter);
+        gridView.setSelection(adapter.getCount() - 1);
         return rootView;
     }
 

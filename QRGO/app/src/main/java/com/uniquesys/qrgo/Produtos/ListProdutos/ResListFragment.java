@@ -21,6 +21,7 @@ public class ResListFragment extends Fragment {
     ArrayList<String> Contatos;
     String user;
     String hash;
+    String res;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class ResListFragment extends Fragment {
             Contatos = getArguments().getStringArrayList("Contatos");
             user = getArguments().getString("user");
             hash = getArguments().getString("hash");
+            res = getArguments().getString("resultado");
         }
     }
 
@@ -44,8 +46,9 @@ public class ResListFragment extends Fragment {
 
 
         ListView gridView = (ListView) rootView.findViewById(R.id.ListView_Prods);
-        SplittedImageListProdRes adapter = new SplittedImageListProdRes(getActivity(),user,hash,Contatos, splittedBitmaps, splittedid);
+        SplittedImageListProdRes adapter = new SplittedImageListProdRes(getActivity(),user,hash,Contatos, splittedBitmaps, splittedid,res);
         gridView.setAdapter(adapter);
+        gridView.setSelection(adapter.getCount() - 1);
         return rootView;
     }
 

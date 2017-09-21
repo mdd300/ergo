@@ -143,7 +143,7 @@ public class ProdutoActivity extends AppCompatActivity {
             String idPesquisa = idProd.get(0).toString();
             i = 0;
             String methodS = "http://192.168.0.85/erp/vendas_produtos/getVariantesTamanho";
-            this.estoque(idPesquisa,methodS);
+            this.estoque(idPesquisa,methodS,i+1);
             EditText edit0 = (EditText) findViewById(R.id.edit0);
             edit0.setText("");
             EditText edit1 = (EditText) findViewById(R.id.edit1);
@@ -158,7 +158,7 @@ public class ProdutoActivity extends AppCompatActivity {
         }else{
             String idPesquisa = idProd.get(i).toString();
             String methodS = "http://192.168.0.85/erp/vendas_produtos/getVariantesTamanho";
-            this.estoque(idPesquisa,methodS);
+            this.estoque(idPesquisa,methodS,i+1);
             EditText edit0 = (EditText) findViewById(R.id.edit0);
             edit0.setText("");
             EditText edit1 = (EditText) findViewById(R.id.edit1);
@@ -191,7 +191,7 @@ public class ProdutoActivity extends AppCompatActivity {
             i = arrayleght - 1;
             String idPesquisa = idProd.get(i).toString();
             String methodS = "http://192.168.0.85/erp/vendas_produtos/getVariantesTamanho";
-            this.estoque(idPesquisa,methodS);
+            this.estoque(idPesquisa,methodS,i+1);
             EditText edit0 = (EditText) findViewById(R.id.edit0);
             edit0.setText("");
             EditText edit1 = (EditText) findViewById(R.id.edit1);
@@ -205,7 +205,7 @@ public class ProdutoActivity extends AppCompatActivity {
         }else{
             String idPesquisa = idProd.get(i).toString();
             String methodS = "http://192.168.0.85/erp/vendas_produtos/getVariantesTamanho";
-            this.estoque(idPesquisa,methodS);
+            this.estoque(idPesquisa,methodS,i+1);
             EditText edit0 = (EditText) findViewById(R.id.edit0);
             edit0.setText("");
             EditText edit1 = (EditText) findViewById(R.id.edit1);
@@ -323,16 +323,18 @@ public class ProdutoActivity extends AppCompatActivity {
         try {
 
             resul = prodTask.get();
+            Log.e("corVariante",resul);
             JSONArray JASresultProd = new JSONArray(resul.toString());
             RelativeLayout rl3 = (RelativeLayout) findViewById(R.id.rL3);
             ViewFlipper simpleViewFlipper=(ViewFlipper) rl3.findViewById(R.id. relativeLayout3);
-            simpleViewFlipper.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    return gestureDetector.onTouchEvent(event);
-                }
-            });
-
+            if(JASresultProd.length() > 1   ) {
+                simpleViewFlipper.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        return gestureDetector.onTouchEvent(event);
+                    }
+                });
+            }
             for(int k=0; k < JASresultProd.length();k++){
 
                 JSONObject obj =  JASresultProd.getJSONObject(k);
@@ -355,12 +357,41 @@ public class ProdutoActivity extends AppCompatActivity {
                     simpleViewFlipper.addView(imageView);
 
                     ViewFlipper simpleViewFlipperCollor=(ViewFlipper) findViewById(R.id.relativeLayout4);
-                    ImageView imageViewCollor = new ImageView(this);
-                    simpleViewFlipperCollor.addView(imageViewCollor);
 
                     ViewFlipper simpleViewFlipperNome=(ViewFlipper)findViewById(R.id.relativeLayout5);
                     TextView TextViewNome = new TextView(this);
                     simpleViewFlipperNome.addView(TextViewNome);
+
+                    simpleViewFlipperCollor = (ViewFlipper) findViewById(R.id.relativeLayout4);
+                    AppCompatImageView imageViewCollor = new AppCompatImageView(this);
+
+                    String color = obj.getString("cor_nome");
+                    Log.w("cor",color);
+
+                    Bitmap bit = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
+                    bit.eraseColor(Color.parseColor(color));
+
+                    int size = Math.min(bit.getWidth(), bit.getHeight());
+                    int x = (bit.getWidth() - size) / 2;
+                    int y = (bit.getHeight() - size) / 2;
+
+                    Bitmap squared = Bitmap.createBitmap(bit, x, y, size, size);
+
+                    Bitmap corBit = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+
+                    Canvas canvas = new Canvas(corBit);
+                    Paint paint = new Paint();
+                    paint.setShader(new BitmapShader(squared, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+                    paint.setAntiAlias(true);
+                    float r = size / 2f;
+                    canvas.drawCircle(r, r, r, paint);
+
+                    imageViewCollor.setImageBitmap(corBit);
+                    imageViewCollor.setBackground(getResources().getDrawable(R.drawable.corprod));
+                    simpleViewFlipperCollor.addView(imageViewCollor);
+                    simpleViewFlipperNome = (ViewFlipper) findViewById(R.id.relativeLayout5);
+                    TextViewNome = new TextView(this);
+
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -394,6 +425,7 @@ public class ProdutoActivity extends AppCompatActivity {
                         AppCompatImageView imageViewCollor = new AppCompatImageView(this);
 
                     String color = obj.getString("cor_nome");
+                        Log.w("cor",color);
 
                         Bitmap bit = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
                         bit.eraseColor(Color.parseColor(color));
@@ -418,9 +450,6 @@ public class ProdutoActivity extends AppCompatActivity {
                     simpleViewFlipperCollor.addView(imageViewCollor);
                     ViewFlipper simpleViewFlipperNome=(ViewFlipper)findViewById(R.id.relativeLayout5);
                     TextView TextViewNome = new TextView(this);
-                    String cor_nome = obj.getString("cor_nome");
-                    TextViewNome.setText(cor_nome);
-                    simpleViewFlipperNome.addView(TextViewNome);
 
 
 
@@ -706,7 +735,7 @@ public class ProdutoActivity extends AppCompatActivity {
                 idPesquisa = idProd.get(0).toString();
             String methodS = "http://192.168.0.85/erp/vendas_produtos/getVariantesTamanho";
             try {
-                this.estoque(idPesquisa,methodS);
+                this.estoque(idPesquisa,methodS,2);
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -727,57 +756,61 @@ public class ProdutoActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    public void estoque(String idEstoque, String methodS) throws ExecutionException, InterruptedException {
+    public void estoque(String idEstoque, String methodS,int i) throws ExecutionException, InterruptedException {
 
-        function = "produto";
+        function = "produtoEst";
         Model estTask = new Model();
-        estTask.execute(function,methodS, idEstoque,user_id,hash,"prod_id_fk");
+        estTask.execute(function, methodS, idEstoque, user_id, hash, "prod_id_fk", String.valueOf(i));
         resul = estTask.get();
-        try {
-            JSONArray JASresultEsPP = new JSONArray(resul.toString());
-            JSONObject objPP = JASresultEsPP.getJSONObject(0);
+        if (resul.equals("[]")) {
+            this.estoque(idEstoque, methodS, 1);
+        } else {
+            try {
+                JSONArray JASresultEsPP = new JSONArray(resul.toString());
+                JSONObject objPP = JASresultEsPP.getJSONObject(0);
 
 
-            String PPSS = objPP.getString("estq_qtde");
-            TextView PP = (TextView)findViewById(R.id.Text0);
-            PPIDS = objPP.getString("prod_id");
-            PP.setText(String.valueOf(PPSS));
+                String PPSS = objPP.getString("estq_qtde");
+                TextView PP = (TextView) findViewById(R.id.Text0);
+                PPIDS = objPP.getString("prod_id");
+                PP.setText(String.valueOf(PPSS));
 
-            JSONArray JASresultEsP = new JSONArray(resul.toString());
-            JSONObject objP = JASresultEsP.getJSONObject(1);
+                JSONArray JASresultEsP = new JSONArray(resul.toString());
+                JSONObject objP = JASresultEsP.getJSONObject(1);
 
-            String PSS = objP.getString("estq_qtde");
-            TextView P = (TextView)findViewById(R.id.Text1);
-            PIDS = objP.getString("prod_id");
-            P.setText(String.valueOf(PSS));
+                String PSS = objP.getString("estq_qtde");
+                TextView P = (TextView) findViewById(R.id.Text1);
+                PIDS = objP.getString("prod_id");
+                P.setText(String.valueOf(PSS));
 
-            JSONArray JASresultEsM = new JSONArray(resul.toString());
-            JSONObject objM = JASresultEsM.getJSONObject(2);
+                JSONArray JASresultEsM = new JSONArray(resul.toString());
+                JSONObject objM = JASresultEsM.getJSONObject(2);
 
-            String MSS = objM.getString("estq_qtde");
-            TextView M = (TextView)findViewById(R.id.Text2);
-            MIDS = objM.getString("prod_id");
-            M.setText(String.valueOf(MSS));
+                String MSS = objM.getString("estq_qtde");
+                TextView M = (TextView) findViewById(R.id.Text2);
+                MIDS = objM.getString("prod_id");
+                M.setText(String.valueOf(MSS));
 
-            JSONArray JASresultEsG = new JSONArray(resul.toString());
-            JSONObject objG = JASresultEsG.getJSONObject(3);
+                JSONArray JASresultEsG = new JSONArray(resul.toString());
+                JSONObject objG = JASresultEsG.getJSONObject(3);
 
-            String GSS = objG.getString("estq_qtde");
-            TextView G = (TextView)findViewById(R.id.Text3);
-            GIDS = objG.getString("prod_id");
-            G.setText(String.valueOf(GSS));
+                String GSS = objG.getString("estq_qtde");
+                TextView G = (TextView) findViewById(R.id.Text3);
+                GIDS = objG.getString("prod_id");
+                G.setText(String.valueOf(GSS));
 
-            JSONArray JASresultEsGG = new JSONArray(resul.toString());
-            JSONObject objGG = JASresultEsGG.getJSONObject(4);
+                JSONArray JASresultEsGG = new JSONArray(resul.toString());
+                JSONObject objGG = JASresultEsGG.getJSONObject(4);
 
-            String GGSS = objGG.getString("estq_qtde");
-            TextView GG = (TextView)findViewById(R.id.Text4);
-            GGIDS = objGG.getString("prod_id");
-            GG.setText(String.valueOf(GGSS));
+                String GGSS = objGG.getString("estq_qtde");
+                TextView GG = (TextView) findViewById(R.id.Text4);
+                GGIDS = objGG.getString("prod_id");
+                GG.setText(String.valueOf(GGSS));
 
-        } catch (JSONException e) {
-            Log.e("tag",e.getMessage());
-            e.printStackTrace();
+            } catch (JSONException e) {
+                Log.e("tag", e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
     public void carrinho(View v) throws ExecutionException, InterruptedException {

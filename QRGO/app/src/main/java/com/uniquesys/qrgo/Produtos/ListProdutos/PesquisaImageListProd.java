@@ -35,6 +35,7 @@ public class PesquisaImageListProd extends BaseAdapter {
     Context mContext;
     List<Bitmap> data;
     List<String> id;
+    String resultado;
     private int resource;
     private LayoutInflater inflater;
     List<String> ListaContatos;
@@ -42,7 +43,7 @@ public class PesquisaImageListProd extends BaseAdapter {
     String hash;
 
 
-    public PesquisaImageListProd(Context c, String user,String s, ArrayList<String> contatos, List<Bitmap> splittedBitmaps, List<String> splittedid) {
+    public PesquisaImageListProd(Context c, String user, String s, ArrayList<String> contatos, List<Bitmap> splittedBitmaps, List<String> splittedid, String res) {
 
         mContext = c;
         data=splittedBitmaps;
@@ -52,6 +53,7 @@ public class PesquisaImageListProd extends BaseAdapter {
         ListaContatos = contatos;
         user_id = user;
         hash = s;
+        resultado = res;
     }
 
 
@@ -77,15 +79,11 @@ public class PesquisaImageListProd extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup arg2) {
         final RelativeLayout convertViewR = (RelativeLayout) inflater.inflate(resource, null);
 
-        String codigo = id.get(position);
-        String method = "http://192.168.0.85/erp/vendas_produtos/getList";
-        String function = "produto";
-        Model prodTask = new Model(mContext);
-        prodTask.execute(function,method, codigo,user_id,hash,"prod_id");
+
         try {
-            final String resultado = prodTask.get();
+
             JSONArray JASresult = new JSONArray(resultado.toString());
-            JSONObject obj = JASresult.getJSONObject(0);
+            JSONObject obj = JASresult.getJSONObject(position);
             String nome = obj.getString("prod_desc");
             String preco = obj.getString("prod_preco");
 
@@ -110,7 +108,7 @@ public class PesquisaImageListProd extends BaseAdapter {
                     Intent in = new Intent(mContext, ProdutoActivity.class);
                     in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     in.putExtra("id",codigo);
-                    in.putExtra("resultado", resultado);
+                    in.putExtra("resultado", String.valueOf(resultado));
                     mContext.startActivity(in);
                     ((ListViewActivity) mContext).overridePendingTransition(R.anim.anim_slide_right,R.anim.anim_slide_left);
                     ((ListViewActivity) mContext).finish();
@@ -161,11 +159,7 @@ public class PesquisaImageListProd extends BaseAdapter {
                     });
                 }
             });
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
         }
         return convertViewR;

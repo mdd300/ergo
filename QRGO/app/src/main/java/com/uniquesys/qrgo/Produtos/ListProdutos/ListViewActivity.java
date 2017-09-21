@@ -15,6 +15,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +41,7 @@ import com.uniquesys.qrgo.MainActivity;
 import com.uniquesys.qrgo.Produtos.CheckoutActivity;
 import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.Produtos.Model;
+import com.uniquesys.qrgo.Produtos.ProdutoActivity;
 import com.uniquesys.qrgo.R;
 import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
 import com.uniquesys.qrgo.model.Imagem;
@@ -55,8 +59,9 @@ public class ListViewActivity extends AppCompatActivity {
     List<Bitmap> splittedBitmaps = new ArrayList<>();
     List<String> splittedid = new ArrayList<>();
     List<String> Contatos = new ArrayList<>();
-    List<JSONObject> ResProd = new ArrayList<>();
+    String ResProd ;
     JSONArray JASresult;
+    JSONArray JASRes;
     String resultado = null;
     Bitmap result = null;
     String img_test = null;
@@ -69,8 +74,6 @@ public class ListViewActivity extends AppCompatActivity {
     String user_id;
     DatabaseReference firebaseLast;
     ValueEventListener valueEventListenerLastMensagemNot;
-    private DatabaseReference firebase;
-    ValueEventListener valueEventListenerMensagem;
     int j = 0;
 
 
@@ -84,57 +87,10 @@ public class ListViewActivity extends AppCompatActivity {
         hash = sharedPreferences.getString("hash","");
         EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
         ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
+        ImageView x = (ImageView) findViewById(R.id.x);
         CampoPesquisa.setVisibility(View.INVISIBLE);
         btnPesquisa.setVisibility(View.INVISIBLE);
-
-
-        valueEventListenerMensagem = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.getValue() != null){
-
-                    for (DataSnapshot key : dataSnapshot.getChildren()) {
-
-                        if(key.getKey() != user_id) {
-
-                            String codigo = key.getKey();
-                            String method = "http://uniquesys.jelasticlw.com.br/qrgo/pedidos/dados_user";
-                            String function = "produto";
-                            Model prodTask = new Model();
-                            prodTask.execute(function,method, codigo,user_id,hash,"prod_id");
-                            String resultado = null;
-                            try {
-                                resultado = prodTask.get();
-                                JSONArray arrayJson = new JSONArray(resultado.toString());
-                                JSONObject obj = arrayJson.getJSONObject(0);
-                                String nome = obj.getString("user_nome");
-                                Contatos.add(key.getKey() + " - " + nome);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-
-        firebase = ConfiguracaoFirebase.getFirebase().child(user_id).child("Contatos");
-
-        firebase.addValueEventListener(valueEventListenerMensagem);
-
-
+        x.setVisibility(View.INVISIBLE);
 
         CampoPesquisa.setOnKeyListener(new View.OnKeyListener()
         {
@@ -242,17 +198,26 @@ public class ListViewActivity extends AppCompatActivity {
                 prodTask.execute(function, method, String.valueOf(pagina), user_id, hash);
 
                 try {
-
-
-                    resultado = prodTask.get();
-
-                    JASresult = new JSONArray(resultado.toString());
-
-
+                    if (resultado == null) {
+                        resultado = prodTask.get();
+                        JASresult = new JSONArray(resultado.toString());
+                        JASRes = new JSONArray(resultado.toString());
+                        ResProd = resultado;
+                    }else{
+                        resultado = prodTask.get();
+                        JSONArray JASresultR = new JSONArray(resultado.toString());
+                        for (int i = 0; i < JASresultR.length(); i++) {
+                            JSONObject obj = JASresultR.getJSONObject(i);
+                            JASRes.put(obj);
+                        }
+                        ResProd = JASRes.toString();
+                        Log.e("teste",ResProd);
+                        JASresult = new JSONArray(resultado.toString());
+                    }
                     try {
                         for (int i = 0; i < JASresult.length(); i++) {
                             JSONObject obj = JASresult.getJSONObject(i);
-                            ResProd.add(obj);
+
                             String img = obj.getString("image_thumb");
                             String id = obj.getString("prod_id");
                             try {
@@ -307,7 +272,7 @@ public class ListViewActivity extends AppCompatActivity {
                     bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
                     bundle.putString("user", (user_id));
                     bundle.putString("hash",hash);
-                    bundle.putStringArrayList("id", (ArrayList<String>) splittedid);
+                    bundle.putString("resultado", ResProd);
                     fragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_ListProd, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -323,6 +288,7 @@ public class ListViewActivity extends AppCompatActivity {
                     bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
                     bundle.putString("user", (user_id));
                     bundle.putString("hash",hash);
+                    bundle.putString("resultado", ResProd);
                     fragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_ListProd, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -350,6 +316,7 @@ public class ListViewActivity extends AppCompatActivity {
             bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
             bundle.putString("user", (user_id));
             bundle.putString("hash",hash);
+            bundle.putString("resultado", ResProd);
             fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_ListProd, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -365,6 +332,7 @@ public class ListViewActivity extends AppCompatActivity {
             bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
             bundle.putString("user", (user_id));
             bundle.putString("hash",hash);
+            bundle.putString("resultado", ResProd);
             fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_ListProd, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
@@ -385,18 +353,44 @@ public class ListViewActivity extends AppCompatActivity {
         EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
         ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
         ImageView btnAbrirPesquisa = (ImageView) findViewById(R.id.imageButton7);
+        ImageView btn = (ImageView) findViewById(R.id.imageButton6);
+        ImageView btngrid = (ImageView) findViewById(R.id.imageButton2);
+        ImageView x = (ImageView) findViewById(R.id.x);
         TextView prod = (TextView) findViewById(R.id.textView4);
 
         CampoPesquisa.setVisibility(View.VISIBLE);
         btnPesquisa.setVisibility(View.VISIBLE);
+        x.setVisibility(View.VISIBLE);
         btnAbrirPesquisa.setVisibility(View.INVISIBLE);
+        btngrid.setVisibility(View.INVISIBLE);
+        btn.setVisibility(View.INVISIBLE);
         prod.setVisibility(View.INVISIBLE);
 
         InputMethodManager imm=(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(CampoPesquisa, InputMethodManager.SHOW_IMPLICIT);
 
     }
+    public void pesquisaTerminar(View v) throws ExecutionException, InterruptedException {
+        EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
+        ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
+        ImageView btnAbrirPesquisa = (ImageView) findViewById(R.id.imageButton7);
+        ImageView btn = (ImageView) findViewById(R.id.imageButton6);
+        ImageView btngrid = (ImageView) findViewById(R.id.imageButton2);
+        ImageView x = (ImageView) findViewById(R.id.x);
+        TextView prod = (TextView) findViewById(R.id.textView4);
 
+        CampoPesquisa.setVisibility(View.INVISIBLE);
+        btnPesquisa.setVisibility(View.INVISIBLE);
+        x.setVisibility(View.INVISIBLE);
+        btnAbrirPesquisa.setVisibility(View.VISIBLE);
+        btngrid.setVisibility(View.VISIBLE);
+        btn.setVisibility(View.VISIBLE);
+        prod.setVisibility(View.VISIBLE);
+
+        InputMethodManager imm=(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(CampoPesquisa, InputMethodManager.SHOW_IMPLICIT);
+
+    }
     public void pesquisa(View v) throws ExecutionException, InterruptedException {
         pagina = 1;
         splittedBitmaps.clear();
@@ -450,6 +444,7 @@ public class ListViewActivity extends AppCompatActivity {
 
 
                     resultado = prodTask.get();
+                    ResProd = resultado;
                     JASresult = new JSONArray(resultado.toString());
                     try {
                         for (int i = 0; i < JASresult.length(); i++) {
@@ -503,9 +498,10 @@ public class ListViewActivity extends AppCompatActivity {
                     bundle.putString("user", (user_id));
                     bundle.putString("hash",hash);
                     bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
+                    bundle.putString("resultado", ResProd);
                     fr.setArguments(bundle);
-                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     fragmentTransaction.replace(R.id.pesquisas_ListProd, fr);
                     fragmentTransaction.commit();
                 }
@@ -519,9 +515,10 @@ public class ListViewActivity extends AppCompatActivity {
                     bundle.putString("user", (user_id));
                     bundle.putString("hash",hash);
                     bundle.putStringArrayList("Contatos", (ArrayList<String>) Contatos);
+                    bundle.putString("resultado", ResProd);
                     fr.setArguments(bundle);
-                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     fragmentTransaction.replace(R.id.pesquisas_ListProd, fr);
                     fragmentTransaction.commit();
 
@@ -599,4 +596,13 @@ public class ListViewActivity extends AppCompatActivity {
         finish();
         firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
     }
+    public void camera(View v) throws ExecutionException, InterruptedException {
+        Intent intent = new Intent(ListViewActivity.this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
+        finish();
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
+    }
+
+
 }

@@ -42,6 +42,8 @@ public class GridFragment extends Fragment {
             GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
             SplittedImageAdapter adapter = new SplittedImageAdapter(getActivity(), splittedBitmaps, splittedid,user,hash);
             gridView.setAdapter(adapter);
+            gridView.setSelection(adapter.getCount() - 1);
+
             return rootView;
     }
 

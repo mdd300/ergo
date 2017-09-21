@@ -40,6 +40,7 @@ import com.uniquesys.qrgo.MainActivity;
 import com.uniquesys.qrgo.Produtos.CheckoutActivity;
 import com.uniquesys.qrgo.Produtos.ListProdutos.ListViewActivity;
 import com.uniquesys.qrgo.Produtos.Model;
+import com.uniquesys.qrgo.Produtos.ProdutoActivity;
 import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
 import com.uniquesys.qrgo.model.Imagem;
 import com.uniquesys.qrgo.R;
@@ -84,8 +85,10 @@ public class GridActivity extends AppCompatActivity {
         hash = sharedPreferences.getString("hash","");
         EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
         ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
+        ImageView x = (ImageView) findViewById(R.id.x);
         CampoPesquisa.setVisibility(View.INVISIBLE);
         btnPesquisa.setVisibility(View.INVISIBLE);
+        x.setVisibility(View.INVISIBLE);
 
         CampoPesquisa.setOnKeyListener(new View.OnKeyListener()
         {
@@ -198,9 +201,7 @@ public class GridActivity extends AppCompatActivity {
 
 
                 resultado = prodTask.get();
-                Log.e("prod",resultado);
                 JASresult = new JSONArray(resultado.toString());
-                Log.e("teste",resultado.toString());
 
                 try {
                     for (int i = 0; i < JASresult.length(); i++) {
@@ -368,12 +369,39 @@ public class GridActivity extends AppCompatActivity {
         EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
         ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
         ImageView btnAbrirPesquisa = (ImageView) findViewById(R.id.imageButton7);
+        ImageView btn = (ImageView) findViewById(R.id.imageButton6);
+        ImageView btngrid = (ImageView) findViewById(R.id.imageButton2);
+        ImageView x = (ImageView) findViewById(R.id.x);
         TextView prod = (TextView) findViewById(R.id.textView4);
 
         CampoPesquisa.setVisibility(View.VISIBLE);
         btnPesquisa.setVisibility(View.VISIBLE);
+        x.setVisibility(View.VISIBLE);
         btnAbrirPesquisa.setVisibility(View.INVISIBLE);
+        btngrid.setVisibility(View.INVISIBLE);
+        btn.setVisibility(View.INVISIBLE);
         prod.setVisibility(View.INVISIBLE);
+
+        InputMethodManager imm=(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(CampoPesquisa, InputMethodManager.SHOW_IMPLICIT);
+
+    }
+    public void pesquisaTerminar(View v) throws ExecutionException, InterruptedException {
+        EditText CampoPesquisa = (EditText) findViewById(R.id.editTextPesquisa);
+        ImageView btnPesquisa = (ImageView) findViewById(R.id.buttonPesquisa);
+        ImageView btnAbrirPesquisa = (ImageView) findViewById(R.id.imageButton7);
+        ImageView btn = (ImageView) findViewById(R.id.imageButton6);
+        ImageView btngrid = (ImageView) findViewById(R.id.imageButton2);
+        ImageView x = (ImageView) findViewById(R.id.x);
+        TextView prod = (TextView) findViewById(R.id.textView4);
+
+        CampoPesquisa.setVisibility(View.INVISIBLE);
+        btnPesquisa.setVisibility(View.INVISIBLE);
+        x.setVisibility(View.INVISIBLE);
+        btnAbrirPesquisa.setVisibility(View.VISIBLE);
+        btngrid.setVisibility(View.VISIBLE);
+        btn.setVisibility(View.VISIBLE);
+        prod.setVisibility(View.VISIBLE);
 
         InputMethodManager imm=(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(CampoPesquisa, InputMethodManager.SHOW_IMPLICIT);
@@ -542,4 +570,12 @@ public class GridActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
         finish();
     }
+    public void camera(View v) throws ExecutionException, InterruptedException {
+        Intent intent = new Intent(GridActivity.this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
+        finish();
+        firebaseLast.removeEventListener(valueEventListenerLastMensagemNot);
+    }
+
 }

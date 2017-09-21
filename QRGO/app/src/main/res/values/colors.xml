@@ -11,6 +11,6 @@
     <color name="VerdeCarrinho">#32c647</color>
     <color name="azulSelected">#0ea2fe</color>
     <color name="azulMenu">#FF34498D</color>
-    <color name="transparente">#80FFFFFF</color>
+    <color name="transparente">#80cfcfcf</color>
 
 </resources>

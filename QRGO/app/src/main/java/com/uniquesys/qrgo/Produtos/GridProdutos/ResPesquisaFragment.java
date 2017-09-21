@@ -42,8 +42,8 @@ public class ResPesquisaFragment extends Fragment {
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridProdutos);
         ResPesquisaImageAdapter adapter = new ResPesquisaImageAdapter(getActivity(), splittedBitmaps, splittedid, user, hash);
-
         gridView.setAdapter(adapter);
+        gridView.setSelection(adapter.getCount() - 1);
 
         return rootView;
     }
