@@ -37,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.Chat.ChatActivity;
 import com.uniquesys.qrgo.Clientes.ClientesActivity;
 import com.uniquesys.qrgo.MainActivity;
+import com.uniquesys.qrgo.Produtos.CheckOut.CheckOutActivity;
 import com.uniquesys.qrgo.Produtos.CheckoutActivity;
 import com.uniquesys.qrgo.Produtos.ListProdutos.ListViewActivity;
 import com.uniquesys.qrgo.Produtos.Model;
@@ -58,7 +59,6 @@ public class GridActivity extends AppCompatActivity {
 
     List<Bitmap> splittedBitmaps = new ArrayList<>();
     List<String> splittedid = new ArrayList<>();
-    ListAdapter empty;
     JSONArray JASresult;
     String resultado = null;
     Bitmap result = null;
@@ -329,7 +329,7 @@ public class GridActivity extends AppCompatActivity {
     }
 
     public void carrinho(View v) throws ExecutionException, InterruptedException {
-        Intent intent_next=new Intent(GridActivity.this,CheckoutActivity.class);
+        Intent intent_next=new Intent(GridActivity.this,CheckOutActivity.class);
         startActivity(intent_next);
         overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
         finish();

@@ -41,7 +41,8 @@
         <activity android:name=".Chat.ConversaActivity" />
         <activity android:name=".Chat.ContatosActivity" />
         <activity android:name=".Produtos.ListProdutos.ListViewActivity" />
-        <activity android:name=".Clientes.ClientesActivity"></activity>
+        <activity android:name=".Clientes.ClientesActivity" />
+        <activity android:name=".Produtos.CheckOut.CheckOutActivity"></activity>
     </application>
 
 </manifest>
