@@ -101,8 +101,6 @@ public class SplittedListCheckOut extends BaseAdapter {
             String quantidade = obj.getString("carrinho_qtde");
             id = obj.getString("prod_id");
 
-
-
             int valorTotal =  Integer.parseInt(preco) * Integer.parseInt(quantidade);
 
             textNome.setText(nome);
@@ -165,7 +163,6 @@ public class SplittedListCheckOut extends BaseAdapter {
                                 builder.setView(modeList);
                                 final Dialog dialog = builder.create();
 
-
                                 dialog.show();
 
                             }
@@ -179,21 +176,12 @@ public class SplittedListCheckOut extends BaseAdapter {
                                 Model prodTask = new Model();
                                 final String method = "http://192.168.0.85/erp/vendas_pedidos/excluirProduto";
                                 final String function = "produto";
-                                prodTask.execute(function, method,finalId, user_id,user_hash,"itens.prod_id_principal");
-                                try {
-
-                                    String resultVar = prodTask.get();
-                                    Log.e("teste",resultVar);
-
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                } catch (ExecutionException e) {
-                                    e.printStackTrace();
-                                }
+                                prodTask.execute(function, method,finalId, user_id,user_hash,"prod_id_principal");
 
                                 Intent in = new Intent(mContext, CheckOutActivity.class);
                                 in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 mContext.startActivity(in);
+                                ((CheckOutActivity) mContext).overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_in);
                                 ((CheckOutActivity) mContext).finish();
                         }
                     });
@@ -222,6 +210,5 @@ public class SplittedListCheckOut extends BaseAdapter {
 
         return convertViewR;
     }
-
 
 }

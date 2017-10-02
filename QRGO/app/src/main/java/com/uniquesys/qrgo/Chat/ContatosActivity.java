@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.Clientes.ClientesActivity;
 import com.uniquesys.qrgo.MainActivity;
+import com.uniquesys.qrgo.Produtos.CheckOut.CheckOutActivity;
 import com.uniquesys.qrgo.Produtos.CheckoutActivity;
 import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.Produtos.Model;
@@ -236,7 +237,7 @@ public class ContatosActivity extends AppCompatActivity {
         finish();
     }
     public void carrinho(View v) throws ExecutionException, InterruptedException {
-        Intent intent_next=new Intent(ContatosActivity.this,CheckoutActivity.class);
+        Intent intent_next=new Intent(ContatosActivity.this,CheckOutActivity.class);
         startActivity(intent_next);
         overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
         finish();

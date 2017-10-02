@@ -98,6 +98,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="@color/Cinza"
+            android:onClick="produtos"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/logo" />
 
@@ -163,6 +164,7 @@
             android:layout_alignRight="@+id/textView25"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:onClick="camera"
             app:srcCompat="@drawable/qrcode" />
 
         <FrameLayout
@@ -257,7 +259,7 @@
             android:layout_marginEnd="34dp"
             android:layout_marginRight="34dp"
             android:background="@color/Cinza"
-            android:onClick="limpar"
+            android:onClick="ExcluirTodos"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/limpar" />
 

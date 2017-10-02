@@ -133,6 +133,8 @@ if(function == "produto") {
         e.printStackTrace();
     }
 }
+
+
         if(function == "produtoEst") {
             String codigo = params[2];
             String user = params[3];
@@ -478,6 +480,7 @@ if(function == "produto") {
 
 
     }
+
 
 
 }

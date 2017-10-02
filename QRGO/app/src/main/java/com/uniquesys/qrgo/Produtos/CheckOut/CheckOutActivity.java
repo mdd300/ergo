@@ -1,6 +1,7 @@
 package com.uniquesys.qrgo.Produtos.CheckOut;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,14 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+
+import com.uniquesys.qrgo.Chat.ChatActivity;
+import com.uniquesys.qrgo.Clientes.ClientesActivity;
+import com.uniquesys.qrgo.MainActivity;
+import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.Produtos.Model;
+import com.uniquesys.qrgo.Produtos.ProdutoActivity;
 import com.uniquesys.qrgo.R;
 import com.uniquesys.qrgo.model.Imagem;
 
@@ -118,6 +126,47 @@ public class CheckOutActivity extends AppCompatActivity {
 
         }.start();
 
+    }
+
+    public void camera(View v) throws ExecutionException, InterruptedException {
+        Intent intent = new Intent(CheckOutActivity.this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
+        finish();
+    }
+    public void chat(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(CheckOutActivity.this,ChatActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
+        finish();
+    }
+
+    public void Clientes(View v) throws ExecutionException, InterruptedException {
+        Intent intent_next=new Intent(CheckOutActivity.this,ClientesActivity.class);
+        startActivity(intent_next);
+        overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
+        finish();
+    }
+    public void produtos(View v) throws ExecutionException, InterruptedException {
+        Intent intent = new Intent(CheckOutActivity.this, GridActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_up,R.anim.anim_slide_down);
+        resultado = null;
+        finish();
+    }
+
+    public void ExcluirTodos(View v) throws ExecutionException, InterruptedException {
+
+        Model prodTask = new Model();
+        final String method = "http://192.168.0.85/erp/vendas_pedidos/excluirAllProduto";
+        final String function = "produto";
+        prodTask.execute(function, method,"1", user_id, hash,"prod_id_principal");
+
+        Intent intent = new Intent(CheckOutActivity.this, CheckOutActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_in);
+        resultado = null;
+        finish();
     }
     }
 

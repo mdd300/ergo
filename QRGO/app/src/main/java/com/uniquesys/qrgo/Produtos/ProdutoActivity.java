@@ -42,6 +42,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.uniquesys.qrgo.Chat.ChatActivity;
 import com.uniquesys.qrgo.Chat.NotificationConversa;
 import com.uniquesys.qrgo.Clientes.ClientesActivity;
+import com.uniquesys.qrgo.Produtos.CheckOut.CheckOutActivity;
 import com.uniquesys.qrgo.Produtos.GridProdutos.GridActivity;
 import com.uniquesys.qrgo.config.ConfiguracaoFirebase;
 import com.uniquesys.qrgo.model.Imagem;
@@ -814,7 +815,7 @@ public class ProdutoActivity extends AppCompatActivity {
         }
     }
     public void carrinho(View v) throws ExecutionException, InterruptedException {
-        Intent intent = new Intent(ProdutoActivity.this, CheckoutActivity.class);
+        Intent intent = new Intent(ProdutoActivity.this, CheckOutActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.anim_slide_up_leave,R.anim.anim_slide_down_leave);
         resultado = null;
